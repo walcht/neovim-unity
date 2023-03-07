@@ -1,3 +1,5 @@
+-- This file contains global (non pluging-specific) settings. For pluging-
+
 -- Line and relative line numbering
 vim.opt.nu = true
 vim.opt.relativenumber = true
