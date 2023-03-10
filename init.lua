@@ -1,4 +1,4 @@
 require("keymaps")
-require("set")
+require("settings")
 require("plugins")
 require("startup")
