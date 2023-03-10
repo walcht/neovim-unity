@@ -28,8 +28,6 @@ return require('packer').startup(function(use)
   -- Undotree: undotree visualization
   use ('mbbill/undotree')
 
-  -- Csharp related (this has caused me A LOT of headache to propetly setup)
-  -- use 'OmniSharp/omnisharp-vim'
   use {'neoclide/coc.nvim', branch = 'release'}
 
   use 'nvim-tree/nvim-web-devicons'     -- Nvim-web-devicons: beautiful nvim-tree icons
@@ -42,5 +40,14 @@ return require('packer').startup(function(use)
   use {"akinsho/toggleterm.nvim", tag = '*', config = function()
       require("toggleterm").setup()
   end}
+
+  -- Showing indentation (especially usefull for Python)
+  use 'lukas-reineke/indent-blankline.nvim'
+
+  -- Tabline plugin
+  use {'romgrk/barbar.nvim', requires = 'nvim-web-devicons'}
+
+  use({ "iamcco/markdown-preview.nvim", run = "cd app && npm install", 
+  setup = function() vim.g.mkdp_filetypes = { "markdown" } end, ft = { "markdown" }, })
 
 end)
