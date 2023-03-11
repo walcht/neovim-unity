@@ -41,6 +41,8 @@ keymap("n", "N", "Nzzzv")
 
 -- Disable Q key
 keymap("n", "Q", "<nop>")
+keymap("n", "L", "<nop>")
+keymap("n", "\"", "<nop>")
 
 -- Copy to system clipboard
 keymap("n", "<leader>y", "\"+y")
