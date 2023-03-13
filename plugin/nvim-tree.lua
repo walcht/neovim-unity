@@ -1,8 +1,3 @@
-vim.api.nvim_create_autocmd('BufEnter', {
-    command = "if winnr('$') == 1 && bufname() == 'NvimTree_' . tabpagenr() | quit | endif",
-    nested = true,
-})
-
 require("nvim-tree").setup { -- BEGIN_DEFAULT_OPTS
       auto_reload_on_write = true,
       disable_netrw = true,
@@ -59,7 +54,7 @@ require("nvim-tree").setup { -- BEGIN_DEFAULT_OPTS
         root_folder_label = ":~:s?$?/..?",
         indent_width = 2,
         indent_markers = {
-          enable = false,
+          enable = true,
           inline_arrows = true,
           icons = {
             corner = "└",
@@ -240,3 +235,6 @@ require("nvim-tree").setup { -- BEGIN_DEFAULT_OPTS
         },
       },
     } -- END_DEFAULT_OPTS
+
+
+vim.keymap.set("n", "<leader>ex", vim.cmd.NvimTreeToggle)

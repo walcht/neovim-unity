@@ -84,6 +84,3 @@ keymap("x", "<leader>p", "\"_dP")
 
 -- Terminal --
 keymap("t", "<C-h>", "<C-\\><C-N><C-w>h", term_opts)
-
-
-vim.keymap.set("n", "<leader>ex", vim.cmd.NvimTreeToggle)
