@@ -45,7 +45,9 @@ return require('packer').startup(function(use)
   use 'lukas-reineke/indent-blankline.nvim'
 
   -- Tabline plugin
-  use {'romgrk/barbar.nvim', requires = 'nvim-web-devicons'}
+  use {'akinsho/bufferline.nvim', tag = "v3.*", requires = 'nvim-tree/nvim-web-devicons'}
+  -- Required to fix closing window issues with bufferline plugin
+  use 'famiu/bufdelete.nvim'
 
   use({ "iamcco/markdown-preview.nvim", run = "cd app && npm install", 
   setup = function() vim.g.mkdp_filetypes = { "markdown" } end, ft = { "markdown" }, })

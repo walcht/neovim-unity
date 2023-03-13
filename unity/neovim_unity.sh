@@ -1,2 +1,2 @@
 #!/bin/bash
-gnome-terminal -- nvr --nvimserver unity $@
+gnome-terminal -- nvr --servername "/tmp/nvimunity" --remote-tab $@
