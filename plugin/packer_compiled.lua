@@ -151,6 +151,11 @@ _G.packer_plugins = {
     loaded = true,
     path = "/home/walidchtioui/.local/share/nvim/site/pack/packer/start/undotree",
     url = "https://github.com/mbbill/undotree"
+  },
+  ["vim-snippets"] = {
+    loaded = true,
+    path = "/home/walidchtioui/.local/share/nvim/site/pack/packer/start/vim-snippets",
+    url = "https://github.com/honza/vim-snippets"
   }
 }
 
