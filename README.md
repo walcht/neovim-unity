@@ -174,6 +174,6 @@ environment.
 
 ## License
 
- [![License: MIT](https://img.shields.io/badge/License-MIT-yellow.svg)](https://opensource.org/licenses/MIT)
- This project is available under the MIT License. See LICENSE.txt file for more
- info.
+This project is available under
+[![License: MIT](https://img.shields.io/badge/License-MIT-yellow.svg)](https://opensource.org/licenses/MIT)
+. See LICENSE.txt file for more info.
