@@ -4,12 +4,15 @@ Ready-to-use Neovim configured for game development using Unity3D engine. This
 intended to be both, a ready-to-use Neovim package and a guide on how to get Neovim
 working with Unity3D.
 
+![unity neovim usage demonstration](./media/demo_1.gif)
+
 ## Installation
 
 This Installtion guide targets __Linux distributions__. A guide on how to
 properly set this for Windows is yet to be provided.
 
 ### Installing Dependencies
+
 The below dependencies should be properly installed, please take a look at
 respective links for up-to-date installation instructions.
 
@@ -20,7 +23,7 @@ install neovim-remote```
 3. __[mono][mono_installation]__: Essential for .Net 4.7.x Assemblies used by
 the Unity engine
 4. __[csharp-ls][csharpls_installation]__: Csharp language server protocol for
-autocomplection, static analyz(if the term LSP is new to you, read 
+autocomplection, static analyz(if the term LSP is new to you, read
 __[this][lsp]__) -- Install using: ```dotnet tool install --global csharp-ls```
 
 ### Neovim Setup
@@ -34,12 +37,11 @@ mv ~/.config/nvim ~/.config/nvim.bak
 mv ~/.local/share/nvim ~/.local/share/nvim.bak
 ```
 
-2. Clone the repository
+1. Clone the repository
 
 ```bash
 git clone https://github.com/walcht/neovim-unity ~/.config/nvim
 ```
-
 
 #### Installing Plugin Dependencies
 
@@ -74,12 +76,11 @@ Why?
 But for the impatient, a set of predefined extensions could be installed
 using the above script.
 
-
 #### Configuring Unity Editor
 
 1. In Unity, navigate to __```Edit > Preferences > External tools```__
 2. In __```External Script Editor```__ dropout, chose __```Browse...```__
-3. Chose the the __```./unity/neovim_unity.sh```__ shell script
+3. Chose the the __```./script/neovim_unity.sh```__ shell script
 4. Copy the following argument into __```External Script Editor Args```__ field:
 
 ```bash
