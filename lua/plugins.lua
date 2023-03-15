@@ -25,7 +25,24 @@ return require('packer').startup(function(use)
 	  end,
   }
 
-  use {'neoclide/coc.nvim', branch = 'release'}
+  -- Completion plugins (for LSP, buffer, path, cmd line, snippets, etc...)
+  use "hrsh7th/nvim-cmp" -- The completion plugin
+  use "hrsh7th/cmp-buffer" -- buffer completions
+  use "hrsh7th/cmp-path" -- path completions
+  use "hrsh7th/cmp-cmdline" -- cmdline completions
+  use "saadparwaiz1/cmp_luasnip" -- snippet completions
+  use "hrsh7th/cmp-nvim-lua" -- lua vim completions
+  use "hrsh7th/cmp-nvim-lsp" -- LSP completions
+
+  -- Snippets
+  use "L3MON4D3/LuaSnip" --snippet engine
+  use "rafamadriz/friendly-snippets" -- a bunch of snippets to use
+
+  -- LSP related plugins
+  use "neovim/nvim-lspconfig"
+  use "williamboman/mason.nvim"
+  use "williamboman/mason-lspconfig.nvim"
+
 
   -- Undotree: undotree visualization
   use ('mbbill/undotree')
@@ -49,10 +66,7 @@ return require('packer').startup(function(use)
   -- Required to fix closing window issues with bufferline plugin
   use 'famiu/bufdelete.nvim'
 
-  use({ "iamcco/markdown-preview.nvim", run = "cd app && npm install", 
+  use({ "iamcco/markdown-preview.nvim", run = "cd app && npm install",
   setup = function() vim.g.mkdp_filetypes = { "markdown" } end, ft = { "markdown" }, })
-
-  -- Snippets for tons of programming languages
-  use 'honza/vim-snippets'
 
 end)

@@ -1,2 +1,2 @@
 #!/bin/bash
-gnome-terminal -- nvr --servername "/tmp/nvimunity" --remote-tab-silent $@
+gnome-terminal -- nvr --servername "/tmp/nvimunity" --remote-silent $@
