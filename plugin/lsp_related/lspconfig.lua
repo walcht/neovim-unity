@@ -55,8 +55,17 @@ mason.setup {
 }
 
 -- Add your language server(s) here
-local servers = {'pyright', 'omnisharp', 'marksman', 'lua_ls', 'jsonls',
-            'html', 'clangd', 'bashls', 'lemminx', 'yamlls'}
+local servers = {
+    'pyright',
+    'marksman',
+    'lua_ls',
+    'jsonls',
+    'html',
+    'clangd',
+    'bashls',
+    'lemminx',
+    'yamlls'
+}
 
 -- Setup mason-lspconfig
 mason_lspconfig.setup {
@@ -69,3 +78,19 @@ for _, lsp in ipairs(servers) do
     capabilities = capabilities,
   }
 end
+
+-- Omnisharp setup
+local pid = vim.fn.getpid()
+local omnisharp_bin = "omnisharp"
+-- on Windows
+-- local omnisharp_bin = "/path/to/omnisharp/OmniSharp.exe"
+
+local config = {
+  handlers = {
+    ["textDocument/definition"] = require('omnisharp_extended').handler,
+  },
+  cmd = { omnisharp_bin, '--languageserver' , '--hostPID', tostring(pid) },
+  -- rest of your settings
+}
+
+lspconfig['omnisharp'].setup(config)

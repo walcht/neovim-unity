@@ -43,6 +43,9 @@ return require('packer').startup(function(use)
   use "williamboman/mason.nvim"
   use "williamboman/mason-lspconfig.nvim"
 
+  -- for proper go-to-definition support for omnisharp
+  use "Hoffs/omnisharp-extended-lsp.nvim"
+
   -- Undotree: undotree visualization
   use ('mbbill/undotree')
 

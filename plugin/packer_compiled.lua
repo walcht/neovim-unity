@@ -124,11 +124,6 @@ _G.packer_plugins = {
     path = "/home/walidchtioui/.local/share/nvim/site/pack/packer/start/cmp_luasnip",
     url = "https://github.com/saadparwaiz1/cmp_luasnip"
   },
-  ["csharpls-extended-lsp.nvim"] = {
-    loaded = true,
-    path = "/home/walidchtioui/.local/share/nvim/site/pack/packer/start/csharpls-extended-lsp.nvim",
-    url = "https://github.com/Decodetalkers/csharpls-extended-lsp.nvim"
-  },
   ["friendly-snippets"] = {
     loaded = true,
     path = "/home/walidchtioui/.local/share/nvim/site/pack/packer/start/friendly-snippets",
@@ -190,6 +185,11 @@ _G.packer_plugins = {
     loaded = true,
     path = "/home/walidchtioui/.local/share/nvim/site/pack/packer/start/nvim-web-devicons",
     url = "https://github.com/nvim-tree/nvim-web-devicons"
+  },
+  ["omnisharp-extended-lsp.nvim"] = {
+    loaded = true,
+    path = "/home/walidchtioui/.local/share/nvim/site/pack/packer/start/omnisharp-extended-lsp.nvim",
+    url = "https://github.com/Hoffs/omnisharp-extended-lsp.nvim"
   },
   ["packer.nvim"] = {
     loaded = true,
