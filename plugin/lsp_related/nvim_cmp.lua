@@ -103,12 +103,15 @@ cmp.setup {
         luasnip = "[SNP]",
         buffer = "[BUF]",
         path = "[PTH]",
+        nvim_lsp = "[LSP]",
+        nvim_lua = "[LUA]"
       })[entry.source.name]
       return vim_item
     end,
   },
   sources = {
       { name = "nvim_lsp" },
+      { name = "nvim_lua" },
       { name = "luasnip" },
       { name = "buffer" },
       { name = "path" },

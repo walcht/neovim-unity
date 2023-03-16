@@ -71,11 +71,21 @@ servers['omnisharp'] = {
     -- rest of your settings
 }
 
+servers['lua_ls'] = {
+    capabilities = capabilities,
+    settings = {
+        Lua = {
+            diagnostics = {
+                globals = { 'vim' }
+            }
+        }
+    },
+}
+
 -- Add your language server(s) here
 -- You cant replace default_config by your server's configurations
 servers['pyright'] = default_config
 servers['marksman'] = default_config
-servers['lua_ls'] = default_config
 servers['jsonls'] = default_config
 servers['html'] = default_config
 servers['clangd'] = default_config
