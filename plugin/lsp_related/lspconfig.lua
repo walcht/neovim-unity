@@ -55,17 +55,33 @@ mason.setup {
 }
 
 -- Add your language server(s) here
-local servers = {
-    'pyright',
-    'marksman',
-    'lua_ls',
-    'jsonls',
-    'html',
-    'clangd',
-    'bashls',
-    'lemminx',
-    'yamlls'
+local servers = {}
+
+-- Default config for all language servers
+local default_config = {
+    capabilities = capabilities,
 }
+
+servers['omnisharp'] = {
+    capabilities = capabilities,
+    handlers = {
+        ["textDocument/definition"] = require('omnisharp_extended').handler,
+    },
+    cmd = { "omnisharp", '--languageserver' , '--hostPID', tostring(vim.fn.getpid()) },
+    -- rest of your settings
+}
+
+-- Add your language server(s) here
+-- You cant replace default_config by your server's configurations
+servers['pyright'] = default_config
+servers['marksman'] = default_config
+servers['lua_ls'] = default_config
+servers['jsonls'] = default_config
+servers['html'] = default_config
+servers['clangd'] = default_config
+servers['bashls'] = default_config
+servers['yamlls'] = default_config
+servers['lemminx'] = default_config
 
 -- Setup mason-lspconfig
 mason_lspconfig.setup {
@@ -73,24 +89,8 @@ mason_lspconfig.setup {
     automatic_installation = false,
 }
 
-for _, lsp in ipairs(servers) do
-  lspconfig[lsp].setup {
-    capabilities = capabilities,
-  }
+-- Setup LSP servers
+for lsp, config in pairs(servers) do
+  lspconfig[lsp].setup(config)
 end
 
--- Omnisharp setup
-local pid = vim.fn.getpid()
-local omnisharp_bin = "omnisharp"
--- on Windows
--- local omnisharp_bin = "/path/to/omnisharp/OmniSharp.exe"
-
-local config = {
-  handlers = {
-    ["textDocument/definition"] = require('omnisharp_extended').handler,
-  },
-  cmd = { omnisharp_bin, '--languageserver' , '--hostPID', tostring(pid) },
-  -- rest of your settings
-}
-
-lspconfig['omnisharp'].setup(config)
