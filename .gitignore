@@ -82,3 +82,4 @@ tags
 
 CMakeUserPresets.json
 
+plugin/packer_compiled.lua
