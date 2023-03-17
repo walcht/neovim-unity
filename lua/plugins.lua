@@ -4,10 +4,11 @@
 vim.cmd [[packadd packer.nvim]]
 
 return require('packer').startup(function(use)
+
   -- Packer can manage itself
   use 'wbthomason/packer.nvim'
 
-  -- Telescope: 
+  -- Telescope (fuzzy finder)
   use {
 	  'nvim-telescope/telescope.nvim', tag = '0.1.1',
 	  -- or                            , branch = '0.1.x',
@@ -17,6 +18,7 @@ return require('packer').startup(function(use)
   -- Catppuccin: color themes
   use { "catppuccin/nvim", as = "catppuccin" }
 
+  -- Syntax highlighting and much more!
   use {
 	  'nvim-treesitter/nvim-treesitter',
 	  run = function()
@@ -53,7 +55,8 @@ return require('packer').startup(function(use)
   use 'nvim-tree/nvim-tree.lua'         -- Nvim-tree: fancy file explorer
   use 'nvim-lualine/lualine.nvim'       -- Lualine: fancy status bar
 
-  use 'lewis6991/gitsigns.nvim'         -- Gitsigns: fancy git decorations
+  -- Fancy git decorations
+  use 'lewis6991/gitsigns.nvim'
 
   -- Toggleterm: terminal integration within neovim
   use {"akinsho/toggleterm.nvim", tag = '*', config = function()
@@ -63,12 +66,18 @@ return require('packer').startup(function(use)
   -- Showing indentation (especially usefull for Python)
   use 'lukas-reineke/indent-blankline.nvim'
 
-  -- Tabline plugin
+  -- Tabline plugin (those beautiful tabs you see above)
   use {'akinsho/bufferline.nvim', tag = "v3.*", requires = 'nvim-tree/nvim-web-devicons'}
+
   -- Required to fix closing window issues with bufferline plugin
   use 'famiu/bufdelete.nvim'
 
+  -- Preview markdown (very, very useful when writing markdown files)
   use({ "iamcco/markdown-preview.nvim", run = "cd app && npm install",
   setup = function() vim.g.mkdp_filetypes = { "markdown" } end, ft = { "markdown" }, })
+
+  -- Annotation support (docstrings for python in one click)
+  -- Also supports xmldoc for csharp!
+  use { "danymat/neogen", tag = "*" }
 
 end)
