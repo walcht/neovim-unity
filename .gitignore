@@ -80,6 +80,7 @@ tags
 /contrib/result
 /contrib/result-*
 
-CMakeUserPresets.json
+# packer compiled file
+/plugin/packer_compiled.lua
 
-plugin/packer_compiled.lua
+CMakeUserPresets.json
