@@ -89,9 +89,11 @@ return require('packer').startup(function(use)
   -- Required to fix closing window issues with bufferline plugin
   use 'famiu/bufdelete.nvim'
 
-  -- Preview markdown (very, very useful when writing markdown files)
-  use({ "iamcco/markdown-preview.nvim", run = "cd app && npm install",
-  setup = function() vim.g.mkdp_filetypes = { "markdown" } end, ft = { "markdown" }, })
+  -- Preview markdown
+  use({
+      "iamcco/markdown-preview.nvim",
+      run = function() vim.fn["mkdp#util#install"]() end,
+  })
 
   -- Annotation support (docstrings for python in one click)
   -- Also supports xmldoc for csharp!
