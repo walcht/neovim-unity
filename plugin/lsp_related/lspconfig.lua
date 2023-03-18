@@ -122,9 +122,15 @@ servers['bashls'] = default_config
 servers['yamlls'] = default_config
 servers['lemminx'] = default_config
 
+-- Ensure installed servers
+local ensure_installed = {}
+for lsp, _ in pairs(servers) do
+    table.insert(ensure_installed, lsp)
+end
+
 -- Setup mason-lspconfig
 mason_lspconfig.setup {
-    ensure_installed = servers,
+    ensure_installed = ensure_installed,
     automatic_installation = false,
 }
 
@@ -132,4 +138,3 @@ mason_lspconfig.setup {
 for lsp, config in pairs(servers) do
   lspconfig[lsp].setup(config)
 end
-
