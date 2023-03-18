@@ -1,4 +1,11 @@
-require('bufferline').setup {
+local status_ok, bufferline = pcall(require, 'bufferline')
+if not status_ok then
+    print('Plugin not loaded: ', 'bufferline')
+    return
+end
+
+
+bufferline.setup {
         options = {
             mode = "buffers", -- set to "tabs" to only show tabpages instead
             numbers = true,

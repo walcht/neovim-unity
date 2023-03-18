@@ -1,7 +1,14 @@
+local status_ok, toggleterm = pcall(require, 'toggleterm')
+if not status_ok then
+    print('Plugin not loaded: ', 'toggleterm')
+    return
+end
+
 local opts = { noremap = true, silent = true }
+
 vim.keymap.set("n", "<leader>tt", vim.cmd.ToggleTerm, opts)
 
-require("toggleterm").setup{
+toggleterm.setup{
   size = 20,
   open_mapping = [[<c-\>]],
   hide_numbers = true, -- hide the number column in toggleterm buffers

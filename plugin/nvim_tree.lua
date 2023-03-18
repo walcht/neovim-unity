@@ -1,4 +1,10 @@
-require("nvim-tree").setup { -- BEGIN_DEFAULT_OPTS
+local status_ok, nvim_tree = pcall(require, 'nvim-tree')
+if not status_ok then
+    print('Plugin not loaded: ', 'nvim-tree')
+    return
+end
+
+nvim_tree.setup { -- BEGIN_DEFAULT_OPTS
       auto_reload_on_write = true,
       disable_netrw = true,
       hijack_cursor = true,

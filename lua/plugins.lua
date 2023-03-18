@@ -1,7 +1,24 @@
--- This file can be loaded by calling `lua require('plugins')` from your init.lua
+local ensure_packer = function()
+  local fn = vim.fn
+  local install_path = fn.stdpath('data')..'/site/pack/packer/start/packer.nvim'
+  if fn.empty(fn.glob(install_path)) > 0 then
+      print('Installing packer.nvim plugin...')
+    fn.system({'git', 'clone', '--depth', '1', 'https://github.com/wbthomason/packer.nvim', install_path})
+    vim.cmd [[packadd packer.nvim]]
+    return true
+  end
+  return false
+end
 
--- Only required if you have packer configured as `opt`
-vim.cmd [[packadd packer.nvim]]
+local packer_bootstrap = ensure_packer()
+
+local status_ok, packer = pcall(require, 'packer')
+if not status_ok then
+    print('Crucial plugin not loaded: ', 'packer')
+    print('Automatic installation failed.', 'Follow installation instructions\
+    in packer.nvim repo.')
+    return
+end
 
 return require('packer').startup(function(use)
 
@@ -79,5 +96,9 @@ return require('packer').startup(function(use)
   -- Annotation support (docstrings for python in one click)
   -- Also supports xmldoc for csharp!
   use { "danymat/neogen", tag = "*" }
+
+  if packer_bootstrap then
+      require('packer').sync()
+  end
 
 end)

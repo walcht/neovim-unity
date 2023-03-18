@@ -1,4 +1,10 @@
-require('lualine').setup {
+local status_ok, lualine = pcall(require, 'lualine')
+if not status_ok then
+    print('Plugin not loaded: ', 'lualine')
+    return
+end
+
+lualine.setup {
   options = {
     icons_enabled = true,
     theme = 'nord',

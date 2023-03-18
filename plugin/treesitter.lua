@@ -1,4 +1,10 @@
-require'nvim-treesitter.configs'.setup {
+local status_ok, nvim_tree_configs = pcall(require, 'nvim-treesitter.configs')
+if not status_ok then
+    print('CRUCIAL plugin not loaded: ', 'nvim-treesitter.configs')
+    return
+end
+
+nvim_tree_configs.setup {
   -- A list of parser names, or "all" (the five listed parsers should always be installed)
   ensure_installed = { "c", "lua", "vim", "c_sharp", "cpp", "python", "json", "json5", "bibtex", "help", "query" },
 

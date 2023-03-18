@@ -1,4 +1,10 @@
-require("catppuccin").setup({
+local status_ok, catppuccin = pcall(require, 'catppuccin')
+if not status_ok then
+    print('Plugin not loaded: ', 'catppuccin')
+    return
+end
+
+catppuccin.setup({
     flavour = "macchiato", -- latte, frappe, macchiato, mocha
     background = { -- :h background
         light = "latte",
