@@ -36,6 +36,13 @@ omnisharp-roslyn. Install using:
 3. __[mono][mono_installation]__: Essential for .Net 4.7.X Assemblies used by
 the Unity engine. Check __[offical installation guide][mono_installation]__.
 
+4. __[wmctrl][wmctrl_installation]__: (optional) for focusing on Neovim
+window instance. (only on linux). Install using:
+
+    ```
+    sudo apt install wmctrl
+    ```
+
 ### Neovim Setup
 
 1. If you already have a Neovim configuration you can ignore the following
@@ -156,3 +163,4 @@ See LICENSE.txt file for more info.
 [csharpls_installation]: https://github.com/razzmatazz/csharp-language-server
 [lsp]: https://microsoft.github.io/language-server-protocol/
 [metadata_issue]: https://github.com/dotnet/format/issues/56
+[wmctrl_installation]: https://linux.die.net/man/1/wmctrl
