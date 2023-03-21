@@ -1,8 +1,8 @@
 # About
 
-Ready-to-use Neovim configuration with the Unity3D engine. This intends to be 
+Ready-to-use Neovim configuration with the Unity engine. This intends to be 
 both, a ready-to-use Neovim package and a guide on how to get Neovim
-working with Unity3D.
+working with Unity.
 
 It is assumed that users have very little knowledge about Neovim. Thus if you 
 already have your own Neovim configuration and want to know how to get it 
@@ -26,18 +26,11 @@ respective links for up-to-date installation instructions.
     pip3 install neovim-remote
     ```
 
-2. __[dotnet-sdk-6.0][dotnet_installation]__: .NET 6.0 is necessary for 
-omnisharp-roslyn. Install using:
+2. __[mono][mono_installation]__: Essential for omnisharp-mono.
+Check __[offical installation guide][mono_installation]__.
 
-    ```
-    sudo apt update && sudo apt install -y dotnet-sdk-6.0
-    ```
-
-3. __[mono][mono_installation]__: Essential for .Net 4.7.X Assemblies used by
-the Unity engine. Check __[offical installation guide][mono_installation]__.
-
-4. __[wmctrl][wmctrl_installation]__: (optional) for focusing on Neovim
-window instance. (only on linux). Install using:
+3. __[wmctrl][wmctrl_installation]__: (optional) for focusing on Neovim
+window instance. Install using:
 
     ```
     sudo apt install wmctrl
@@ -139,7 +132,7 @@ metadata warnings, etc...).
     ---
 
 - Q. Why the headache? Why not just use Visual Studio?
-- A. I do a lot of programming outside Unity3D and I'm used to using Neovim
+- A. I do a lot of programming outside Unity and I'm used to using Neovim
 for all my programming tasks. Thus it is much easier for me to stick to Neovim.
 
     ---
@@ -149,7 +142,7 @@ for all my programming tasks. Thus it is much easier for me to stick to Neovim.
 This project was done by a very inexperienced Neovim user. If anything can be
 enhanced then please open a PR!
 I really enjoy using Neovim and I find it a bit sad that there are no
-properly updated guides on how to set it up with Unity3D development
+properly updated guides on how to set it up with Unity development
 environment.
 
 ## License
