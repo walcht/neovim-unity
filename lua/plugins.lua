@@ -52,6 +52,7 @@ return require('packer').startup(function(use)
   use "saadparwaiz1/cmp_luasnip" -- snippet completions
   use "hrsh7th/cmp-nvim-lua" -- lua vim completions
   use "hrsh7th/cmp-nvim-lsp" -- LSP completions
+  use "hrsh7th/cmp-nvim-lsp-signature-help" -- Function parameters completions
 
   -- Snippets
   use "L3MON4D3/LuaSnip" --snippet engine
