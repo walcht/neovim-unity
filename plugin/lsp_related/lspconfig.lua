@@ -95,7 +95,7 @@ servers['omnisharp'] = {
     handlers = {
         ["textDocument/definition"] = require('omnisharp_extended').handler,
     },
-    cmd = { "omnisharp", '--languageserver' , '--hostPID', tostring(vim.fn.getpid()) },
+    cmd = { "omnisharp-mono", '--languageserver' , '--hostPID', tostring(vim.fn.getpid()) },
     -- rest of your settings
 }
 
@@ -130,7 +130,7 @@ end
 
 -- Setup mason-lspconfig
 mason_lspconfig.setup {
-    ensure_installed = ensure_installed,
+    -- ensure_installed = ensure_installed,
     automatic_installation = false,
 }
 
