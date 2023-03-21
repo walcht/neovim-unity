@@ -125,16 +125,22 @@ servers['lemminx'] = default_config
 -- Ensure installed servers
 local ensure_installed = {}
 for lsp, _ in pairs(servers) do
+    -- we want omnisharp-mono installed not omnisharp
+    if lsp == "omnisharp" then
+       table.insert(ensure_installed, "omnisharp_mono")
+       goto continue
+    end
     table.insert(ensure_installed, lsp)
+    ::continue::
 end
 
 -- Setup mason-lspconfig
 mason_lspconfig.setup {
-    -- ensure_installed = ensure_installed,
+    ensure_installed = ensure_installed,
     automatic_installation = false,
 }
 
 -- Setup LSP servers
 for lsp, config in pairs(servers) do
-  lspconfig[lsp].setup(config)
+    lspconfig[lsp].setup(config)
 end
