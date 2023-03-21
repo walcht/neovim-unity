@@ -143,10 +143,10 @@ nvim_tree.setup { -- BEGIN_DEFAULT_OPTS
         },
       },
       filters = {
-        dotfiles = false,
+        dotfiles = true,
         git_clean = false,
         no_buffer = false,
-        custom = {},
+        custom = {'*.meta', '*.csproj', '*.cache', '*.dll*'},
         exclude = {},
       },
       filesystem_watchers = {
