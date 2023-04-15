@@ -11,8 +11,7 @@ nvim_tree.setup { -- BEGIN_DEFAULT_OPTS
       hijack_netrw = true,
       hijack_unnamed_buffer_when_opening = true,
       sort_by = "name",
-      root_dirs = {"Assets", "Scripts"},
-      prefer_startup_root = false,
+      prefer_startup_root = true,
       sync_root_with_cwd = true,
       reload_on_bufenter = false,
       respect_buf_cwd = false,
@@ -20,7 +19,7 @@ nvim_tree.setup { -- BEGIN_DEFAULT_OPTS
       remove_keymaps = false,
       select_prompts = false,
       view = {
-        centralize_selection = false,
+        centralize_selection = true,
         cursorline = true,
         debounce_delay = 15,
         width = 30,
@@ -120,7 +119,6 @@ nvim_tree.setup { -- BEGIN_DEFAULT_OPTS
         update_root = true,
         ignore_list = {},
       },
-      ignore_ft_on_setup = {},
       system_open = {
         cmd = "",
         args = {},
@@ -186,8 +184,8 @@ nvim_tree.setup { -- BEGIN_DEFAULT_OPTS
           },
         },
         open_file = {
-          quit_on_open = false,
-          resize_window = true,
+          quit_on_open = true,
+          resize_window = false,
           window_picker = {
             enable = true,
             picker = "default",
