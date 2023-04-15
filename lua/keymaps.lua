@@ -57,6 +57,9 @@ keymap("n", "<leader>d", "\"_d")
 -- Replace the current word pointed by cursor
 keymap("n", "<leader>rw", [[:%s/\<<C-r><C-w>\>/<C-r><C-w>/gI<Left><Left><Left>]])
 
+-- Formatting keybinding
+keymap("n", "<leader>fo", ":Format<cr>", opts)
+
 -- Visual Mode --
 -- Stauy in indent mode
 keymap("v", "<", "<gv", opts)
