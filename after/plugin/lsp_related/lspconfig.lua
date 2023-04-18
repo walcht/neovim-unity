@@ -4,6 +4,12 @@ if not status_mason_ok then
   return
 end
 
+local status_mason_registry_ok, mason_registry = pcall(require, "mason-registry")
+if not status_mason_registry_ok then
+    print("Plugin not installed (CRUCIAL): mason-registry")
+    return
+end
+
 -- Requiring mason_lspconfig
 local status_mason_lspconfig_ok, mason_lspconfig = pcall(require, "mason-lspconfig")
 if not status_mason_lspconfig_ok then
@@ -56,6 +62,16 @@ mason.setup {
 
 -- Add your language server(s) here
 local servers = {}
+
+-- Add linters and formatters here
+local linters_and_formatters = {
+    'black',
+    'jsonlint',
+    'cspell',
+    'csharpier',
+    'markdownlint',
+    'flake8',
+}
 
 -- Use an on_attach function to only map the following keys
 -- after the language server attaches to the current buffer
@@ -122,6 +138,7 @@ servers['bashls'] = default_config
 servers['yamlls'] = default_config
 servers['lemminx'] = default_config
 
+
 -- Ensure installed servers
 local ensure_installed = {}
 for lsp, _ in pairs(servers) do
@@ -132,6 +149,16 @@ for lsp, _ in pairs(servers) do
     end
     table.insert(ensure_installed, lsp)
     ::continue::
+end
+
+for _, linter_or_formatter in pairs(linters_and_formatters) do
+    if not mason_registry.is_installed(linter_or_formatter) then
+        print(string.format("Linter or formatter not installed: %s",
+            linter_or_formatter))
+        vim.cmd(string.format(
+            "MasonInstall %s", linter_or_formatter
+        ))
+    end
 end
 
 -- Setup mason-lspconfig

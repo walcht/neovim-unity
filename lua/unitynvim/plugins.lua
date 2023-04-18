@@ -11,24 +11,21 @@ local ensure_packer = function()
 end
 
 local packer_bootstrap = ensure_packer()
-
 local status_ok, packer = pcall(require, 'packer')
 if not status_ok then
-    print('Crucial plugin not loaded: ', 'packer')
+    print('Plugin not loaded (CRUCIAL): ', 'packer')
     print('Automatic installation failed.', 'Follow installation instructions\
     in packer.nvim repo.')
     return
 end
 
-return require('packer').startup(function(use)
-
+packer.startup(function(use)
   -- Packer can manage itself
   use 'wbthomason/packer.nvim'
 
   -- Telescope (fuzzy finder)
   use {
 	  'nvim-telescope/telescope.nvim', tag = '0.1.1',
-	  -- or                            , branch = '0.1.x',
 	  requires = { {'nvim-lua/plenary.nvim'} }
   }
 

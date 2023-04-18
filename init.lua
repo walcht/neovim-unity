@@ -1,5 +1,1 @@
-require("plugins")
-require("keymaps")
-require("settings")
-require("startup")
-require("commands")
+require("unitynvim")

@@ -5,20 +5,20 @@ if not status_ok then
 end
 
 nvim_tree.setup { -- BEGIN_DEFAULT_OPTS
-      auto_reload_on_write = true,
-      disable_netrw = true,
-      hijack_cursor = true,
-      hijack_netrw = true,
-      hijack_unnamed_buffer_when_opening = true,
-      sort_by = "name",
-      prefer_startup_root = true,
-      sync_root_with_cwd = true,
-      reload_on_bufenter = false,
-      respect_buf_cwd = false,
-      on_attach = "default",
-      remove_keymaps = false,
-      select_prompts = false,
-      view = {
+    auto_reload_on_write = true,
+    disable_netrw = true,
+    hijack_cursor = true,
+    hijack_netrw = true,
+    hijack_unnamed_buffer_when_opening = true,
+    sort_by = "name",
+    prefer_startup_root = true,
+    sync_root_with_cwd = true,
+    reload_on_bufenter = false,
+    respect_buf_cwd = false,
+    on_attach = "default",
+    remove_keymaps = false,
+    select_prompts = false,
+    view = {
         centralize_selection = true,
         cursorline = true,
         debounce_delay = 15,
@@ -237,7 +237,35 @@ nvim_tree.setup { -- BEGIN_DEFAULT_OPTS
           watcher = false,
         },
       },
-    } -- END_DEFAULT_OPTS
+} -- END_DEFAULT_OPTS
 
+local status, nvim_tree_api = pcall(require, 'nvim-tree.api')
+if not status then
+    print('Plugin not loaded: ', 'nvim_tree_api')
+    return
+end
 
+-- Open nvim-tree on directory or no-name buffer
+local function open_nvim_tree(data)
+
+    -- buffer is a directory
+    local directory = vim.fn.isdirectory(data.file) == 1
+
+    -- buffer is a [No Name]
+    local no_name = data.file == "" and vim.bo[data.buf].buftype == ""
+
+    if directory then
+        -- change to the directory
+        vim.cmd.cd(data.file)
+        nvim_tree_api.tree.open()
+        return
+    end
+
+    if no_name then
+        nvim_tree_api.tree.toggle({ focus = false, find_file = true, })
+    end
+
+end
+
+vim.api.nvim_create_autocmd({ "VimEnter" }, { callback = open_nvim_tree })
 vim.keymap.set("n", "<leader>ex", vim.cmd.NvimTreeToggle)
