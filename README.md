@@ -17,6 +17,9 @@ properly set this for Windows(and MacOS) is yet to be provided.
 
 ### Installing Dependencies
 
+First of all make sure that you have installed __Neovim >= 0.8.0__. You can do
+that by following this [guide][neovim_installation].
+
 The below dependencies should be properly installed, please take a look at
 respective links for up-to-date installation instructions.
 
@@ -26,10 +29,10 @@ respective links for up-to-date installation instructions.
     pip3 install neovim-remote
     ```
 
-2. __[mono][mono_installation]__: Essential for omnisharp-mono.
+1. __[mono][mono_installation]__: Essential for omnisharp-mono.
 Check __[official installation guide][mono_installation]__.
 
-3. __[wmctrl][wmctrl_installation]__: (optional) for focusing on Neovim
+1. __[wmctrl][wmctrl_installation]__: (optional) for focusing on Neovim
 window instance. Install using:
 
     ```bash
@@ -39,7 +42,7 @@ window instance. Install using:
 ### Neovim Setup
 
 1. If you already have a Neovim configuration you can ignore the following
-steps and jump to [Configuring Unity Editor][#configuring_unity_edito].
+steps and jump to [Configuring Unity Editor](#configuring-unity-editor).
 If you want to use this configuration, make sure to do a backup:
 
     ```bash
@@ -69,7 +72,7 @@ the ```./scripts/plugin_dependencies.sh``` script.
 
 1. In Unity, navigate to __```Edit > Preferences > External tools```__
 2. In __```External Script Editor```__ dropout, chose __```Browse...```__
-3. Chose the the __```./script/neovim_unity.sh```__ shell script
+3. Chose the the __```./script/unitynvim.sh```__ shell script
 4. Copy the following argument into __```External Script Editor Args```__ field:
 
     ```bash
@@ -91,55 +94,71 @@ Make sure to run ```:checkhealth``` to check if plugins are working properly.
 If any issues are encountered then it most probably is related to some plugin
 dependencies that are not\not properly installed.
 
-## Usage
-
-## Demos
-
 ## TODO
 
-1. Improve nvim-tree
-    + change root directory through rec search for scripts, assets, etc...
-    + ignore .meta files (and other unnecessary files)
-1. Focuse on Neovim terminal window after opening a file in Unity
 1. Provide a set of default keymaps as a PDF 'cheat sheet' (please remember
-that this assumes users with 0 Neovim experience thus we want a fast 
+that this assumes users with 0 Neovim experience thus we want a fast
 get-to-work approach)
-1. Add omnisharp-roslyn language server restart keymap (believe me, this is crucial)
+1. Add omnisharp-roslyn language server restart keymap (CRUCIAL!)
 1. Add XML comments highlighting
 1. Add debugger support
 1. Windows support (IMPORTANT!)
-1. MacOS support
+1. MacOS support (IMPORTANT!)
 1. Improve this README file
 1. Add GitHub pages support
 
 ## (Known) Limitations
-- Omnisharp language server may take a while to start. Thus a bit of patience
+
++ Omnisharp language server may take a while to start. Thus a bit of patience
 opening a file for the first time is needed.
-- Saving an edited file won't automatically trigger Unity to recompile project
++ Saving an edited file won't automatically trigger Unity to recompile project
 files. You should do that manually (Project window > right click > Refresh)
-- When opening a file, the Neovim window won't be focused on automatically.
-- Development environment won't be as rich as on Visual Studio (in terms of
++ When opening a file, the Neovim window won't be focused on automatically.
++ Development environment won't be as rich as on Visual Studio (in terms of
 features provided).
 
 ## FAQ
 
-- Q. Why not use csharp-ls?
-- A. I have tried. I have really tried, but the amount of problems that I got 
++ Q. Why not use csharp-ls?
++ A. I have tried. I have really tried, but the amount of problems that I got
 was simply not worth it (failures to detect .NET framework 4.7.X assemblies,
 metadata warnings, etc...).
 
     ---
 
-- Q. Why the headache? Why not just use Visual Studio?
-- A. I do a lot of programming outside Unity and I'm used to using Neovim
++ Q. Why the headache? Why not just use Visual Studio?
++ A. I do a lot of programming outside Unity and I'm used to using Neovim
 for all my programming tasks. Thus it is much easier for me to stick to Neovim.
+And you get to learn tons of new stuff when no one is holding your hand like a
+baby ;)
 
     ---
 
++ Q. Why when opening a .cs script, nvim opens multiple empty buffers?
++ A. __Make sure that the name of your Unity project does not contain any white
+spaces__.
+
+    ---
+
++ Q. Syntax highlighting doesn't seem to work. What should I do?
++ A. When Neovim for the first time, for some reason Treesitter does
+not work (will be fixed). Just open another script and it should work.
+
+    ---
+
++ Q. Why does LSP take so long to provided completion at the start of Neovim?
++ A. That's Omnisharp reading your whole project for proper LSP setup. A little
+bit of patience is needed.
+
+    ---
+
++ Q. LSP stopped working, help!
++ A. Restart Omnisharp (a restart keymap will be added)
+
 ## Feedback
 
-This project was done by a very inexperienced Neovim user. If anything can be
-enhanced then please open a PR!
+This project was done by an inexperienced Neovim user. If anything can be
+enhanced then please open a PR (I really do appreciate it)!
 I really enjoy using Neovim and I find it a bit sad that there are no
 properly updated guides on how to set it up with Unity development
 environment.
@@ -149,6 +168,7 @@ environment.
 [![License: MIT](https://img.shields.io/badge/License-MIT-yellow.svg)](https://opensource.org/licenses/MIT)
 See LICENSE.txt file for more info.
 
+[neovim_installation]: https://github.com/neovim/neovim/tags
 [nvr_repo]: https://github.com/mhinz/neovim-remote
 [dotnet_installation]: https://github.com/dotnet/core/blob/main/linux.md
 [mono_installation]: https://www.mono-project.com/download/stable/
