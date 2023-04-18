@@ -1,18 +1,18 @@
 # About
 
-Ready-to-use Neovim configuration with the Unity engine. This intends to be 
+Ready-to-use Neovim configuration with the Unity engine. This intends to be
 both, a ready-to-use Neovim package and a guide on how to get Neovim
 working with Unity.
 
-It is assumed that users have very little knowledge about Neovim. Thus if you 
-already have your own Neovim configuration and want to know how to get it 
-working with Unity, you can easily follow this README as a guide on how to do that.
+If you already have your own Neovim configuration and want to know how to get
+it working with Unity, you can easily follow this README as a guide on how to
+do that.
 
-![unity neovim usage demonstration](./media/demo_1.gif)
+https://user-images.githubusercontent.com/89390465/232910870-bdddddd3-bc82-4376-a8f2-c315e0293faa.webm
 
 ## Installation
 
-This Installtion guide targets __Linux distributions__. A guide on how to
+This Installation guide targets __Linux distributions__. A guide on how to
 properly set this for Windows(and MacOS) is yet to be provided.
 
 ### Installing Dependencies
@@ -22,17 +22,17 @@ respective links for up-to-date installation instructions.
 
 1. __[nvr][nvr_repo]__: Remotely control Neovim processes. Install using:
 
-    ```
+    ```bash
     pip3 install neovim-remote
     ```
 
 2. __[mono][mono_installation]__: Essential for omnisharp-mono.
-Check __[offical installation guide][mono_installation]__.
+Check __[official installation guide][mono_installation]__.
 
 3. __[wmctrl][wmctrl_installation]__: (optional) for focusing on Neovim
 window instance. Install using:
 
-    ```
+    ```bash
     sudo apt install wmctrl
     ```
 
@@ -42,27 +42,27 @@ window instance. Install using:
 steps and jump to [Configuring Unity Editor][#configuring_unity_edito].
 If you want to use this configuration, make sure to do a backup:
 
-    ```
+    ```bash
     mv ~/.config/nvim ~/.config/nvim.bak
     mv ~/.local/share/nvim ~/.local/share/nvim.bak
     ```
 
 1. Clone the repository
 
-    ```
+    ```bash
     git clone https://github.com/walcht/neovim-unity ~/.config/nvim
     ```
 
 #### Installing Plugin Dependencies
 
-Some plugins require external tools to be installed. The following table 
+Some plugins require external tools to be installed. The following table
 associates each plugin with its dependencies.
 
-You can install these dependencies one-by-one or you can execute 
+You can install these dependencies one-by-one or you can execute
 the ```./scripts/plugin_dependencies.sh``` script.
 
-| Plugin            | Dependencie(s)                   |
-|-------------------|----------------------------------|
+| Plugin            | Dependencies(s)                   |
+|-------------------|-----------------------------------|
 |||
 
 #### Configuring Unity Editor
@@ -75,9 +75,8 @@ the ```./scripts/plugin_dependencies.sh``` script.
     ```bash
     +$(Line) $(File)
     ```
-<details>
-<summary>Why?</summary>
-<br>
+
+<details><summary>Why?</summary><br>
 Usually when clicking on a an error message in Unity console, it directs
 you towards the <b>file</b> and the <b>position</b> of the cause of that error.
 To do that, Unity has to instantiate an editor server instance, provide it
