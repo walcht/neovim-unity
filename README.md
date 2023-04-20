@@ -8,12 +8,16 @@ If you already have your own Neovim configuration and want to know how to get
 it working with Unity, you can easily follow this README as a guide on how to
 do that.
 
-https://user-images.githubusercontent.com/89390465/232910870-bdddddd3-bc82-4376-a8f2-c315e0293faa.webm
+<https://user-images.githubusercontent.com/89390465/232910870-bdddddd3-bc82-4376-a8f2-c315e0293faa.webm>
 
 ## Installation
 
 This Installation guide targets __Linux distributions__. A guide on how to
 properly set this for Windows(and MacOS) is yet to be provided.
+
+This project has been tested with __Unity2020.3.XXXX LTS__. Everything seems
+to be working perfectly fine. Any tests on other Unity versions are extremely
+appreciated!
 
 ### Installing Dependencies
 
@@ -85,7 +89,7 @@ you towards the <b>file</b> and the <b>position</b> of the cause of that error.
 To do that, Unity has to instantiate an editor server instance, provide it
 with file name, line and column. Now when opening another file, the same
 editor server instance is used and the newly opened file will just appear
-as a tab in the editor.
+as a tab in the perviously instantiated editor server instance.
 </details>
 
 #### Is Everything Working Fine?
@@ -96,26 +100,22 @@ dependencies that are not\not properly installed.
 
 ## TODO
 
-1. Provide a set of default keymaps as a PDF 'cheat sheet' (please remember
-that this assumes users with 0 Neovim experience thus we want a fast
-get-to-work approach)
+1. Add debugger support (CRUCIAL!)
 1. Add omnisharp-roslyn language server restart keymap (CRUCIAL!)
-1. Add XML comments highlighting
-1. Add debugger support
-1. Windows support (IMPORTANT!)
-1. MacOS support (IMPORTANT!)
-1. Improve this README file
-1. Add GitHub pages support
+1. Provide a set of default keymaps as a PDF 'cheat sheet' (IMPORTANT)
+1. Windows support (IMPORTANT)
+1. MacOS support (IMPORTANT)
+1. Improve this README file (IMPORTANT)
+1. Add XML comments highlighting (OPTIONAL)
+1. Add GitHub pages support (OPTIONAL)
 
 ## (Known) Limitations
 
 + Omnisharp language server may take a while to start. Thus a bit of patience
 opening a file for the first time is needed.
-+ Saving an edited file won't automatically trigger Unity to recompile project
-files. You should do that manually (Project window > right click > Refresh)
-+ When opening a file, the Neovim window won't be focused on automatically.
 + Development environment won't be as rich as on Visual Studio (in terms of
-features provided).
+features provided). But you get a much more consistent development environment
+if you do a lot of programming outside gamedev.
 
 ## FAQ
 
@@ -153,7 +153,8 @@ bit of patience is needed.
     ---
 
 + Q. LSP stopped working, help!
-+ A. Restart Omnisharp (a restart keymap will be added)
++ A. Restart Omnisharp by entering ```:LspRestart omnisharp``` (a restart keymap
+will be added)
 
 ## Feedback
 
@@ -170,9 +171,5 @@ See LICENSE.txt file for more info.
 
 [neovim_installation]: https://github.com/neovim/neovim/tags
 [nvr_repo]: https://github.com/mhinz/neovim-remote
-[dotnet_installation]: https://github.com/dotnet/core/blob/main/linux.md
 [mono_installation]: https://www.mono-project.com/download/stable/
-[csharpls_installation]: https://github.com/razzmatazz/csharp-language-server
-[lsp]: https://microsoft.github.io/language-server-protocol/
-[metadata_issue]: https://github.com/dotnet/format/issues/56
 [wmctrl_installation]: https://linux.die.net/man/1/wmctrl
