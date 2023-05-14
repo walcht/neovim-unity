@@ -73,6 +73,11 @@ local linters_and_formatters = {
     'flake8',
 }
 
+-- Add your debugger(s) here
+local debuggers = {
+    'debugpy',
+}
+
 -- Use an on_attach function to only map the following keys
 -- after the language server attaches to the current buffer
 local on_attach = function(client, bufnr)
@@ -151,7 +156,7 @@ for lsp, _ in pairs(servers) do
     table.insert(ensure_installed, lsp)
     ::continue::
 end
-
+-- Ensure linters and formatters are installed
 for _, linter_or_formatter in pairs(linters_and_formatters) do
     if not mason_registry.is_installed(linter_or_formatter) then
         print(string.format("Linter or formatter not installed: %s",
@@ -161,13 +166,18 @@ for _, linter_or_formatter in pairs(linters_and_formatters) do
         ))
     end
 end
-
+-- Ensure debuggers are installed
+for _, debugger in pairs(debuggers) do
+    if not mason_registry.is_installed(debugger) then
+        print(string.format("Debuggers is not installed: %s", debugger))
+        vim.cmd(string.format("MasonInstall %s", debugger))
+    end
+end
 -- Setup mason-lspconfig
 mason_lspconfig.setup {
     ensure_installed = ensure_installed,
     automatic_installation = false,
 }
-
 -- Setup LSP servers
 for lsp, config in pairs(servers) do
     lspconfig[lsp].setup(config)

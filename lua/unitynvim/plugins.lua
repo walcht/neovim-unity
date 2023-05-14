@@ -1,7 +1,7 @@
 local ensure_packer = function()
   local fn = vim.fn
   local install_path =
-     fn.stdpath('data')..'/site/pack/packer/start/packer.nvim'
+    fn.stdpath('data')..'/site/pack/packer/start/packer.nvim'
   if fn.empty(fn.glob(install_path)) > 0 then
       print('Installing packer.nvim plugin...')
     fn.system({
@@ -106,6 +106,8 @@ packer.startup(function(use)
   -----------------------------------------------------------------------------
   ----------------------------- DEBUGGING RELATED -----------------------------
   use 'mfussenegger/nvim-dap'
+  use { "rcarriga/nvim-dap-ui", requires = {"mfussenegger/nvim-dap"} }
+  use 'theHamsta/nvim-dap-virtual-text'
   use 'mfussenegger/nvim-dap-python'
   -----------------------------------------------------------------------------
   if packer_bootstrap then

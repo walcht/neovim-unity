@@ -37,7 +37,7 @@ vim.opt.isfname:append("@-@")
 vim.opt.updatetime = 50
 
 -- Set max-line-length column
-vim.opt.colorcolumn = "110"
+vim.opt.colorcolumn = "80"
 
 -- disable netrw at the very start
 vim.g.loaded_netrw = 1
