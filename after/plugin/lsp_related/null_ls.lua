@@ -10,13 +10,13 @@ local completion = null_ls.builtins.completion
 local code_actions = null_ls.builtins.code_actions
 
 -- before adding any new linters/formatters, make sure that you add them
--- to Mason's list of linters_and_formatters. That way they will be ensured to
+-- to Mason's list of linters_and_formatters. That way they are ensured to
 -- be installed and managed through Mason!
 null_ls.setup({
     sources = {
         -- Python
         formatting.black.with({
-            extra_args = {"--line-length=79"}
+            extra_args = {"--line-length=110"}
         }),
         diagnostics.flake8,
 
@@ -24,14 +24,16 @@ null_ls.setup({
         formatting.csharpier,
 
         -- Markdown
+        formatting.markdownlint,
         diagnostics.markdownlint,
 
         -- JSON
         diagnostics.jsonlint,
 
         -- Misc
+        -- add csharp, python etc... for spelling support
         diagnostics.cspell.with({
-            filetypes = {"csharp", "markdown", "python"}
+            filetypes = {"markdown"}
         }),
         code_actions.cspell,
     },

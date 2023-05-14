@@ -1,4 +1,4 @@
--- This file contains global (non pluging-specific) settings. For pluging-
+-- This file contains global (non pluging-specific) settings.
 
 -- Line and relative line numbering
 vim.opt.nu = true
@@ -25,6 +25,7 @@ vim.opt.undofile = true
 vim.opt.hlsearch = false
 vim.opt.incsearch = true
 
+-- Use terminal colors
 vim.opt.termguicolors = true
 
 -- Scrolling\Vertical navigation options
@@ -35,7 +36,8 @@ vim.opt.isfname:append("@-@")
 -- Fast update time
 vim.opt.updatetime = 50
 
-vim.opt.colorcolumn = "80"
+-- Set max-line-length column
+vim.opt.colorcolumn = "110"
 
 -- disable netrw at the very start
 vim.g.loaded_netrw = 1

@@ -128,7 +128,7 @@ servers['lua_ls'] = {
 }
 
 -- Add your language server(s) here
--- You cant replace default_config by your server's configurations
+-- You can replace default_config by your server's configurations
 servers['pyright'] = default_config
 servers['marksman'] = default_config
 servers['jsonls'] = default_config
@@ -137,6 +137,7 @@ servers['clangd'] = default_config
 servers['bashls'] = default_config
 servers['yamlls'] = default_config
 servers['lemminx'] = default_config
+servers['tsserver'] = default_config
 
 
 -- Ensure installed servers

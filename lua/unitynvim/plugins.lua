@@ -1,15 +1,22 @@
 local ensure_packer = function()
   local fn = vim.fn
-  local install_path = fn.stdpath('data')..'/site/pack/packer/start/packer.nvim'
+  local install_path =
+     fn.stdpath('data')..'/site/pack/packer/start/packer.nvim'
   if fn.empty(fn.glob(install_path)) > 0 then
       print('Installing packer.nvim plugin...')
-    fn.system({'git', 'clone', '--depth', '1', 'https://github.com/wbthomason/packer.nvim', install_path})
+    fn.system({
+        'git',
+        'clone',
+        '--depth',
+        '1',
+        'https://github.com/wbthomason/packer.nvim',
+        install_path,
+    })
     vim.cmd [[packadd packer.nvim]]
     return true
   end
   return false
 end
-
 local packer_bootstrap = ensure_packer()
 local status_ok, packer = pcall(require, 'packer')
 if not status_ok then
@@ -18,88 +25,90 @@ if not status_ok then
     in packer.nvim repo.')
     return
 end
-
 packer.startup(function(use)
-  -- Packer can manage itself
-  use 'wbthomason/packer.nvim'
-
-  -- Telescope (fuzzy finder)
+  ---------------------------------- PACKER -----------------------------------
+  use 'wbthomason/packer.nvim'              -- Packer can manage itself
+  -----------------------------------------------------------------------------
+  ---------------------------- TELESCOPE RELATED ------------------------------
   use {
-	  'nvim-telescope/telescope.nvim', tag = '0.1.1',
+	  'nvim-telescope/telescope.nvim',      -- fuzzy finder
+      tag = '0.1.1',
 	  requires = { {'nvim-lua/plenary.nvim'} }
   }
-
-  -- Catppuccin: color themes
-  use { "catppuccin/nvim", as = "catppuccin" }
-
-  -- Syntax highlighting and much more!
+  -----------------------------------------------------------------------------
+  -------------------------------- TREESITTER ---------------------------------
   use {
-	  'nvim-treesitter/nvim-treesitter',
+	  'nvim-treesitter/nvim-treesitter',    -- syntax highlighting and more
 	  run = function()
-		  local ts_update = require('nvim-treesitter.install').update({ with_sync = true })
+		  local ts_update = require('nvim-treesitter.install').update({
+              with_sync = true
+          })
 		  ts_update()
 	  end,
   }
-
-  -- Completion plugins (for LSP, buffer, path, cmd line, snippets, etc...)
-  use "hrsh7th/nvim-cmp" -- The completion plugin
-  use "hrsh7th/cmp-buffer" -- buffer completions
-  use "hrsh7th/cmp-path" -- path completions
-  use "hrsh7th/cmp-cmdline" -- cmdline completions
-  use "saadparwaiz1/cmp_luasnip" -- snippet completions
-  use "hrsh7th/cmp-nvim-lua" -- lua vim completions
-  use "hrsh7th/cmp-nvim-lsp" -- LSP completions
-  use "hrsh7th/cmp-nvim-lsp-signature-help" -- Function parameters completions
-
-  -- Snippets
-  use "L3MON4D3/LuaSnip" --snippet engine
-  use "rafamadriz/friendly-snippets" -- a bunch of snippets to use
-
-  -- LSP related plugins
+  -----------------------------------------------------------------------------
+  ---------------------------- COMPLETION RELATED -----------------------------
+  use "hrsh7th/nvim-cmp"                    -- completion plugin
+  use "hrsh7th/cmp-buffer"                  -- buffer completions
+  use "hrsh7th/cmp-path"                    -- path completions
+  use "hrsh7th/cmp-cmdline"                 -- cmdline completions
+  use "saadparwaiz1/cmp_luasnip"            -- snippet completions
+  use "hrsh7th/cmp-nvim-lua"                -- lua vim completions
+  use "hrsh7th/cmp-nvim-lsp"                -- LSP completions
+  use "hrsh7th/cmp-nvim-lsp-signature-help" -- function parameters completions
+  -----------------------------------------------------------------------------
+  ----------------------------- SNIPPETS RELATED ------------------------------
+  use "L3MON4D3/LuaSnip"                    -- snippet engine
+  use "rafamadriz/friendly-snippets"        -- a bunch of ready-to-use snippets
+  -----------------------------------------------------------------------------
+  -------------------------------- LSP RELATED --------------------------------
   use "neovim/nvim-lspconfig"
   use "williamboman/mason.nvim"
   use "williamboman/mason-lspconfig.nvim"
-  use "jose-elias-alvarez/null-ls.nvim" -- for linting purposes
-
-  -- for proper go-to-definition support for omnisharp
-  use "Hoffs/omnisharp-extended-lsp.nvim"
-
-  -- Undotree: undotree visualization
-  use ('mbbill/undotree')
-
-  use 'nvim-tree/nvim-web-devicons'     -- Nvim-web-devicons: beautiful nvim-tree icons
-  use 'nvim-tree/nvim-tree.lua'         -- Nvim-tree: fancy file explorer
-  use 'nvim-lualine/lualine.nvim'       -- Lualine: fancy status bar
-
-  -- Fancy git decorations
-  use 'lewis6991/gitsigns.nvim'
-
-  -- Toggleterm: terminal integration within neovim
-  use {"akinsho/toggleterm.nvim", tag = '*', config = function()
-      require("toggleterm").setup()
-  end}
-
-  -- Showing indentation (especially usefull for Python)
-  use 'lukas-reineke/indent-blankline.nvim'
-
-  -- Tabline plugin (those beautiful tabs you see above)
-  use {'akinsho/bufferline.nvim', tag = "v3.*", requires = 'nvim-tree/nvim-web-devicons'}
-
-  -- Required to fix closing window issues with bufferline plugin
-  use 'famiu/bufdelete.nvim'
-
-  -- Preview markdown
+  use "jose-elias-alvarez/null-ls.nvim"     -- for linting purposes
+  use "Hoffs/omnisharp-extended-lsp.nvim"   -- for proper go-to-definition
+                                            -- support for omnisharp
+  -----------------------------------------------------------------------------
+  -------------------------------- UI RELATED ---------------------------------
+  use 'nvim-tree/nvim-tree.lua'             -- fancy file explorer
+  use 'nvim-lualine/lualine.nvim'           -- fancy status bar
+  use 'nvim-tree/nvim-web-devicons'         -- beautiful nvim-tree icons
+  use {
+      "catppuccin/nvim",                    -- color themes
+      as = "catppuccin"
+  }
+  use {
+      'akinsho/bufferline.nvim',            -- tabline plugin
+      tag = "v3.*",
+      requires = 'nvim-tree/nvim-web-devicons'
+  }
+  use 'lukas-reineke/indent-blankline.nvim' -- showing indentation (especially
+                                            -- usefull for Python)
+  use 'famiu/bufdelete.nvim'                -- required to fix closing window
+                                            -- issues with bufferline plugin
+  -----------------------------------------------------------------------------
+  ------------------------------------ MISC -----------------------------------
+  use ('mbbill/undotree')                   -- undotree visualization
+  use {
+      "akinsho/toggleterm.nvim",            -- terminal integration within nvim
+      tag = '*',
+      config = function() require("toggleterm").setup() end
+  }
+  use { "danymat/neogen", tag = "*" }       -- annotation support (docstrings
+                                            -- for python & xmldoc for csharp)
   use({
-      "iamcco/markdown-preview.nvim",
+      "iamcco/markdown-preview.nvim",       -- markdown preview
       run = function() vim.fn["mkdp#util#install"]() end,
   })
-
-  -- Annotation support (docstrings for python in one click)
-  -- Also supports xmldoc for csharp!
-  use { "danymat/neogen", tag = "*" }
-
+  -----------------------------------------------------------------------------
+  -------------------------------- GIT RELATED --------------------------------
+  use 'lewis6991/gitsigns.nvim'             -- Fancy git decorations
+  -----------------------------------------------------------------------------
+  ----------------------------- DEBUGGING RELATED -----------------------------
+  use 'mfussenegger/nvim-dap'
+  use 'mfussenegger/nvim-dap-python'
+  -----------------------------------------------------------------------------
   if packer_bootstrap then
       require('packer').sync()
   end
-
 end)
