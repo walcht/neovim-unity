@@ -3,16 +3,13 @@ if not status_ok then
     print('Plugin not loaded: ', 'toggleterm')
     return
 end
-
 local opts = { noremap = true, silent = true }
-
 vim.keymap.set("n", "<leader>tt", vim.cmd.ToggleTerm, opts)
-
 toggleterm.setup{
   size = 20,
   open_mapping = [[<c-\>]],
   hide_numbers = true, -- hide the number column in toggleterm buffers
-  autochdir = false, -- when neovim changes it current directory the terminal will change it's own when next it's opened
+  autochdir = true, -- when neovim changes it current directory the terminal will change it's own when next it's opened
   shade_terminals = true, -- NOTE: this option takes priority over highlights specified so if you specify Normal highlights you should set this to false
   start_in_insert = true,
   insert_mappings = true, -- whether or not the open mapping applies in insert mode
@@ -29,13 +26,7 @@ toggleterm.setup{
     -- see :h nvim_open_win for details on borders however
     -- the 'curved' border is a custom border type
     -- not natively supported but implemented in this plugin.
-    border = 'curved'
+    border = 'single'
     -- like `size`, width and height can be a number or function which is passed the current terminal
   },
-  winbar = {
-    enabled = false,
-    name_formatter = function(term) --  term: Terminal
-      return term.name
-    end
-  }
 }
