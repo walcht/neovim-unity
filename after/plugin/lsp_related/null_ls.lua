@@ -15,7 +15,9 @@ null_ls.setup({
         formatting.black.with({
             extra_args = {"--line-length=110"}
         }),
-        diagnostics.flake8,
+        diagnostics.flake8.with({
+            extra_args = {"--max-line-length=110", "--ignore=E501"}
+        }),
 
         -- C#
         formatting.csharpier,
