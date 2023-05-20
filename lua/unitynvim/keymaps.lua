@@ -86,3 +86,6 @@ keymap("x", "<leader>p", "\"_dP")
 
 -- Terminal --
 keymap("t", "<C-h>", "<C-\\><C-N><C-w>h", term_opts)
+
+-- Toggle relative numbers --
+keymap({"n", "v"}, "<leader>trn", ":set invrelativenumber<CR>", term_opts)
