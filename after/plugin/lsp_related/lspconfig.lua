@@ -174,3 +174,6 @@ mason_lspconfig.setup {
 for lsp, config in pairs(servers) do
     lspconfig[lsp].setup(config)
 end
+
+-- KEYMAPS --
+vim.keymap.set({"n", "v"}, "<leader>rl", ":e<CR>", { silent = true })
