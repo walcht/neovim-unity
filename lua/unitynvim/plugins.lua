@@ -103,6 +103,7 @@ packer.startup(function(use)
   -----------------------------------------------------------------------------
   -------------------------------- GIT RELATED --------------------------------
   use 'lewis6991/gitsigns.nvim'             -- Fancy git decorations
+  use "sindrets/diffview.nvim"              -- Git diff view
   -----------------------------------------------------------------------------
   ----------------------------- DEBUGGING RELATED -----------------------------
   use 'mfussenegger/nvim-dap'

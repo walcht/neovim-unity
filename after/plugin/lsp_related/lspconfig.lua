@@ -137,6 +137,8 @@ servers['bashls'] = default_config
 servers['yamlls'] = default_config
 servers['lemminx'] = default_config
 servers['tsserver'] = default_config
+servers['jdtls'] = default_config
+
 -- Ensure installed servers
 local ensure_installed = {}
 for lsp, _ in pairs(servers) do
@@ -176,4 +178,4 @@ for lsp, config in pairs(servers) do
 end
 
 -- KEYMAPS --
-vim.keymap.set({"n", "v"}, "<leader>rl", ":e<CR>", { silent = true })
+vim.keymap.set({ "n", "v" }, "<leader>rl", ":e<CR>", { silent = true })
