@@ -15,8 +15,7 @@ null_ls.setup({
         formatting.black.with({
             extra_args = { "--line-length=110" }
         }),
-        diagnostics.mypy,
-
+        diagnostics.ruff,
         -- C#
         formatting.csharpier,
 

@@ -61,7 +61,7 @@ local servers = {}
 -- Add linters and formatters here
 local linters_and_formatters = {
     'black',
-    'mypy',
+    'ruff',
     'csharpier',
     'jsonlint',
     'markdownlint',
