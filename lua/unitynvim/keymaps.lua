@@ -31,6 +31,7 @@ keymap("n", "<leader>d", "\"_d")        -- Delete to void register
 keymap("n", "<leader>rw", [[:%s/\<<C-r><C-w>\>/<C-r><C-w>/gI<Left><Left><Left>]])   -- Replace word 
 keymap("n", "<leader>fo", ":Format<cr>", opts)                          -- Formatting keybinding
 keymap("n", "<leader>trn", ":set invrelativenumber<CR>", term_opts)     -- Toggle relative line numbers
+keymap("n", "<leader>cs", ":set spell!<CR>", opts)   -- Toggle spell
 -------------------------------------------------------------------------------------------------------------
 ----------------------------------------------- VISUAL MODE -------------------------------------------------
 keymap("v", "<", "<gv", opts)           -- Stay in indent mode
