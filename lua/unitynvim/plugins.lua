@@ -66,6 +66,7 @@ packer.startup(function(use)
   use "williamboman/mason.nvim"
   use "williamboman/mason-lspconfig.nvim"
   use "jose-elias-alvarez/null-ls.nvim"     -- for linting purposes
+  use "folke/trouble.nvim"                  -- for LSP\Linter warnings\errors
   use "Hoffs/omnisharp-extended-lsp.nvim"   -- for proper go-to-definition
                                             -- support for omnisharp
   -----------------------------------------------------------------------------
