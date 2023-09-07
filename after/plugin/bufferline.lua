@@ -6,7 +6,7 @@ end
 bufferline.setup {
     options = {
         mode = "buffers",
-        numbers = "none",
+        numbers = "ordinal",
         close_command = "Bdelete! %d",
         right_mouse_command = "Bdelete! %d",
         left_mouse_command = "buffer %d",
@@ -34,8 +34,8 @@ bufferline.setup {
                 separator = true
             }
         },
-        color_icons = false,
-        show_buffer_icons = false,
+        color_icons = true,
+        show_buffer_icons = true,
         show_buffer_close_icons = true,
         show_close_icon = true,
         show_tab_indicators = false,
@@ -49,6 +49,6 @@ bufferline.setup {
             delay = 200,
             reveal = {'close'}
         },
-        sort_by = "extension",
+        sort_by = "id",
     }
 }
