@@ -7,18 +7,15 @@ local formatting = null_ls.builtins.formatting
 local diagnostics = null_ls.builtins.diagnostics
 local code_actions = null_ls.builtins.code_actions
 local augroup = vim.api.nvim_create_augroup("LspFormatting", {})
--- before adding any new linters/formatters, make sure that you add them
--- to Mason's list of linters_and_formatters. That way they are ensured to
--- be installed and managed through Mason!
+-- before adding any new linters/formatters, make sure that you add them to Mason's list of
+-- linters_and_formatters. That way they are ensured to be installed and managed through Mason!
 null_ls.setup({
     sources = {
         -- Python
         formatting.black.with({
-            extra_args = {"--line-length=110"}
+            extra_args = { "--line-length=110" }
         }),
-        diagnostics.flake8.with({
-            extra_args = {"--max-line-length=110", "--ignore=E501"}
-        }),
+        diagnostics.mypy,
 
         -- C#
         formatting.csharpier,
@@ -29,13 +26,6 @@ null_ls.setup({
 
         -- JSON
         diagnostics.jsonlint,
-
-        -- Misc
-        -- add csharp, python etc... for spelling support
-        diagnostics.cspell.with({
-            filetypes = {"markdown"}
-        }),
-        code_actions.cspell,
     },
 
     on_attach = function(client, bufnr)
@@ -45,7 +35,6 @@ null_ls.setup({
                 group = augroup,
                 buffer = bufnr,
                 callback = function()
-
                     vim.lsp.buf.format()
                 end,
             })

@@ -15,7 +15,7 @@ local status_mason_lspconfig_ok, mason_lspconfig = pcall(require, "mason-lspconf
 if not status_mason_lspconfig_ok then
     return
 end
-
+vim.keymap.set({ "n", "v" }, "<leader>rl", ":LspRestart<CR>", { silent = true })
 -- Requiring lspconfig
 local lspconfig = require("lspconfig")
 
@@ -61,11 +61,10 @@ local servers = {}
 -- Add linters and formatters here
 local linters_and_formatters = {
     'black',
-    'jsonlint',
-    'cspell',
+    'mypy',
     'csharpier',
+    'jsonlint',
     'markdownlint',
-    'flake8',
 }
 -- Add your debugger(s) here
 local debuggers = {
@@ -176,6 +175,3 @@ mason_lspconfig.setup {
 for lsp, config in pairs(servers) do
     lspconfig[lsp].setup(config)
 end
-
--- KEYMAPS --
-vim.keymap.set({ "n", "v" }, "<leader>rl", ":e<CR>", { silent = true })
