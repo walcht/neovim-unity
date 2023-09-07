@@ -13,7 +13,7 @@ null_ls.setup({
     sources = {
         -- Python
         formatting.black.with({
-            extra_args = { "--line-length=110" }
+            extra_args = { "--line-length=88" }
         }),
         diagnostics.ruff,
         -- C#
