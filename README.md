@@ -8,7 +8,7 @@ If you already have your own Neovim configuration and want to know how to get
 it working with Unity, you can easily follow this README as a guide on how to
 do that.
 
-<https://user-images.githubusercontent.com/89390465/232910870-bdddddd3-bc82-4376-a8f2-c315e0293faa.webm>
+![neovim-unity C# LSP, Trouble and Explorer image](https://user-images.githubusercontent.com/89390465/266743629-3c074ba8-7e19-4089-8b09-cae6263ffea1.png)
 
 ## Installation
 
