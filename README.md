@@ -100,14 +100,15 @@ If any issues are encountered then it is, most probably, related to some plugin
 dependencies that are not (or not properly) installed.
 
 ## TODO
-[] Add debugger support for C# (CRUCIAL)
-[] Add omnisharp-roslyn language server restart keymap (CRUCIAL)
-[] Windows support (CRUCIAL)
-[] Provide a set of default keymaps as a PDF 'cheat sheet' (IMPORTANT)
-[] MacOS support (IMPORTANT)
-[] Add XML comments highlighting (OPTIONAL)
-[] Add GitHub pages support (OPTIONAL)
-[] Add support for other programming languages
+
+- [ ] Add debugger support for C# (CRUCIAL)
+- [ ] Add omnisharp-roslyn language server restart keymap (CRUCIAL)
+- [ ] Windows support (CRUCIAL)
+- [ ] Provide a set of default keymaps as a PDF 'cheat sheet' (IMPORTANT)
+- [ ] MacOS support (IMPORTANT)
+- [ ] Add XML comments highlighting (OPTIONAL)
+- [ ] Add GitHub pages support (OPTIONAL)
+- [ ] Add support for other programming languages
 
 ## (Known) Limitations
 
