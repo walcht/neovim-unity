@@ -1,34 +1,24 @@
--- Requiring mason
 local status_mason_ok, mason = pcall(require, "mason")
 if not status_mason_ok then
     return
 end
-
 local status_mason_registry_ok, mason_registry = pcall(require, "mason-registry")
 if not status_mason_registry_ok then
     print("Plugin not installed (CRUCIAL): mason-registry")
     return
 end
-
--- Requiring mason_lspconfig
 local status_mason_lspconfig_ok, mason_lspconfig = pcall(require, "mason-lspconfig")
 if not status_mason_lspconfig_ok then
     return
 end
-vim.keymap.set({ "n", "v" }, "<leader>rl", ":LspRestart<CR>", { silent = true })
--- Requiring lspconfig
 local lspconfig = require("lspconfig")
-
--- Requiring cmp_nvim_lsp
 local status_cmp_nvim_lsp, cmp_nvim_lsp = pcall(require, "cmp_nvim_lsp")
 if not status_cmp_nvim_lsp then
     return
 end
-
--- For advertising cmp_nvim_lsp completion cepabilities for LSP servers
+-- For advertising cmp_nvim_lsp completion capabilities for LSP servers
 local capabilities = cmp_nvim_lsp.default_capabilities()
-
--- The following setup order should be respected!
+-- WARNING: THE FOLLOWING SETUP ORDER SHOULD BE RESPECTED!
 -- 1. mason.setup{}
 -- 2. mason_lspconfig.setup{}
 -- 3. lspconfig.<lsp_name>.setup{}
@@ -58,7 +48,7 @@ mason.setup {
 }
 -- Add your language server(s) here
 local servers = {}
--- Add linters and formatters here
+--------------------------------- ADD LINTERS AND FORMATTERS HERE -------------------------------------------
 local linters_and_formatters = {
     'black',
     'ruff',
@@ -66,16 +56,18 @@ local linters_and_formatters = {
     'jsonlint',
     'markdownlint',
 }
--- Add your debugger(s) here
+-------------------------------------------------------------------------------------------------------------
+------------------------------------- ADD YOUR DEBUGGER(S) HERE ---------------------------------------------
 local debuggers = {
     'debugpy',
 }
--- Use an on_attach function to only map the following keys
--- after the language server attaches to the current buffer
+-------------------------------------------------------------------------------------------------------------
 local on_attach = function(client, bufnr)
     -- Mappings.
     -- See `:help vim.lsp.*` for documentation on any of the below functions
     local bufopts = { noremap = true, silent = true, buffer = bufnr }
+    ---------------------------------------------------------------------------------------------------------
+    --------------------------------------------- KEYMAPS ---------------------------------------------------
     vim.keymap.set('n', 'gD', vim.lsp.buf.declaration, bufopts)
     vim.keymap.set('n', 'gd', vim.lsp.buf.definition, bufopts)
     vim.keymap.set('n', 'K', vim.lsp.buf.hover, bufopts)
@@ -96,16 +88,13 @@ local on_attach = function(client, bufnr)
         function() vim.lsp.buf.format { async = true } end,
         bufopts
     )
+    ---------------------------------------------------------------------------------------------------------
 end
--- Default config for all language servers
-local default_config = {
+local default_config = { -- Default config for all language servers
     on_attach = on_attach,
     capabilities = capabilities,
 }
--- Configuration for omnisharp
--- Why not csharp-ls? I faced tons of issues working with that ls on Ubuntu
--- and omnisharp seems (at least currently) to have a much better support.
-servers['omnisharp'] = {
+servers['omnisharp'] = { -- Configuration for omnisharp
     on_attach = on_attach,
     capabilities = capabilities,
     handlers = {
@@ -125,9 +114,8 @@ servers['lua_ls'] = {
         }
     },
 }
--- Add your language server(s) here
--- You can replace default_config by your server's configurations
-servers['pyright'] = default_config
+-------------------------------- ADD YOUR LANGUAGE SERVER(S) HERE -------------------------------------------
+servers['pyright'] = default_config -- You can replace default_config by your server's configurations
 servers['marksman'] = default_config
 servers['jsonls'] = default_config
 servers['html'] = default_config
@@ -137,7 +125,7 @@ servers['yamlls'] = default_config
 servers['lemminx'] = default_config
 servers['tsserver'] = default_config
 servers['jdtls'] = default_config
-
+-------------------------------------------------------------------------------------------------------------
 -- Ensure installed servers
 local ensure_installed = {}
 for lsp, _ in pairs(servers) do
@@ -149,8 +137,7 @@ for lsp, _ in pairs(servers) do
     table.insert(ensure_installed, lsp)
     ::continue::
 end
--- Ensure linters and formatters are installed
-for _, linter_or_formatter in pairs(linters_and_formatters) do
+for _, linter_or_formatter in pairs(linters_and_formatters) do -- Ensure linters and formatters are installed
     if not mason_registry.is_installed(linter_or_formatter) then
         print(string.format("Linter or formatter not installed: %s",
             linter_or_formatter))
@@ -159,19 +146,19 @@ for _, linter_or_formatter in pairs(linters_and_formatters) do
         ))
     end
 end
--- Ensure debuggers are installed
-for _, debugger in pairs(debuggers) do
+for _, debugger in pairs(debuggers) do -- Ensure debuggers are installed
     if not mason_registry.is_installed(debugger) then
         print(string.format("Debuggers is not installed: %s", debugger))
         vim.cmd(string.format("MasonInstall %s", debugger))
     end
 end
--- Setup mason-lspconfig
-mason_lspconfig.setup {
+mason_lspconfig.setup { -- Setup mason-lspconfig
     ensure_installed = ensure_installed,
     automatic_installation = false,
 }
--- Setup LSP servers
-for lsp, config in pairs(servers) do
+for lsp, config in pairs(servers) do -- Setup LSP servers
     lspconfig[lsp].setup(config)
 end
+---------------------------------------------- KEYMAPS ------------------------------------------------------
+vim.keymap.set({ "n", "v" }, "<leader>rl", ":LspRestart<CR>", { silent = true })
+-------------------------------------------------------------------------------------------------------------

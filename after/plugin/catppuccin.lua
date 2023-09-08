@@ -54,7 +54,7 @@ catppuccin.setup({
             subtext0 = "#A69372",
             overlay2 = "#8C7A58",
             overlay1 = "#735F3F",
-            overlay0 = "#95a5a6",  -- comment color
+            overlay0 = "#95a5a6", -- comment color
             surface2 = "#4B4F51",
             surface1 = "#2A2D2E",
             surface0 = "#232728",
@@ -101,6 +101,4 @@ catppuccin.setup({
         -- For more plugins integrations please scroll down (https://github.com/catppuccin/nvim#integrations)
     },
 })
-
--- setup must be called before loading
-vim.cmd.colorscheme "catppuccin-mocha"
+vim.cmd.colorscheme "catppuccin-mocha" -- setup must be called before loading

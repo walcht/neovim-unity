@@ -11,22 +11,19 @@ local augroup = vim.api.nvim_create_augroup("LspFormatting", {})
 -- linters_and_formatters. That way they are ensured to be installed and managed through Mason!
 null_ls.setup({
     sources = {
-        -- Python
+        --------------------------------------------- FORMATTERS --------------------------------------------
         formatting.black.with({
             extra_args = { "--line-length=88" }
         }),
-        diagnostics.ruff,
-        -- C#
-        formatting.csharpier,
-
-        -- Markdown
         formatting.markdownlint,
+        formatting.csharpier,
+        -----------------------------------------------------------------------------------------------------
+        --------------------------------------------- DIAGNOSTICS -------------------------------------------
+        diagnostics.ruff,
         diagnostics.markdownlint,
-
-        -- JSON
         diagnostics.jsonlint,
+        -----------------------------------------------------------------------------------------------------
     },
-
     on_attach = function(client, bufnr)
         if client.supports_method("textDocument/formatting") then
             vim.api.nvim_clear_autocmds({ group = augroup, buffer = bufnr })
