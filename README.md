@@ -76,8 +76,8 @@ guide.
 #### Configuring Unity Editor
 
 1. In Unity, navigate to __```Edit > Preferences > External tools```__
-2. In __```External Script Editor```__ dropout, chose __```Browse...```__
-3. Chose the the __```./script/unitynvim.sh```__ shell script
+2. In __```External Script Editor```__ dropout, choose __```Browse...```__
+3. Chosse the the __```./script/unitynvim.sh```__ shell script
 4. Copy the following argument into __```External Script Editor Args```__ field:
 
     ```bash
@@ -100,15 +100,14 @@ If any issues are encountered then it is, most probably, related to some plugin
 dependencies that are not (or not properly) installed.
 
 ## TODO
-
-1. [] Add debugger support for C# (CRUCIAL)
-1. [] Add omnisharp-roslyn language server restart keymap (CRUCIAL)
-1. [] Windows support (CRUCIAL)
-1. [] Provide a set of default keymaps as a PDF 'cheat sheet' (IMPORTANT)
-1. [] MacOS support (IMPORTANT)
-1. [] Add XML comments highlighting (OPTIONAL)
-1. [] Add GitHub pages support (OPTIONAL)
-1. [] Add support for other programming languages
+[] Add debugger support for C# (CRUCIAL)
+[] Add omnisharp-roslyn language server restart keymap (CRUCIAL)
+[] Windows support (CRUCIAL)
+[] Provide a set of default keymaps as a PDF 'cheat sheet' (IMPORTANT)
+[] MacOS support (IMPORTANT)
+[] Add XML comments highlighting (OPTIONAL)
+[] Add GitHub pages support (OPTIONAL)
+[] Add support for other programming languages
 
 ## (Known) Limitations
 
