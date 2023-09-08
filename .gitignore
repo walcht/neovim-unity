@@ -81,6 +81,6 @@ tags
 /contrib/result-*
 
 # packer compiled file
-/plugin/packer_compiled.lua
+after/plugin/packer_compiled.lua
 
 CMakeUserPresets.json
