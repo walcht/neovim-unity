@@ -94,13 +94,24 @@ local default_config = { -- Default config for all language servers
     on_attach = on_attach,
     capabilities = capabilities,
 }
+-------------------------------- ADD YOUR LANGUAGE SERVER(S) HERE -------------------------------------------
+-- Replace with your own path to Omnisharp executable
+local omnisharp_executable = "omnisharp";
 servers['omnisharp'] = { -- Configuration for omnisharp
     on_attach = on_attach,
     capabilities = capabilities,
     handlers = {
         ["textDocument/definition"] = require('omnisharp_extended').handler,
     },
-    cmd = { "omnisharp-mono", '--languageserver', '--hostPID', tostring(vim.fn.getpid()) },
+    cmd = { omnisharp_executable, '--languageserver', '--hostPID', tostring(vim.fn.getpid()) },
+    enable_editorconfig_support = true, -- setting from .editorconfig
+    enable_ms_build_load_projects_on_demand = false,
+    enable_roslyn_analyzers = true,
+    analyze_open_documents_only = true,
+    organize_imports_on_format = true,
+    -- may result in slow completion responsiveness
+    enable_import_completion = false,
+    sdk_include_prereleases = true,
     -- rest of your settings
 }
 servers['lua_ls'] = {
@@ -114,7 +125,6 @@ servers['lua_ls'] = {
         }
     },
 }
--------------------------------- ADD YOUR LANGUAGE SERVER(S) HERE -------------------------------------------
 servers['pyright'] = default_config -- You can replace default_config by your server's configurations
 servers['marksman'] = default_config
 servers['jsonls'] = default_config
@@ -130,12 +140,7 @@ servers['jdtls'] = default_config
 local ensure_installed = {}
 for lsp, _ in pairs(servers) do
     -- we want omnisharp-mono installed not omnisharp
-    if lsp == "omnisharp" then
-        table.insert(ensure_installed, "omnisharp_mono")
-        goto continue
-    end
     table.insert(ensure_installed, lsp)
-    ::continue::
 end
 for _, linter_or_formatter in pairs(linters_and_formatters) do -- Ensure linters and formatters are installed
     if not mason_registry.is_installed(linter_or_formatter) then
