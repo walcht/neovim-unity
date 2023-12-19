@@ -28,16 +28,16 @@ respective links for an up-to-date installation instructions.
 
 1.**[nvr][nvr_repo]**: Remotely control Neovim processes. Install using:
 
-    ```bash
-    pip3 install neovim-remote
-    ```
+```bash
+pip3 install neovim-remote
+```
 
 1.**[wmctrl][wmctrl_installation]**: (optional) for focusing on Neovim
 window instance. Install using:
 
-        ```bash
-        sudo apt install wmctrl
-        ```
+```bash
+sudo apt install wmctrl
+```
 
 ### Neovim Setup
 
@@ -45,14 +45,16 @@ window instance. Install using:
 steps and jump to [Configuring Unity Editor](#configuring-unity-editor).
 If you want to use this configuration, make sure to do a backup:
 
-        ```bash
-        mv ~/.config/nvim ~/.config/nvim.bak
-        mv ~/.local/share/nvim ~/.local/share/nvim.bak
-        ```
+```bash
+mv ~/.config/nvim ~/.config/nvim.bak
+mv ~/.local/share/nvim ~/.local/share/nvim.bak
+```
 
-1. Clone the repository
+1. Clone the repository:
 
-   git clone <https://github.com/walcht/neovim-unity> ~/.config/nvim
+```bash
+git clone <https://github.com/walcht/neovim-unity> ~/.config/nvim
+```
 
 #### Installing Plugin Dependencies
 
