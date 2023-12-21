@@ -26,13 +26,13 @@ that by following this [guide][neovim_installation].
 The below dependencies should be properly installed, please take a look at
 respective links for an up-to-date installation instructions.
 
-1.**[nvr][nvr_repo]**: Remotely control Neovim processes. Install using:
+1. **[nvr][nvr_repo]**: Remotely control Neovim processes. Install using:
 
 ```bash
 pip3 install neovim-remote
 ```
 
-1.**[wmctrl][wmctrl_installation]**: (optional) for focusing on Neovim
+1. **[wmctrl][wmctrl_installation]**: (optional) for focusing on Neovim
 window instance. Install using:
 
 ```bash
@@ -163,32 +163,32 @@ dependencies that are not (or not properly) installed.
 - A. Serious problems on Ubuntu 22.04 (failures to detect .NET framework 4.7.X
   assemblies, metadata warnings, etc...).
 
-      ---
+---
 
 - Q. Why the headache? Why not just use Visual Studio?
 - A. Some people find a great joy in using Neovim. Some other people use it for
   all their programming tasks thus it would be inefficient for them to transition
   to Visual Studio or VSCode just for Unity programming.
 
-      ---
+---
 
 - Q. Why when opening a .cs script, nvim opens multiple empty buffers?
 - A. **Make sure that the name of your Unity project does not contain any white
   spaces**.
 
-      ---
+---
 
 - Q. Syntax highlighting doesn't seem to work. What should I do?
 - A. When opening Neovim for the first time, for some reason Treesitter does
   not work (will be fixed). Just open another script and it should work.
 
-      ---
+---
 
 - Q. Why does LSP take so long to provide completion at the start of Neovim?
 - A. That's Omnisharp reading your whole project for proper LSP setup. A little
   bit of patience at the start is needed.
 
-      ---
+---
 
 - Q. LSP stopped working, help!
 - A. Restart Omnisharp by entering `:LspRestart omnisharp` (a restart keymap
