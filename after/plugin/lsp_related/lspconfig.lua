@@ -134,7 +134,6 @@ servers['bashls'] = default_config
 servers['yamlls'] = default_config
 servers['lemminx'] = default_config
 servers['tsserver'] = default_config
-servers['jdtls'] = default_config
 -------------------------------------------------------------------------------------------------------------
 -- Ensure installed servers
 local ensure_installed = {}

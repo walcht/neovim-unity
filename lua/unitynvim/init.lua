@@ -1,7 +1,6 @@
 if vim.loader then vim.loader.enable() end
 for _, source in ipairs {
     "unitynvim.plugins",
-    "unitynvim.commands",
     "unitynvim.keymaps",
     "unitynvim.settings",
 } do
