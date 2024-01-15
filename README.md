@@ -60,7 +60,7 @@ mv ~/.local/share/nvim ~/.local/share/nvim.bak
 2. Clone the repository:
 
 ```bash
-git clone <https://github.com/walcht/neovim-unity> ~/.config/nvim
+git clone https://github.com/walcht/neovim-unity ~/.config/nvim
 ```
 
 #### Installing Plugin Dependencies
