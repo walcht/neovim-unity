@@ -26,22 +26,29 @@ that by following this [guide][neovim_installation].
 The below dependencies should be properly installed, please take a look at
 respective links for an up-to-date installation instructions.
 
-1. **[nvr][nvr_repo]**: Remotely control Neovim processes. Install using:
+- **[nvr][nvr_repo]**: Remotely control Neovim processes. Install using:
 
 ```bash
 pip3 install neovim-remote
 ```
 
-1. **[wmctrl][wmctrl_installation]**: (optional) for focusing on Neovim
+- **[wmctrl][wmctrl_installation]**: (optional) for focusing on Neovim
 window instance. Install using:
 
 ```bash
 sudo apt install wmctrl
 ```
 
+- **[xclip][xclip_repo]**: (optional) for adding clipboard support
+for Neovim on Linux distros:
+
+```bash
+sudo apt install xclip
+```
+
 ### Neovim Setup
 
-1.If you already have a Neovim configuration you can ignore the following
+1. If you already have a Neovim configuration you can ignore the following
 steps and jump to [Configuring Unity Editor](#configuring-unity-editor).
 If you want to use this configuration, make sure to do a backup:
 
@@ -50,7 +57,7 @@ mv ~/.config/nvim ~/.config/nvim.bak
 mv ~/.local/share/nvim ~/.local/share/nvim.bak
 ```
 
-1. Clone the repository:
+2. Clone the repository:
 
 ```bash
 git clone <https://github.com/walcht/neovim-unity> ~/.config/nvim
@@ -63,7 +70,7 @@ Some plugins require external tools to be installed.
 For a start, make sure the latest versions of these are installed:
 
 1. Git
-1. NPM
+2. NPM
 
 Type `:checkhealth` in a Neovim instance to check for missing dependencies.
 Plugins with missing dependencies should be clearly identified and a simple
@@ -77,11 +84,13 @@ guide.
 3. Chose the the **`./script/unitynvim.sh`** shell script
 4. Copy the following argument into **`External Script Editor Args`** field:
 
+```bash
    +$(Line) $(File)
+```
 
 <details><summary>Why?</summary><br>
 Usually when clicking on an error message in Unity's console, it directs
-you towards the __file__ and the __position__ of the cause of that error.
+you towards the <b>file</b> and the <b>position</b> of the cause of that error.
 To do that, Unity has to instantiate an editor server instance and provide it
 with the file name, line and column. Now when opening another file, the same
 editor server instance is used and the newly opened file will just appear
@@ -98,7 +107,7 @@ Omnisharp to work properly (Think of across-files go-to definitions and
 references or classes defined in external modules like UnityEngine, UnityEditor
 etc...).
 
-![Unity Csharp Project Directory Root not Detected](https://private-user-images.githubusercontent.com/89390465/291637073-92de932c-7e6e-4110-9840-635d4bb33bdb.png?jwt=eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpc3MiOiJnaXRodWIuY29tIiwiYXVkIjoicmF3LmdpdGh1YnVzZXJjb250ZW50LmNvbSIsImtleSI6ImtleTEiLCJleHAiOjE3MDMwMDE4MzAsIm5iZiI6MTcwMzAwMTUzMCwicGF0aCI6Ii84OTM5MDQ2NS8yOTE2MzcwNzMtOTJkZTkzMmMtN2U2ZS00MTEwLTk4NDAtNjM1ZDRiYjMzYmRiLnBuZz9YLUFtei1BbGdvcml0aG09QVdTNC1ITUFDLVNIQTI1NiZYLUFtei1DcmVkZW50aWFsPUFLSUFJV05KWUFYNENTVkVINTNBJTJGMjAyMzEyMTklMkZ1cy1lYXN0LTElMkZzMyUyRmF3czRfcmVxdWVzdCZYLUFtei1EYXRlPTIwMjMxMjE5VDE1NTg1MFomWC1BbXotRXhwaXJlcz0zMDAmWC1BbXotU2lnbmF0dXJlPWNiYWM2ZWIzOTA4OWI5NjMwZmU2ODM3ZjdkZDJmN2M1OGI1MWRmYjhhODA5YzYzMTBlMzM0MmIwYWQ5YjJjOTAmWC1BbXotU2lnbmVkSGVhZGVycz1ob3N0JmFjdG9yX2lkPTAma2V5X2lkPTAmcmVwb19pZD0wIn0.AbaXsEZmBl5eO1r_-O8WIrEHqyczbIslZvYGPb6KkxY)
+![Unity Csharp Project Directory Root not Detected](https://github.com/walcht/neovim-unity/assets/89390465/92de932c-7e6e-4110-9840-635d4bb33bdb)
 
 Unity only allows to generate the _.csproj_ files when Visual Studio, Visual
 Studio Code or JetBrains Rider is selected as an external editor (i.e. the
@@ -108,7 +117,7 @@ Neovim). Moreover, the associated external editor has to be installed for that
 option to show. That is, to properly use Neovim as an external editor you have
 to install VSCode (or Visual Studio or JetBrains Rider) for proper LSP support.
 
-![Unity Regenerate Project Files](https://private-user-images.githubusercontent.com/89390465/291628827-0a473a5f-f6f8-467f-832c-5cbf1588c692.png?jwt=eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpc3MiOiJnaXRodWIuY29tIiwiYXVkIjoicmF3LmdpdGh1YnVzZXJjb250ZW50LmNvbSIsImtleSI6ImtleTEiLCJleHAiOjE3MDMwMDE4MzAsIm5iZiI6MTcwMzAwMTUzMCwicGF0aCI6Ii84OTM5MDQ2NS8yOTE2Mjg4MjctMGE0NzNhNWYtZjZmOC00NjdmLTgzMmMtNWNiZjE1ODhjNjkyLnBuZz9YLUFtei1BbGdvcml0aG09QVdTNC1ITUFDLVNIQTI1NiZYLUFtei1DcmVkZW50aWFsPUFLSUFJV05KWUFYNENTVkVINTNBJTJGMjAyMzEyMTklMkZ1cy1lYXN0LTElMkZzMyUyRmF3czRfcmVxdWVzdCZYLUFtei1EYXRlPTIwMjMxMjE5VDE1NTg1MFomWC1BbXotRXhwaXJlcz0zMDAmWC1BbXotU2lnbmF0dXJlPTRmMWJlMTQxODVjMTk3ZTgxZGJmNmJkNTE1NTg4YWFiMzI5MzdkYTFlMmEyYzg2MWZhMTAxMDFmNDE1Njc2NzcmWC1BbXotU2lnbmVkSGVhZGVycz1ob3N0JmFjdG9yX2lkPTAma2V5X2lkPTAmcmVwb19pZD0wIn0.3MxkRIg00cHtq5-jcbd6kIdEy3GgE12nbNf4c-BbWs0)
+![Unity Regenerate Project Files](https://github.com/walcht/neovim-unity/assets/89390465/0a473a5f-f6f8-467f-832c-5cbf1588c692)
 
 Furthermore, for the option of the chosen editor from the supported external
 editors to show, you have to make sure that its integration package is
@@ -116,7 +125,7 @@ installed. To do so, Go to `Window > Package Manager` and make sure it is
 included in `Engineering` Feature (See picture below). If it is not there, then
 it needs to be installed.
 
-![Unity VSCode Integration](https://private-user-images.githubusercontent.com/89390465/291627920-235a6f2f-be80-42b2-a4d2-75f904005ae0.png?jwt=eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpc3MiOiJnaXRodWIuY29tIiwiYXVkIjoicmF3LmdpdGh1YnVzZXJjb250ZW50LmNvbSIsImtleSI6ImtleTEiLCJleHAiOjE3MDMwMDE4MzAsIm5iZiI6MTcwMzAwMTUzMCwicGF0aCI6Ii84OTM5MDQ2NS8yOTE2Mjc5MjAtMjM1YTZmMmYtYmU4MC00MmIyLWE0ZDItNzVmOTA0MDA1YWUwLnBuZz9YLUFtei1BbGdvcml0aG09QVdTNC1ITUFDLVNIQTI1NiZYLUFtei1DcmVkZW50aWFsPUFLSUFJV05KWUFYNENTVkVINTNBJTJGMjAyMzEyMTklMkZ1cy1lYXN0LTElMkZzMyUyRmF3czRfcmVxdWVzdCZYLUFtei1EYXRlPTIwMjMxMjE5VDE1NTg1MFomWC1BbXotRXhwaXJlcz0zMDAmWC1BbXotU2lnbmF0dXJlPWM4NzcwMzQ4MzQ1NTcwZGQ4NTc2NzFlYjZkNmQ0ZmVlOWFmYmZlMTM3ZjI0OGQzMTc2ZTlkMDNkNDEyYzE2ZTQmWC1BbXotU2lnbmVkSGVhZGVycz1ob3N0JmFjdG9yX2lkPTAma2V5X2lkPTAmcmVwb19pZD0wIn0.tl-ctOq3DSkFBSY81dfVwNZ-bOScBVD05Z359IZcCdE)
+![Unity VSCode Integration](https://github.com/walcht/neovim-unity/assets/89390465/235a6f2f-be80-42b2-a4d2-75f904005ae0)
 
 This is the second biggest limitation of using Neovim as an external editor for
 Unity, the first being the current absence of Unity debugging support.
@@ -134,16 +143,18 @@ dependencies that are not (or not properly) installed.
 
 ## TODO
 
-1. [ ] Add debugger support for C# (CRUCIAL)
+- [ ] Add debugger support for C# (CRUCIAL)
        This is a hard-to-add feature, since Unity only provides debugging support
        for a set of Editors including VSCode and Visual Studio.
-1. [ ] Add omnisharp-roslyn language server restart keymap (CRUCIAL)
-1. [ ] Windows support (CRUCIAL)
-1. [ ] Provide a set of default keymaps as a PDF 'cheat sheet' (IMPORTANT)
-1. [ ] MacOS support (IMPORTANT)
-1. [ ] Add XML comments highlighting (OPTIONAL)
-1. [ ] Add GitHub pages support (OPTIONAL)
-1. [ ] Add support for other programming languages
+- [ ] Add omnisharp-roslyn language server restart keymap (CRUCIAL)
+- [ ] Windows support (CRUCIAL)
+- [ ] Provide a set of default keymaps as a PDF 'cheat sheet' (IMPORTANT)
+- [ ] MacOS support (IMPORTANT)
+- [ ] Add XML comments highlighting (OPTIONAL)
+- [ ] Add GitHub pages support (OPTIONAL)
+- [X] Add support for other programming languages
+       Game developers aren't just tied to using C# so adding support for other
+       languages is really appreciated.
 
 ## (Known) Limitations
 
@@ -208,3 +219,4 @@ See LICENSE.txt file for more info.
 [neovim_installation]: https://github.com/neovim/neovim/tags
 [nvr_repo]: https://github.com/mhinz/neovim-remote
 [wmctrl_installation]: https://linux.die.net/man/1/wmctrl
+[xclip_repo]: https://github.com/astrand/xclip
