@@ -23,6 +23,12 @@ Unity versions are extremely appreciated!
 First of all make sure that you have installed **Neovim >= 0.8.0**. You can do
 that by following this [guide][neovim_installation].
 
+For C# Language Server Protocol (LSP) support, **[omnisharp-roslyn](https://github.com/OmniSharp/omnisharp-roslyn)** is used.
+Omnisharp is built using **[Mono](https://www.mono-project.com/)** on OSX/Linux therefore **Mono >= 6.4**
+has to be globally installed. Mono can be officially installed from here:
+
+**[Mono installation guide](https://www.mono-project.com/download/stable/#download-lin)**
+
 The below dependencies should be properly installed, please take a look at
 respective links for an up-to-date installation instructions.
 
@@ -70,7 +76,7 @@ Some plugins require external tools to be installed.
 For a start, make sure the latest versions of these are installed:
 
 1. Git
-2. NPM
+2. (optional) NPM
 
 Type `:checkhealth` in a Neovim instance to check for missing dependencies.
 Plugins with missing dependencies should be clearly identified and a simple

@@ -48,7 +48,7 @@ mason.setup {
 }
 -- Add your language server(s) here
 local servers = {}
---------------------------------- ADD LINTERS AND FORMATTERS HERE -------------------------------------------
+------------------------------------- ADD LINTERS AND FORMATTERS HERE ---------------------------------------
 local linters_and_formatters = {
     'black',
     'ruff',
@@ -57,7 +57,7 @@ local linters_and_formatters = {
     'markdownlint',
 }
 -------------------------------------------------------------------------------------------------------------
-------------------------------------- ADD YOUR DEBUGGER(S) HERE ---------------------------------------------
+----------------------------------------- ADD YOUR DEBUGGER(S) HERE -----------------------------------------
 local debuggers = {
     'debugpy',
 }
@@ -94,10 +94,13 @@ local default_config = { -- Default config for all language servers
     on_attach = on_attach,
     capabilities = capabilities,
 }
--------------------------------- ADD YOUR LANGUAGE SERVER(S) HERE -------------------------------------------
+------------------------------------- ADD YOUR LANGUAGE SERVER(S) HERE --------------------------------------
 -- Replace with your own path to Omnisharp executable
-local omnisharp_executable = "omnisharp";
-servers['omnisharp'] = { -- Configuration for omnisharp
+-- On OSX/Linux, use omnisharp-mono and make sure Mono >= 6.4.0 is installed
+-- On Windows, use omnisharp and make sure .NET SDK >= 6.0 is installed
+-- Read README at official omnisharp repo: https://github.com/OmniSharp/omnisharp-roslyn
+local omnisharp_executable = "omnisharp-mono";
+servers['omnisharp_mono'] = { -- Configuration for omnisharp
     on_attach = on_attach,
     capabilities = capabilities,
     handlers = {
@@ -138,7 +141,6 @@ servers['tsserver'] = default_config
 -- Ensure installed servers
 local ensure_installed = {}
 for lsp, _ in pairs(servers) do
-    -- we want omnisharp-mono installed not omnisharp
     table.insert(ensure_installed, lsp)
 end
 for _, linter_or_formatter in pairs(linters_and_formatters) do -- Ensure linters and formatters are installed
