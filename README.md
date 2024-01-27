@@ -1,4 +1,23 @@
-# About
+# Table of Content
+
+<!--toc:start-->
+- [Table of Content](#table-of-content)
+  - [About](#about)
+  - [Installation](#installation)
+    - [Installing Dependencies](#installing-dependencies)
+    - [Neovim Setup](#neovim-setup)
+      - [Installing Plugin Dependencies](#installing-plugin-dependencies)
+      - [Configuring Unity Editor](#configuring-unity-editor)
+      - [Important Step for Proper LSP Functionalities](#important-step-for-proper-lsp-functionalities)
+      - [Is Everything Working Fine?](#is-everything-working-fine)
+  - [TODO](#todo)
+  - [(Known) Limitations](#known-limitations)
+  - [FAQ](#faq)
+  - [Feedback](#feedback)
+  - [License](#license)
+<!--toc:end-->
+
+## About
 
 Ready-to-use Neovim configuration with the Unity engine. This project aims to be
 both, a ready-to-use Neovim package and a guide on how to get Neovim
@@ -23,14 +42,18 @@ Unity versions are extremely appreciated!
 First of all make sure that you have installed **Neovim >= 0.8.0**. You can do
 that by following this [guide][neovim_installation].
 
-For C# Language Server Protocol (LSP) support, **[omnisharp-roslyn](https://github.com/OmniSharp/omnisharp-roslyn)** is used.
-Omnisharp is built using **[Mono](https://www.mono-project.com/)** on OSX/Linux therefore **Mono >= 6.4**
-has to be globally installed. Mono can be officially installed from here:
+For C# Language Server Protocol (LSP) support,
+**[Omnisharp](https://github.com/OmniSharp/omnisharp-roslyn)** is used.
+Omnisharp requires **.NET SDK >= 6.0** to be globally installed. It can be
+officially installed from here:
 
-**[Mono installation guide](https://www.mono-project.com/download/stable/#download-lin)**
+**[.NET SDK Linux installation guide](https://learn.microsoft.com/en-us/dotnet/core/install/linux)**
+
+**NOTE**: Do not use **Omnisharp-mono** (notice the *-mono* part) on Linux
+because for some reason it did not work and caused major slowdowns.
 
 The below dependencies should be properly installed, please take a look at
-respective links for an up-to-date installation instructions.
+the respective links for an up-to-date installation instructions.
 
 - **[nvr][nvr_repo]**: Remotely control Neovim processes. Install using:
 
@@ -63,7 +86,7 @@ mv ~/.config/nvim ~/.config/nvim.bak
 mv ~/.local/share/nvim ~/.local/share/nvim.bak
 ```
 
-2. Clone the repository:
+1. Clone the repository:
 
 ```bash
 git clone https://github.com/walcht/neovim-unity ~/.config/nvim
@@ -105,17 +128,17 @@ as a tab in the perviously instantiated editor server instance.
 
 #### Important Step for Proper LSP Functionalities
 
-For LSP to work properly _.csproj_ files have to be generated from the project
+For LSP to work properly *.csproj* files have to be generated from the project
 files. If you enter the command `:LspInfo` after opening a .cs file from a
 Unity project, you might notice that the project's directory root wasn't
 detected (see image below). The project directory has to be detected for
 Omnisharp to work properly (Think of across-files go-to definitions and
 references or classes defined in external modules like UnityEngine, UnityEditor
-etc...).
+etc.).
 
 ![Unity Csharp Project Directory Root not Detected](https://github.com/walcht/neovim-unity/assets/89390465/92de932c-7e6e-4110-9840-635d4bb33bdb)
 
-Unity only allows to generate the _.csproj_ files when Visual Studio, Visual
+Unity only allows to generate the *.csproj* files when Visual Studio, Visual
 Studio Code or JetBrains Rider is selected as an external editor (i.e. the
 button **`Regenerate project files`** only appears when one of these external
 editors is selected and doesn't for any other custom external editor like
@@ -137,9 +160,12 @@ This is the second biggest limitation of using Neovim as an external editor for
 Unity, the first being the current absence of Unity debugging support.
 We're trying to surpass these limitations using some hacks.
 
-Fortunately, **this process has to be done only once per Unity Project**. To the
-best of our knowledge, there is no need to regenerate project _.csproj_ files
-after the creation\addition of a new Csharp script.
+Unfortunately, **this process has to be done every time a new file is created**.
+Not doing so will result in auto-completion not working for Unity-related Functionalities
+(see the image below where auto-completion for .NET functionalities is working
+while it is not for the UnityEngine module).
+
+![New File with no UnityEngine Auto-completion](https://github.com/walcht/neovim-unity/assets/89390465/529fc3c8-87cc-466a-9562-957c499360d3)
 
 #### Is Everything Working Fine?
 
@@ -152,7 +178,8 @@ dependencies that are not (or not properly) installed.
 - [ ] Add debugger support for C# (CRUCIAL)
        This is a hard-to-add feature, since Unity only provides debugging support
        for a set of Editors including VSCode and Visual Studio.
-- [ ] Add omnisharp-roslyn language server restart keymap (CRUCIAL)
+- [X] Add omnisharp-roslyn language server restart keymap (CRUCIAL)
+        **SPACE rl** (rl for Restart Server)
 - [ ] Windows support (CRUCIAL)
 - [ ] Provide a set of default keymaps as a PDF 'cheat sheet' (IMPORTANT)
 - [ ] MacOS support (IMPORTANT)
@@ -167,12 +194,15 @@ dependencies that are not (or not properly) installed.
 - No Unity debugging support. Still questionable whether this could be solved.
 
 - External editor (either Visual Studio, Visual Studio Code or JetBrains Rider)
-  is needed to generate Unity project _.csproj_ files which are necessary for
+  is needed to generate Unity project *.csproj* files which are necessary for
   proper LSP Functionalities (see previous section
   **Important Step for Proper LSP Functionalities**).
 
 - When opening a file for the first time, Omnisharp LSP may take a while
   to start thus a bit of patience is needed.
+
+- Omnisharp start-up may consume a lot of memory. This is a crucial issue that
+we're currently working on solving.
 
 ## FAQ
 
