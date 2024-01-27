@@ -96,25 +96,26 @@ local default_config = { -- Default config for all language servers
 }
 ------------------------------------- ADD YOUR LANGUAGE SERVER(S) HERE --------------------------------------
 -- Replace with your own path to Omnisharp executable
--- On OSX/Linux, use omnisharp-mono and make sure Mono >= 6.4.0 is installed
--- On Windows, use omnisharp and make sure .NET SDK >= 6.0 is installed
+-- Install .NET CORE SDK for this omnisharp to work
 -- Read README at official omnisharp repo: https://github.com/OmniSharp/omnisharp-roslyn
-local omnisharp_executable = "omnisharp-mono";
-servers['omnisharp_mono'] = { -- Configuration for omnisharp
+-- TODO:    OmniSharp startup is consuming a lot of memory! This is potentially related to some log buffering
+--          that is done by lspconfig. This is a crucial issue and has to be fixed ASAP!
+local omnisharp_executable = "omnisharp";
+servers['omnisharp'] = { -- Configuration for omnisharp
     on_attach = on_attach,
     capabilities = capabilities,
     handlers = {
         ["textDocument/definition"] = require('omnisharp_extended').handler,
     },
     cmd = { omnisharp_executable, '--languageserver', '--hostPID', tostring(vim.fn.getpid()) },
-    enable_editorconfig_support = true, -- setting from .editorconfig
-    enable_ms_build_load_projects_on_demand = false,
-    enable_roslyn_analyzers = true,
-    analyze_open_documents_only = true,
-    organize_imports_on_format = true,
+    -- enable_editorconfig_support = true, -- setting from .editorconfig
+    -- enable_ms_build_load_projects_on_demand = true,
+    -- enable_roslyn_analyzers = true,
+    -- analyze_open_documents_only = true,
+    -- organize_imports_on_format = true,
     -- may result in slow completion responsiveness
-    enable_import_completion = false,
-    sdk_include_prereleases = true,
+    -- enable_import_completion = true,
+    -- sdk_include_prereleases = true,
     -- rest of your settings
 }
 servers['lua_ls'] = {
@@ -166,5 +167,5 @@ for lsp, config in pairs(servers) do -- Setup LSP servers
     lspconfig[lsp].setup(config)
 end
 ---------------------------------------------- KEYMAPS ------------------------------------------------------
-vim.keymap.set({ "n", "v" }, "<leader>rl", ":LspRestart<CR>", { silent = true })
+vim.keymap.set({ "n", "v" }, "<leader>rl", ":LspRestart<CR>", { silent = false })
 -------------------------------------------------------------------------------------------------------------
