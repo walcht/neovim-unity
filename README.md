@@ -157,6 +157,10 @@ installed (usually it is installed by default). To do so, Go to
 
 ![Unity VSCode Integration](https://github.com/walcht/neovim-unity/assets/89390465/235a6f2f-be80-42b2-a4d2-75f904005ae0)
 
+Then verify that .csproj files were generated:
+
+![image](https://github.com/walcht/neovim-unity/assets/89390465/bed1263d-81b4-4a47-be16-b2039d27b46b)
+
 This is the second biggest limitation of using Neovim as an external editor for
 Unity, the first being the current absence of Unity debugging support.
 We're trying to surpass these limitations using some hacks.
@@ -241,6 +245,27 @@ we're currently working on solving.
 - Q. LSP stopped working, help!
 - A. Restart Omnisharp by entering `:LspRestart omnisharp` (a restart keymap
   will be added)
+
+---
+
+- Q. Unity's new InputSystem is not detected (or its auto-completion is not
+working). What should I do?
+
+    ![image](https://github.com/walcht/neovim-unity/assets/89390465/9c4f4329-151f-4d6d-88bd-50955404f6fb)
+
+- A. If you're planning to use the new Input System then you have to make sure
+that:
+
+    1. The InputSystem package is installed by checking
+    ```Window > Package Manager > Input System```.
+
+    1. That ```Edit > Project Settings > Player > Active Input Handling*``` is
+    set to ```New``` or ```Both```.
+
+    1. And finally that you regenerate .csproj files (important step for generating
+    .csproj InputSystem files - see picture below):
+
+![InputSystem csproj files](https://github.com/walcht/neovim-unity/assets/89390465/1468955f-5739-4789-9a97-b97d491b37cb)
 
 ## Feedback
 
