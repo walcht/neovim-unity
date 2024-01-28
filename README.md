@@ -1,5 +1,7 @@
 # Table of Content
 
+This project is **not affiliated with Unity Technologies**.
+
 <!--toc:start-->
 - [Table of Content](#table-of-content)
   - [About](#about)
