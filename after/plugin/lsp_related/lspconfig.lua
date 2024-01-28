@@ -103,7 +103,13 @@ local default_config = { -- Default config for all language servers
 local omnisharp_executable = "omnisharp";
 servers['omnisharp'] = { -- Configuration for omnisharp
     on_attach = on_attach,
-    capabilities = capabilities,
+    capabilities = vim.tbl_deep_extend("force", capabilities, {
+        workspace = {
+            didChangeWatchedFiles = {
+                dynamicRegistration = true,
+            },
+        },
+    }),
     handlers = {
         ["textDocument/definition"] = require('omnisharp_extended').handler,
     },
