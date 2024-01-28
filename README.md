@@ -144,17 +144,16 @@ Unity only allows to generate the *.csproj* files when Visual Studio, Visual
 Studio Code or JetBrains Rider is selected as an external editor (i.e. the
 button **`Regenerate project files`** only appears when one of these external
 editors is selected and doesn't for any other custom external editor like
-Neovim). Moreover, the associated external editor has to be installed for that
-option to show. That is, to properly use Neovim as an external editor you have
-to install VSCode (or Visual Studio or JetBrains Rider) for proper LSP support.
+Neovim). **Luckily, We can trick Unity into thinking that VSCode is installed
+by browsing to an empty ```code``` file (it does not have to be executable)**
+(```code``` file in provided in ```scripts``` folder for convenience).
 
-![Unity Regenerate Project Files](https://github.com/walcht/neovim-unity/assets/89390465/0a473a5f-f6f8-467f-832c-5cbf1588c692)
+![Unity Regenerate Project Files](https://github.com/walcht/neovim-unity/assets/89390465/40edb52d-0ebf-4f2b-86b9-89f15fcb8ba5)
 
-Furthermore, for the option of the chosen editor from the supported external
-editors to show, you have to make sure that its integration package is
-installed. To do so, Go to `Window > Package Manager` and make sure it is
-included in `Engineering` Feature (See picture below). If it is not there, then
-it needs to be installed.
+Furthermore, you have to make sure that Visual Studio Code Editor package is
+installed (usually it is installed by default). To do so, Go to
+`Window > Package Manager` and make sure it is included in `Engineering` Feature
+(See picture below). If it is not there, then it needs to be installed.
 
 ![Unity VSCode Integration](https://github.com/walcht/neovim-unity/assets/89390465/235a6f2f-be80-42b2-a4d2-75f904005ae0)
 
