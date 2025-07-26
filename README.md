@@ -2,96 +2,157 @@
 
 This project is **not affiliated with Unity Technologies**.
 
-<!--toc:start-->
-- [Table of Content](#table-of-content)
-  - [About](#about)
-  - [Installation](#installation)
-    - [Installing Dependencies](#installing-dependencies)
-    - [Neovim Setup](#neovim-setup)
-      - [Installing Plugin Dependencies](#installing-plugin-dependencies)
-      - [Configuring Unity Editor](#configuring-unity-editor)
-      - [Important Step for Proper LSP Functionalities](#important-step-for-proper-lsp-functionalities)
-      - [Is Everything Working Fine?](#is-everything-working-fine)
-  - [TODO](#todo)
-  - [(Known) Limitations](#known-limitations)
-  - [FAQ](#faq)
-  - [Feedback](#feedback)
-  - [License](#license)
-<!--toc:end-->
-
 ## About
 
-Ready-to-use Neovim configuration with the Unity engine. This project aims to be
-both, a ready-to-use Neovim package and a guide on how to get Neovim
+Ready-to-use Neovim configuration with the Unity engine. This repository is 
+a single README file that provides instructions on how to setup Neovim for
+Unity game engine development tasks. This project aims to provide both, a
+ready-to-use Neovim package and a guide on how to get Neovim
 working with Unity.
 
 If you already have your own Neovim configuration and want to know how to get
 it working with Unity, you can easily follow this README as a guide on how to
 do that.
 
-![neovim-unity C# LSP, Trouble and Explorer image](https://user-images.githubusercontent.com/89390465/266743629-3c074ba8-7e19-4089-8b09-cae6263ffea1.png)
-
 ## Installation
 
 This Installation guide targets **Linux distributions**. A guide on how to
 properly set this for Windows(and MacOS) is yet to be provided.
 
-This project has been tested with **Unity2020.3.XXXX LTS**. Any tests on other
+This project has been tested with **Unity6000.1 LTS**. Any tests on other
 Unity versions are extremely appreciated!
-
-### Installing Dependencies
-
-First of all make sure that you have installed **Neovim >= 0.8.0**. You can do
-that by following this [guide][neovim_installation].
-
-For C# Language Server Protocol (LSP) support,
-**[Omnisharp](https://github.com/OmniSharp/omnisharp-roslyn)** is used.
-Omnisharp requires **.NET SDK >= 6.0** to be globally installed. It can be
-officially installed from here:
-
-**[.NET SDK Linux installation guide](https://learn.microsoft.com/en-us/dotnet/core/install/linux)**
-
-**NOTE**: Do not use **Omnisharp-mono** (notice the *-mono* part) on Linux
-because for some reason it did not work and caused major slowdowns.
-
-The below dependencies should be properly installed, please take a look at
-the respective links for an up-to-date installation instructions.
-
-- **[nvr][nvr_repo]**: Remotely control Neovim processes. Install using:
-
-```bash
-pip3 install neovim-remote
-```
-
-- **[wmctrl][wmctrl_installation]**: (optional) for focusing on Neovim
-window instance. Install using:
-
-```bash
-sudo apt install wmctrl
-```
-
-- **[xclip][xclip_repo]**: (optional) for adding clipboard support
-for Neovim on Linux distros:
-
-```bash
-sudo apt install xclip
-```
 
 ### Neovim Setup
 
-1. If you already have a Neovim configuration you can ignore the following
-steps and jump to [Configuring Unity Editor](#configuring-unity-editor).
-If you want to use this configuration, make sure to do a backup:
+First of all make sure that you have installed **Neovim >= 0.11**. You can do
+that by following this [guide][neovim_installation].
+
+1. If you already have a Neovim configuration, you can ignore the following
+steps and jump to [Installing Dependencies](#installing-dependencies). It is
+best however to take a look into how the C# LSP is configured in **CGNvim** to
+avoid annoying pitfalls.
+
+If you want to use the configuration proposed by this project, make sure to do
+a backup:
 
 ```bash
 mv ~/.config/nvim ~/.config/nvim.bak
 mv ~/.local/share/nvim ~/.local/share/nvim.bak
 ```
 
-1. Clone the repository:
+1. Then clone the **CGNvim** repository (Neovim configuration for general
+purpose computer graphics development):
 
 ```bash
-git clone https://github.com/walcht/neovim-unity ~/.config/nvim
+git clone https://github.com/walcht/CGNvim.git ~/.config/nvim
+```
+
+### Installing Dependencies
+
+For C# Language Server Protocol (LSP) support, you have to:
+
+1. globally install **.NET SDK >= 9.0**. It can be installed from the following
+official source:
+
+**[.NET SDK installation guide][dotnet_sdk_installation_guide]**
+
+1. download the Roslyn Language Server as a NuGet package from:
+    1. on Linux: [Roslyn LS Linux][roslyn_lsp_linux]
+    1. on Windows: [Roslyn LS Windows][roslyn_lsp_windows]
+    1. on MacOS: [Roslyn LS MacOS][roslyn_lsp_macos]
+
+2. extract it (NugGets are ZIP archives) at some location of your choice
+(that we hereafter refer to as **<roslyn_ls_path>**):
+
+3. open the Roslyn LSP configuration file (or your custom Neovim's Roslyn LS
+configuration file) using some text editor:
+
+```bash
+nvim ~/.config/nvim/lua/cgnvim/lsps/roslyn_ls.lua
+```
+
+and change the `cmd` path to where you extracted/installed the Roslyn LSP:
+
+```lua
+  cmd = {
+    'dotnet',
+    '<roslyn_ls_path>/Microsoft.CodeAnalysis.LanguageServer.dll',
+    '--logLevel', -- this property is required by the server
+    'Information',
+    '--extensionLogDirectory', -- this property is required by the server
+    fs.joinpath(uv.os_tmpdir(), 'roslyn_ls/logs'),
+    '--stdio',  -- adjust accordingly in case you want to communicate with the
+                -- LSP via TCP
+  },
+```
+
+where `<roslyn_ls_path>` has to be the folder you extracted the Roslyn LSP NuGet
+package to.
+
+Note: you might have heard of Omnisharp as another C# LSP, **avoid using it** as
+it is being(?) discontinued and has major memory leakage issues.
+
+#### Configuring Unity Editor
+
+Roslyn LSP (and all(?) other C# LSPs) works by analyzing the generated solution
+(.sln) and .csproj files from the provided C# project(s)/solution(s). These
+project files have to be initially generated then updated whenever a C# script
+is updated or a new C# script is created.
+
+Essentially, some Unity plugin has to automatically handle this. The same plugin
+should also be able to instantiate a Neovim instance (in case one is not already
+instantiated) and communicate with it (e.g., when clicking on a Unity Console
+Log error, the plugin has to open the corresponding file at the appropriate
+location).
+
+This is exactly how Visual Studio (also VSCode and Rider) is integrated for
+Unity development tasks. The plugin in this case is installed by default (check
+Package Manager for the officially supported **Visual Studio Editor** plugin).
+
+In the case of Neovim, the custom plugin **com.walcht.ide.neovim** has to be
+installed for proper Neovim support. In the Unity Editor, in the top menu bar
+navigate to:
+
+Window -> Package Management -> Package Manager
+-> navigate to plus sign on top left -> Install package from git URL...
+-> enter `https://github.com/walcht/com.walcht.ide.neovim.git` -> install
+
+Now when navigating to: `Edit -> Preferences -> External Tools` you should
+see `Neovim` in the drop down options.
+
+To automatically open Neovim when clicking on files/console warnings or errors,
+navigate to:
+
+`Edit -> Preferences -> External Tools` then Set "External Script Editor" to
+Neovim.
+
+Adjust which packages to generate the .csproj files for (you will only get LSP
+functionalities for those selected packages and you might - not verified - get
+worse performance the more the selected):
+
+![Unity's external tools menu][com_walcht_ide_neovim]
+
+Now try to open a C# script from you project and keep an eye on the
+notifications that might pop-up.
+
+#### Optional Dependencies
+
+The below dependencies can be installed for a better development experience,
+please take a look at the respective links for an up-to-date installation
+instructions.
+
+- **[wmctrl][wmctrl_installation]**: (optional) for focusing on Neovim
+window instance on Linux. On Debian-based distros, install using:
+
+```bash
+sudo apt-get install wmctrl
+```
+
+- **[xclip][xclip_repo]**: (optional) for adding clipboard support
+for Neovim on Linux. On Debian-based distros, install using:
+
+```bash
+sudo apt-get install xclip
 ```
 
 #### Installing Plugin Dependencies
@@ -102,31 +163,12 @@ For a start, make sure the latest versions of these are installed:
 
 1. Git
 2. (optional) NPM
+3. (optional) Python >= 3.9
 
 Type `:checkhealth` in a Neovim instance to check for missing dependencies.
 Plugins with missing dependencies should be clearly identified and a simple
 internet search with the dependency's name will yield the official installation
 guide.
-
-#### Configuring Unity Editor
-
-1. In Unity, navigate to **`Edit > Preferences > External tools`**
-2. In **`External Script Editor`** dropout, chose **`Browse...`**
-3. Chose the the **`./script/unitynvim.sh`** shell script
-4. Copy the following argument into **`External Script Editor Args`** field:
-
-```bash
-   +$(Line) $(File)
-```
-
-<details><summary>Why?</summary><br>
-Usually when clicking on an error message in Unity's console, it directs
-you towards the <b>file</b> and the <b>position</b> of the cause of that error.
-To do that, Unity has to instantiate an editor server instance and provide it
-with the file name, line and column. Now when opening another file, the same
-editor server instance is used and the newly opened file will just appear
-as a tab in the perviously instantiated editor server instance.
-</details>
 
 #### Important Step for Proper LSP Functionalities
 
@@ -138,76 +180,37 @@ Omnisharp to work properly (Think of across-files go-to definitions and
 references or classes defined in external modules like UnityEngine, UnityEditor
 etc.).
 
-![Unity Csharp Project Directory Root not Detected](https://github.com/walcht/neovim-unity/assets/89390465/92de932c-7e6e-4110-9840-635d4bb33bdb)
-
-Unity only allows to generate the *.csproj* files when Visual Studio, Visual
-Studio Code or JetBrains Rider is selected as an external editor (i.e. the
-button **`Regenerate project files`** only appears when one of these external
-editors is selected and doesn't for any other custom external editor like
-Neovim). **Luckily, We can trick Unity into thinking that VSCode is installed
-by browsing to an empty ```code``` file (it does not have to be executable)**
-(```code``` file in provided in ```scripts``` folder for convenience).
-
-![Unity Regenerate Project Files](https://github.com/walcht/neovim-unity/assets/89390465/40edb52d-0ebf-4f2b-86b9-89f15fcb8ba5)
-
-Furthermore, you have to make sure that Visual Studio Code Editor package is
-installed (usually it is installed by default). To do so, Go to
-`Window > Package Manager` and make sure it is included in `Engineering` Feature
-(See picture below). If it is not there, then it needs to be installed.
-
-![Unity VSCode Integration](https://github.com/walcht/neovim-unity/assets/89390465/235a6f2f-be80-42b2-a4d2-75f904005ae0)
-
-Then verify that .csproj files were generated:
-
-![image](https://github.com/walcht/neovim-unity/assets/89390465/bed1263d-81b4-4a47-be16-b2039d27b46b)
-
-This is the second biggest limitation of using Neovim as an external editor for
-Unity, the first being the current absence of Unity debugging support.
-We're trying to surpass these limitations using some hacks.
-
-Unfortunately, **this process has to be done every time a new file is created**.
-Not doing so will result in auto-completion not working for Unity-related Functionalities
-(see the image below where auto-completion for .NET functionalities is working
-while it is not for the UnityEngine module).
-
-![New File with no UnityEngine Auto-completion](https://github.com/walcht/neovim-unity/assets/89390465/529fc3c8-87cc-466a-9562-957c499360d3)
-
 #### Is Everything Working Fine?
 
-Make sure to run `:checkhealth` to check if installed plugins are working properly.
-If any issues are encountered then it is, most probably, related to some plugin
-dependencies that are not (or not properly) installed.
+Getting a C# LSP (in this case Roslyn LS) to work properly for a Unity project
+can be frustrating.
+
+To debug LSP issues, make sure that the C# LSP is active by entering the command
+`:LspInfo` and checking the output. Do also check the LSP logs using the command
+`:LspLog` (important to note that a lot of LSP *errors* and *warnings* can be
+safely ignored).
+
+Make sure to run `:checkhealth` to check if installed plugins are working
+properly. If any issues are encountered then it is, most probably, related to
+some plugin dependencies that are not (or not properly) installed.
 
 ## TODO
 
 - [ ] Add debugger support for C# (CRUCIAL)
        This is a hard-to-add feature, since Unity only provides debugging support
        for a set of Editors including VSCode and Visual Studio.
-- [X] Add omnisharp-roslyn language server restart keymap (CRUCIAL)
-        **SPACE rl** (rl for Restart Server)
 - [ ] Windows support (CRUCIAL)
 - [ ] Provide a set of default keymaps as a PDF 'cheat sheet' (IMPORTANT)
 - [ ] MacOS support (IMPORTANT)
 - [ ] Add XML comments highlighting (OPTIONAL)
 - [ ] Add GitHub pages support (OPTIONAL)
-- [X] Add support for other programming languages
-       Game developers aren't just tied to using C# so adding support for other
-       languages is really appreciated.
+- [X] Add support for other programming languages (check the **CGNvim** Neovim
+      configuration)
 
 ## (Known) Limitations
 
-- No Unity debugging support. Still questionable whether this could be solved.
-
-- External editor (either Visual Studio, Visual Studio Code or JetBrains Rider)
-  is needed to generate Unity project *.csproj* files which are necessary for
-  proper LSP Functionalities (see previous section
-  **Important Step for Proper LSP Functionalities**).
-
-- When opening a file for the first time, Omnisharp LSP may take a while
-  to start thus a bit of patience is needed.
-
-- Omnisharp start-up may consume a lot of memory. This is a crucial issue that
-we're currently working on solving.
+- No Unity debugging support for the moment. This will be added in the near
+future.
 
 ## FAQ
 
@@ -218,9 +221,9 @@ we're currently working on solving.
 ---
 
 - Q. Why the headache? Why not just use Visual Studio?
-- A. Some people find a great joy in using Neovim. Some other people use it for
-  all their programming tasks thus it would be inefficient for them to transition
-  to Visual Studio or VSCode just for Unity programming.
+- A. Some people find great joy in using Neovim. Some other people use it for
+  all their programming tasks thus it would be inefficient for them to
+  transition to Visual Studio or VSCode just for Unity programming.
 
 ---
 
@@ -231,47 +234,27 @@ we're currently working on solving.
 ---
 
 - Q. Syntax highlighting doesn't seem to work. What should I do?
-- A. When opening Neovim for the first time, for some reason Treesitter does
-  not work (will be fixed). Just open another script and it should work.
+- A. Check whether Treesitter (syntax highlighting plugin) is working properly.
 
 ---
 
 - Q. Why does LSP take so long to provide completion at the start of Neovim?
+(this question was only relevant when Omnisharp LSP was used)
 - A. That's Omnisharp reading your whole project for proper LSP setup. A little
-  bit of patience at the start is needed.
+  bit of patience at the start is needed. As instructed in the beginning of this
+  guide, **just avoid using Omnisharp - it has numerous issues including severe
+  memory leakage problems**.
 
 ---
 
-- Q. LSP stopped working, help!
-- A. Restart Omnisharp by entering `:LspRestart omnisharp` (a restart keymap
-  will be added)
-
----
-
-- Q. Unity's new InputSystem is not detected (or its auto-completion is not
-working). What should I do?
-
-    ![image](https://github.com/walcht/neovim-unity/assets/89390465/9c4f4329-151f-4d6d-88bd-50955404f6fb)
-
-- A. If you're planning to use the new Input System then you have to make sure
-that:
-
-    1. The InputSystem package is installed by checking
-    ```Window > Package Manager > Input System```.
-
-    1. That ```Edit > Project Settings > Player > Active Input Handling*``` is
-    set to ```New``` or ```Both```.
-
-    1. And finally that you regenerate .csproj files (important step for generating
-    .csproj InputSystem files - see picture below):
-
-![InputSystem csproj files](https://github.com/walcht/neovim-unity/assets/89390465/1468955f-5739-4789-9a97-b97d491b37cb)
+- Q. LSP stopped working/does not work, help!
+- A. Check LSP log by entering `:LspInfo` and solve issues accordingly.
 
 ## Feedback
 
-I really enjoy using Neovim and I find it a bit sad that there are no
-properly updated guides on how to set it up with Unity for a proper, fast
-and efficient development environment.
+The objective for this guide and its related projects is to provide a rich
+Neovim development experience for the Unity game engine. Any feedback is more
+than welcome (especially regarding C# LSP details).
 
 ## License
 
@@ -279,6 +262,10 @@ and efficient development environment.
 See LICENSE.txt file for more info.
 
 [neovim_installation]: https://github.com/neovim/neovim/tags
-[nvr_repo]: https://github.com/mhinz/neovim-remote
 [wmctrl_installation]: https://linux.die.net/man/1/wmctrl
 [xclip_repo]: https://github.com/astrand/xclip
+[dotnet_sdk_installation_guide]: https://learn.microsoft.com/en-us/dotnet/core/install/
+[roslyn_lsp_linux]: https://dev.azure.com/azure-public/vside/_artifacts/feed/vs-impl/NuGet/Microsoft.CodeAnalysis.LanguageServer.linux-x64/overview
+[roslyn_lsp_windows]: https://dev.azure.com/azure-public/vside/_artifacts/feed/vs-impl/NuGet/Microsoft.CodeAnalysis.LanguageServer.win-x64/overview
+[roslyn_lsp_macos]: https://dev.azure.com/azure-public/vside/_artifacts/feed/vs-impl/NuGet/Microsoft.CodeAnalysis.LanguageServer.osx-x64/overview
+[com_walcht_ide_neovim]: (https://private-user-images.githubusercontent.com/89390465/469834041-8b59b404-da9d-4aba-8906-6987f235f5ca.png?jwt=eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpc3MiOiJnaXRodWIuY29tIiwiYXVkIjoicmF3LmdpdGh1YnVzZXJjb250ZW50LmNvbSIsImtleSI6ImtleTUiLCJleHAiOjE3NTMyODMyODksIm5iZiI6MTc1MzI4Mjk4OSwicGF0aCI6Ii84OTM5MDQ2NS80Njk4MzQwNDEtOGI1OWI0MDQtZGE5ZC00YWJhLTg5MDYtNjk4N2YyMzVmNWNhLnBuZz9YLUFtei1BbGdvcml0aG09QVdTNC1ITUFDLVNIQTI1NiZYLUFtei1DcmVkZW50aWFsPUFLSUFWQ09EWUxTQTUzUFFLNFpBJTJGMjAyNTA3MjMlMkZ1cy1lYXN0LTElMkZzMyUyRmF3czRfcmVxdWVzdCZYLUFtei1EYXRlPTIwMjUwNzIzVDE1MDMwOVomWC1BbXotRXhwaXJlcz0zMDAmWC1BbXotU2lnbmF0dXJlPTk2YWUxYjY3ZjBhNWVmZTIyZmJiZjZlNDViNDY4MGIxOTk3YWFhODNmZTNjNWNiOTRiZTdmYWE1ODZlN2RiMWYmWC1BbXotU2lnbmVkSGVhZGVycz1ob3N0In0.PKi7EpgvK0h1rEusb3GPj59YENbeyxsSB9s1a93-xEU)
