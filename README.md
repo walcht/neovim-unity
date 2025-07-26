@@ -1,8 +1,6 @@
-# Table of Content
+# About
 
 This project is **not affiliated with Unity Technologies**.
-
-## About
 
 Ready-to-use Neovim configuration with the Unity engine. This repository is 
 a single README file that provides instructions on how to setup Neovim for
@@ -53,7 +51,6 @@ For C# Language Server Protocol (LSP) support, you have to:
 
 1. globally install **.NET SDK >= 9.0**. It can be installed from the following
 official source:
-
 **[.NET SDK installation guide][dotnet_sdk_installation_guide]**
 
 1. download the Roslyn Language Server as a NuGet package from:
@@ -115,7 +112,12 @@ navigate to:
 
 Window -> Package Management -> Package Manager
 -> navigate to plus sign on top left -> Install package from git URL...
--> enter `https://github.com/walcht/com.walcht.ide.neovim.git` -> install
+
+then enter:
+```
+https://github.com/walcht/com.walcht.ide.neovim.git
+```
+and click on install.
 
 Now when navigating to: `Edit -> Preferences -> External Tools` you should
 see `Neovim` in the drop down options.
@@ -268,4 +270,4 @@ See LICENSE.txt file for more info.
 [roslyn_lsp_linux]: https://dev.azure.com/azure-public/vside/_artifacts/feed/vs-impl/NuGet/Microsoft.CodeAnalysis.LanguageServer.linux-x64/overview
 [roslyn_lsp_windows]: https://dev.azure.com/azure-public/vside/_artifacts/feed/vs-impl/NuGet/Microsoft.CodeAnalysis.LanguageServer.win-x64/overview
 [roslyn_lsp_macos]: https://dev.azure.com/azure-public/vside/_artifacts/feed/vs-impl/NuGet/Microsoft.CodeAnalysis.LanguageServer.osx-x64/overview
-[com_walcht_ide_neovim]: (https://private-user-images.githubusercontent.com/89390465/469834041-8b59b404-da9d-4aba-8906-6987f235f5ca.png?jwt=eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpc3MiOiJnaXRodWIuY29tIiwiYXVkIjoicmF3LmdpdGh1YnVzZXJjb250ZW50LmNvbSIsImtleSI6ImtleTUiLCJleHAiOjE3NTMyODMyODksIm5iZiI6MTc1MzI4Mjk4OSwicGF0aCI6Ii84OTM5MDQ2NS80Njk4MzQwNDEtOGI1OWI0MDQtZGE5ZC00YWJhLTg5MDYtNjk4N2YyMzVmNWNhLnBuZz9YLUFtei1BbGdvcml0aG09QVdTNC1ITUFDLVNIQTI1NiZYLUFtei1DcmVkZW50aWFsPUFLSUFWQ09EWUxTQTUzUFFLNFpBJTJGMjAyNTA3MjMlMkZ1cy1lYXN0LTElMkZzMyUyRmF3czRfcmVxdWVzdCZYLUFtei1EYXRlPTIwMjUwNzIzVDE1MDMwOVomWC1BbXotRXhwaXJlcz0zMDAmWC1BbXotU2lnbmF0dXJlPTk2YWUxYjY3ZjBhNWVmZTIyZmJiZjZlNDViNDY4MGIxOTk3YWFhODNmZTNjNWNiOTRiZTdmYWE1ODZlN2RiMWYmWC1BbXotU2lnbmVkSGVhZGVycz1ob3N0In0.PKi7EpgvK0h1rEusb3GPj59YENbeyxsSB9s1a93-xEU)
+[com_walcht_ide_neovim]: https://private-user-images.githubusercontent.com/89390465/469834041-8b59b404-da9d-4aba-8906-6987f235f5ca.png?jwt=eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpc3MiOiJnaXRodWIuY29tIiwiYXVkIjoicmF3LmdpdGh1YnVzZXJjb250ZW50LmNvbSIsImtleSI6ImtleTUiLCJleHAiOjE3NTM1Mjg2NTQsIm5iZiI6MTc1MzUyODM1NCwicGF0aCI6Ii84OTM5MDQ2NS80Njk4MzQwNDEtOGI1OWI0MDQtZGE5ZC00YWJhLTg5MDYtNjk4N2YyMzVmNWNhLnBuZz9YLUFtei1BbGdvcml0aG09QVdTNC1ITUFDLVNIQTI1NiZYLUFtei1DcmVkZW50aWFsPUFLSUFWQ09EWUxTQTUzUFFLNFpBJTJGMjAyNTA3MjYlMkZ1cy1lYXN0LTElMkZzMyUyRmF3czRfcmVxdWVzdCZYLUFtei1EYXRlPTIwMjUwNzI2VDExMTIzNFomWC1BbXotRXhwaXJlcz0zMDAmWC1BbXotU2lnbmF0dXJlPTc1ZjhjYjhlOGVjMGJiMzg1ODFmODAzOTY0ODRlN2UzYWVmOGM3ODA5NThhOWMwYzZjNTAzYWZjOTIyNmQyZWQmWC1BbXotU2lnbmVkSGVhZGVycz1ob3N0In0.W44-36Eupe9Sojor7iDoPeOMxhLwMynWbeEgQIBv4BE
