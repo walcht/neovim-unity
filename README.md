@@ -209,19 +209,15 @@ multiple instances with which the DAP client could be attached.
 > [!CAUTION]
 > In a typical Microsoft manner, you will be in breach of the license terms for
 the extension if you use it for Neovim development. To quote the
-[license terms> (a) Use with In-Scope Products and Services. You may install and use the
-> Software only with Microsoft Visual Studio Code, vscode.dev, GitHub
-> Codespaces (“Codespaces”) from GitHub, Inc. (“GitHub”), and successor
-> Microsoft, GitHub, and other Microsoft affiliates’ products and services
-> (collectively, the “In-Scope Products and Services”).][stupid_license]:
+[license terms][stupid_license]:
+>
+> > (a) Use with In-Scope Products and Services. You may install and use the
+> > Software only with Microsoft Visual Studio Code, vscode.dev, GitHub
+> > Codespaces (“Codespaces”) from GitHub, Inc. (“GitHub”), and successor
+> > Microsoft, GitHub, and other Microsoft affiliates’ products and services
+> > (collectively, the “In-Scope Products and Services”).
 
-> (a) Use with In-Scope Products and Services. You may install and use the
-> Software only with Microsoft Visual Studio Code, vscode.dev, GitHub
-> Codespaces (“Codespaces”) from GitHub, Inc. (“GitHub”), and successor
-> Microsoft, GitHub, and other Microsoft affiliates’ products and services
-> (collectively, the “In-Scope Products and Services”).
-
-For this reason, I started a project to update provide an up-to-date debug
+For this reason, I started a project to provide an up-to-date debug
 adapter under an MIT license.
 
 ## TODO
