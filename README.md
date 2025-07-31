@@ -196,18 +196,45 @@ Make sure to run `:checkhealth` to check if installed plugins are working
 properly. If any issues are encountered then it is, most probably, related to
 some plugin dependencies that are not (or not properly) installed.
 
+## Unity Debugger Support
+
+As the time of writing this, there is no up-to-date **open-source** Unity debug
+adpater project (the previous official [VSCode Unity Debug][depracated_unity_debug]
+is depracated). It is however provided under an MIT license which 
+
+The new official extension for VSCode, albeit closed-source, provides a
+`UnityDebugAdapter.dll` and a `UnityAttachProbe.dll` which \**can be used* to list
+multiple instances with which the DAP client could be attached.
+
+> [!CAUTION]
+> In a typical Microsoft manner, you will be in breach of the license terms for
+the extension if you use it for Neovim development. To quote the
+[license terms> (a) Use with In-Scope Products and Services. You may install and use the
+> Software only with Microsoft Visual Studio Code, vscode.dev, GitHub
+> Codespaces (“Codespaces”) from GitHub, Inc. (“GitHub”), and successor
+> Microsoft, GitHub, and other Microsoft affiliates’ products and services
+> (collectively, the “In-Scope Products and Services”).][stupid_license]:
+
+> (a) Use with In-Scope Products and Services. You may install and use the
+> Software only with Microsoft Visual Studio Code, vscode.dev, GitHub
+> Codespaces (“Codespaces”) from GitHub, Inc. (“GitHub”), and successor
+> Microsoft, GitHub, and other Microsoft affiliates’ products and services
+> (collectively, the “In-Scope Products and Services”).
+
+For this reason, I started a project to update provide an up-to-date debug
+adapter under an MIT license.
+
 ## TODO
 
-- [ ] Add debugger support for C# (CRUCIAL)
-       This is a hard-to-add feature, since Unity only provides debugging support
-       for a set of Editors including VSCode and Visual Studio.
+- [ ] Debugging support for Unity
+      This is probably the most difficult-to-implement feature for this project.
+      There is no Unity debug adaptor that is up-to-date and released under a
+      permissive license (read [Unity Debugger Support][#unity-debugger-support]).
 - [ ] Windows support (CRUCIAL)
 - [ ] Provide a set of default keymaps as a PDF 'cheat sheet' (IMPORTANT)
 - [ ] MacOS support (IMPORTANT)
 - [ ] Add XML comments highlighting (OPTIONAL)
 - [ ] Add GitHub pages support (OPTIONAL)
-- [X] Add support for other programming languages (check the **CGNvim** Neovim
-      configuration)
 
 ## (Known) Limitations
 
@@ -271,3 +298,5 @@ See LICENSE.txt file for more info.
 [roslyn_lsp_windows]: https://dev.azure.com/azure-public/vside/_artifacts/feed/vs-impl/NuGet/Microsoft.CodeAnalysis.LanguageServer.win-x64/overview
 [roslyn_lsp_macos]: https://dev.azure.com/azure-public/vside/_artifacts/feed/vs-impl/NuGet/Microsoft.CodeAnalysis.LanguageServer.osx-x64/overview
 [com_walcht_ide_neovim]: https://private-user-images.githubusercontent.com/89390465/469834041-8b59b404-da9d-4aba-8906-6987f235f5ca.png?jwt=eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpc3MiOiJnaXRodWIuY29tIiwiYXVkIjoicmF3LmdpdGh1YnVzZXJjb250ZW50LmNvbSIsImtleSI6ImtleTUiLCJleHAiOjE3NTM1Mjg2NTQsIm5iZiI6MTc1MzUyODM1NCwicGF0aCI6Ii84OTM5MDQ2NS80Njk4MzQwNDEtOGI1OWI0MDQtZGE5ZC00YWJhLTg5MDYtNjk4N2YyMzVmNWNhLnBuZz9YLUFtei1BbGdvcml0aG09QVdTNC1ITUFDLVNIQTI1NiZYLUFtei1DcmVkZW50aWFsPUFLSUFWQ09EWUxTQTUzUFFLNFpBJTJGMjAyNTA3MjYlMkZ1cy1lYXN0LTElMkZzMyUyRmF3czRfcmVxdWVzdCZYLUFtei1EYXRlPTIwMjUwNzI2VDExMTIzNFomWC1BbXotRXhwaXJlcz0zMDAmWC1BbXotU2lnbmF0dXJlPTc1ZjhjYjhlOGVjMGJiMzg1ODFmODAzOTY0ODRlN2UzYWVmOGM3ODA5NThhOWMwYzZjNTAzYWZjOTIyNmQyZWQmWC1BbXotU2lnbmVkSGVhZGVycz1ob3N0In0.W44-36Eupe9Sojor7iDoPeOMxhLwMynWbeEgQIBv4BE
+[depracated_unity_debug]: https://github.com/Unity-Technologies/vscode-unity-debug
+[stupid_license]: https://marketplace.visualstudio.com/items/VisualStudioToolsForUnity.vstuc/license
