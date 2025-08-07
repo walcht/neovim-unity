@@ -3,6 +3,8 @@
 > [!NOTE]
 > This project is **not affiliated with Unity Technologies**.
 
+![Showcase of Unity Neovim IDE-like editor with LSP support and diagnostics][showcase_0]
+
 Ready-to-use Neovim configuration with the Unity engine. This repository is 
 a single README file that provides instructions on how to setup Neovim for
 Unity game engine development tasks. This project aims to provide both, a
@@ -322,3 +324,4 @@ See LICENSE.txt file for more info.
 [depracated_unity_debug]: https://github.com/Unity-Technologies/vscode-unity-debug
 [stupid_license]: https://marketplace.visualstudio.com/items/VisualStudioToolsForUnity.vstuc/license
 [unity_dap]: https://github.com/walcht/unity-dap
+[showcase_0]: https://raw.githubusercontent.com/walcht/walcht/refs/heads/master/images/neovim-unity-showcase-0.png
