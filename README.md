@@ -1,16 +1,27 @@
 # About
 
-This project is **not affiliated with Unity Technologies**.
+> [!NOTE]
+> This project is **not affiliated with Unity Technologies**.
 
 Ready-to-use Neovim configuration with the Unity engine. This repository is 
 a single README file that provides instructions on how to setup Neovim for
 Unity game engine development tasks. This project aims to provide both, a
 ready-to-use Neovim package and a guide on how to get Neovim
-working with Unity.
+working with Unity all while relying on permissive licenses for thirdy party
+tools/plugins providers (i.e., no Microsoft licenses that forces telemetry)
 
 If you already have your own Neovim configuration and want to know how to get
 it working with Unity, you can easily follow this README as a guide on how to
 do that.
+
+## Target Readers/Users
+
+It is assumed that readers of this guide have a basic knowledge of IDE concepts,
+Neovim, and Lua (and to very little extent C#). In case the reader is new to
+concepts like LSP (language server protocol) and DAP (debug adapter protocol),
+there are collapsed sections under the name `New to X?` describing the concepts
+very briefly but clearly enough to get started with incorporating them into your
+Neovim configuration.
 
 ## Installation
 
@@ -27,11 +38,11 @@ that by following this [guide][neovim_installation].
 
 1. If you already have a Neovim configuration, you can ignore the following
 steps and jump to [Installing Dependencies](#installing-dependencies). It is
-best however to take a look into how the C# LSP is configured in **CGNvim** to
-avoid annoying pitfalls.
+best however to take a look into how the C# LSP and Unity debugging are
+configured in **CGNvim** to avoid annoying pitfalls.
 
 If you want to use the configuration proposed by this project, make sure to do
-a backup:
+a backup of your own configuration (assuming you have one):
 
 ```bash
 mv ~/.config/nvim ~/.config/nvim.bak
@@ -198,18 +209,32 @@ some plugin dependencies that are not (or not properly) installed.
 
 ## Unity Debugger Support
 
-As the time of writing this, there is no up-to-date **open-source** Unity debug
-adpater project (the previous official [VSCode Unity Debug][depracated_unity_debug]
-is depracated). It is however provided under an MIT license which 
+<details>
+<summary>New to the concept of Debug Adapter Protocols (DAP)?</summary>
 
-The new official extension for VSCode, albeit closed-source, provides a
-`UnityDebugAdapter.dll` and a `UnityAttachProbe.dll` which \**can be used* to list
-multiple instances with which the DAP client could be attached.
+### Debug Adapter Protocols
+
+TODO
+
+</details>
+
+The Mono debug adapter for Unity [VSCode Unity Debug][depracated_unity_debug]
+is no longer supported and is deprecated, therefore a fork of the project is
+created at [Unity-DAP][unity_dap] to provide an up-to-date debug adapter for Unity
+(without any VSCode dependencies).
+
+> [!NOTE]
+> [Unity-DAP][unity_dap] only supports debugging applications built using the scripting backend `Mono`
+> (i.e., IL2CPP debugging is not supported). Read the caution below in case debugging
+> IL2CPP-built applications is a necessity for you.
+
+Alternatively, if you want to bebug IL2CPP-built apps then the new official extension
+for VSCode, albeit closed-source, provides a `UnityDebugAdapter.dll` and a `UnityAttachProbe.dll`
+which \**can be used* to list multiple instances with which the DAP client could be attached.
 
 > [!CAUTION]
-> In a typical Microsoft manner, you will be in breach of the license terms for
-the extension if you use it for Neovim development. To quote the
-[license terms> (a) Use with In-Scope Products and Services. You may install and use the
+> You will be in breach of the license terms for the extension if you use
+it for Neovim development. To quote the [license terms> (a) Use with In-Scope Products and Services. You may install and use the
 > Software only with Microsoft Visual Studio Code, vscode.dev, GitHub
 > Codespaces (“Codespaces”) from GitHub, Inc. (“GitHub”), and successor
 > Microsoft, GitHub, and other Microsoft affiliates’ products and services
@@ -221,8 +246,6 @@ the extension if you use it for Neovim development. To quote the
 > Microsoft, GitHub, and other Microsoft affiliates’ products and services
 > (collectively, the “In-Scope Products and Services”).
 
-For this reason, I started a project to update provide an up-to-date debug
-adapter under an MIT license.
 
 ## TODO
 
@@ -300,3 +323,4 @@ See LICENSE.txt file for more info.
 [com_walcht_ide_neovim]: https://private-user-images.githubusercontent.com/89390465/469834041-8b59b404-da9d-4aba-8906-6987f235f5ca.png?jwt=eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpc3MiOiJnaXRodWIuY29tIiwiYXVkIjoicmF3LmdpdGh1YnVzZXJjb250ZW50LmNvbSIsImtleSI6ImtleTUiLCJleHAiOjE3NTM1Mjg2NTQsIm5iZiI6MTc1MzUyODM1NCwicGF0aCI6Ii84OTM5MDQ2NS80Njk4MzQwNDEtOGI1OWI0MDQtZGE5ZC00YWJhLTg5MDYtNjk4N2YyMzVmNWNhLnBuZz9YLUFtei1BbGdvcml0aG09QVdTNC1ITUFDLVNIQTI1NiZYLUFtei1DcmVkZW50aWFsPUFLSUFWQ09EWUxTQTUzUFFLNFpBJTJGMjAyNTA3MjYlMkZ1cy1lYXN0LTElMkZzMyUyRmF3czRfcmVxdWVzdCZYLUFtei1EYXRlPTIwMjUwNzI2VDExMTIzNFomWC1BbXotRXhwaXJlcz0zMDAmWC1BbXotU2lnbmF0dXJlPTc1ZjhjYjhlOGVjMGJiMzg1ODFmODAzOTY0ODRlN2UzYWVmOGM3ODA5NThhOWMwYzZjNTAzYWZjOTIyNmQyZWQmWC1BbXotU2lnbmVkSGVhZGVycz1ob3N0In0.W44-36Eupe9Sojor7iDoPeOMxhLwMynWbeEgQIBv4BE
 [depracated_unity_debug]: https://github.com/Unity-Technologies/vscode-unity-debug
 [stupid_license]: https://marketplace.visualstudio.com/items/VisualStudioToolsForUnity.vstuc/license
+[unity_dap]: https://github.com/walcht/unity-dap
