@@ -5,6 +5,10 @@
 
 ![Showcase of Unity Neovim IDE-like editor with LSP support and diagnostics][showcase_0]
 
+Debugging is also supported:
+
+![Showcase of Unity Neovim IDE-like editor's debugging support][showcase_1]
+
 Ready-to-use Neovim configuration with the Unity engine. This repository is 
 a single README file that provides instructions on how to setup Neovim for
 Unity game engine development tasks. This project aims to provide both, a
@@ -41,7 +45,7 @@ that by following this [guide][neovim_installation].
 1. If you already have a Neovim configuration, you can ignore the following
 steps and jump to [Installing Dependencies](#installing-dependencies). It is
 best however to take a look into how the C# LSP and Unity debugging are
-configured in **CGNvim** to avoid annoying pitfalls.
+configured in [**CGNvim**][cgnvim] to avoid annoying pitfalls.
 
 If you want to use the configuration proposed by this project, make sure to do
 a backup of your own configuration (assuming you have one):
@@ -51,7 +55,7 @@ mv ~/.config/nvim ~/.config/nvim.bak
 mv ~/.local/share/nvim ~/.local/share/nvim.bak
 ```
 
-1. Then clone the **CGNvim** repository (Neovim configuration for general
+1. Then clone the [**CGNvim**][cgnvim] repository (Neovim configuration for general
 purpose computer graphics development):
 
 ```bash
@@ -225,6 +229,62 @@ is no longer supported and is deprecated, therefore a fork of the project is
 created at [Unity-DAP][unity_dap] to provide an up-to-date debug adapter for Unity
 (without any VSCode dependencies).
 
+
+To add debugging support for Unity, you have to:
+
+1. install **Mono**
+
+2. install the [Unity debug adapter][unity_dap] by cloning the repo and building from source:
+
+ ```bash
+ git clone https://github.com/walcht/unity-dap.git
+ cd unity-dap
+ dotnet build unity-debug-adapter/unity-debug-adapter.csproj --configuration=Release
+ ```
+
+3. Assuming you are using the [CGNvim][cgnvim] Neovim configuration, navigate
+to `~/.config/nvim/lua/cgnvim/daps/unity.lua` and change the `unity-debug-adapter.exe`
+path (also optionally change `mono` path in case it is not in PATH):
+
+ ```lua
+ -- adjust mono path - do not use Unity's integrated MonoBleedingEdge
+ command = "mono",
+ -- adjust unity-debug-adapter.exe path
+ args = {
+   "<path-to-unity-debug-adapter.exe>",
+   "--log-level=none",
+   -- "--log-file=<path-to-log-file>",
+ },
+ ```
+
+ 4. If you are debugging a Unity editor instance, make sure Unity is set to `Mode: Debug`
+ and if you are debugging a Unity player instance, then make sure that it is debuggable
+ (check the settings on how to do that).
+
+ 5. Open a C# script, set some breakpoints and continue (<F5> key or by `:DapContinue`)
+
+ 4. The Unity DAP connects to the Unity Mono debugger via a TCP socket, therefore
+ you have to provide an IP address and a port. On Linux, you can figure the debugging
+ port of a Unity editor instance by checking the output of:
+
+ ```bash
+ ss -tlp | grep 'Unity'
+ ```
+ which yields an output like this:
+
+ ```
+ LISTEN 0      16         127.0.0.1:56365       0.0.0.0:*    users:(("UnityShaderComp",pid=306581,fd=128),("Unity",pid=306365,fd=128))
+ LISTEN 0      16         127.0.0.1:56451       0.0.0.0:*    users:(("UnityShaderComp",pid=322591,fd=47),("Unity",pid=322451,fd=47))  
+ LISTEN 0      16         127.0.0.1:56457       0.0.0.0:*    users:(("UnityShaderComp",pid=322609,fd=47),("Unity",pid=322457,fd=47))
+ ```
+
+ the debugging IP is 127.0.0.1 and the port is 56365.
+ (ideally the list of endpoints to connect to should be listed automatically - will be implemented in the near future)
+
+ In case you are not using the CGNvim Neovim configuration,
+ just copy its [DAP configuration for Unity][cgnvim_unity_dap]
+ and adapt it to your configuration.
+
 > [!NOTE]
 > [Unity-DAP][unity_dap] only supports debugging applications built using the scripting backend `Mono`
 > (i.e., IL2CPP debugging is not supported). Read the caution below in case debugging
@@ -249,10 +309,6 @@ adapter under an MIT license.
 
 ## TODO
 
-- [ ] Debugging support for Unity
-      This is probably the most difficult-to-implement feature for this project.
-      There is no Unity debug adaptor that is up-to-date and released under a
-      permissive license (read [Unity Debugger Support][#unity-debugger-support]).
 - [ ] Windows support (CRUCIAL)
 - [ ] Provide a set of default keymaps as a PDF 'cheat sheet' (IMPORTANT)
 - [ ] MacOS support (IMPORTANT)
@@ -325,3 +381,6 @@ See LICENSE.txt file for more info.
 [stupid_license]: https://marketplace.visualstudio.com/items/VisualStudioToolsForUnity.vstuc/license
 [unity_dap]: https://github.com/walcht/unity-dap
 [showcase_0]: https://raw.githubusercontent.com/walcht/walcht/refs/heads/master/images/neovim-unity-showcase-0.png
+[cgnvim]: https://github.com/walcht/CGNvim
+[cgnvim_unity_dap]: https://github.com/walcht/CGNvim/blob/master/lua/cgnvim/daps/unity.lua
+[showcase_1]: https://raw.githubusercontent.com/walcht/walcht/refs/heads/master/images/neovim-unity-showcase-1.png
