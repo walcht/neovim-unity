@@ -232,30 +232,30 @@ created at [Unity-DAP][unity_dap] to provide an up-to-date debug adapter for Uni
 
 To add debugging support for Unity, you have to:
 
-1. install **Mono**
+1. install [**Mono**][mono]
 
-2. install the [Unity debug adapter][unity_dap] by cloning the repo and building from source:
+2. install the [Unity debug adapter][unity_dap] by cloning the repo and building it from source:
 
- ```bash
- git clone https://github.com/walcht/unity-dap.git
- cd unity-dap
- dotnet build unity-debug-adapter/unity-debug-adapter.csproj --configuration=Release
- ```
+     ```bash
+     git clone https://github.com/walcht/unity-dap.git
+     cd unity-dap
+     dotnet build unity-debug-adapter/unity-debug-adapter.csproj --configuration=Release
+     ```
 
 3. Assuming you are using the [CGNvim][cgnvim] Neovim configuration, navigate
 to `~/.config/nvim/lua/cgnvim/daps/unity.lua` and change the `unity-debug-adapter.exe`
 path (also optionally change `mono` path in case it is not in PATH):
 
- ```lua
- -- adjust mono path - do not use Unity's integrated MonoBleedingEdge
- command = "mono",
- -- adjust unity-debug-adapter.exe path
- args = {
-   "<path-to-unity-debug-adapter.exe>",
-   "--log-level=none",
-   -- "--log-file=<path-to-log-file>",
- },
- ```
+     ```lua
+     -- adjust mono path - do not use Unity's integrated MonoBleedingEdge
+     command = "mono",
+     -- adjust unity-debug-adapter.exe path
+     args = {
+       "<path-to-unity-debug-adapter.exe>",
+       "--log-level=none",  -- optional log level argument: tace | debug | info | warn | error | critical | none
+       -- "--log-file=<path-to-log-file>",  -- optional path to log file (logs to stderr in case this is not provided)
+     },
+     ```
 
  4. If you are debugging a Unity editor instance, make sure Unity is set to `Mode: Debug`
  and if you are debugging a Unity player instance, then make sure that it is debuggable
@@ -267,19 +267,20 @@ path (also optionally change `mono` path in case it is not in PATH):
  you have to provide an IP address and a port. On Linux, you can figure the debugging
  port of a Unity editor instance by checking the output of:
 
- ```bash
- ss -tlp | grep 'Unity'
- ```
- which yields an output like this:
+     ```bash
+     ss -tlp | grep 'Unity'
+     ```
 
- ```
- LISTEN 0      16         127.0.0.1:56365       0.0.0.0:*    users:(("UnityShaderComp",pid=306581,fd=128),("Unity",pid=306365,fd=128))
- LISTEN 0      16         127.0.0.1:56451       0.0.0.0:*    users:(("UnityShaderComp",pid=322591,fd=47),("Unity",pid=322451,fd=47))  
- LISTEN 0      16         127.0.0.1:56457       0.0.0.0:*    users:(("UnityShaderComp",pid=322609,fd=47),("Unity",pid=322457,fd=47))
- ```
+     which yields an output like this:
 
- the debugging IP is 127.0.0.1 and the port is 56365.
- (ideally the list of endpoints to connect to should be listed automatically - will be implemented in the near future)
+     ```
+     LISTEN 0      16         127.0.0.1:56365       0.0.0.0:*    users:(("UnityShaderComp",pid=306581,fd=128),("Unity",pid=306365,fd=128))
+     LISTEN 0      16         127.0.0.1:56451       0.0.0.0:*    users:(("UnityShaderComp",pid=322591,fd=47),("Unity",pid=322451,fd=47))  
+     LISTEN 0      16         127.0.0.1:56457       0.0.0.0:*    users:(("UnityShaderComp",pid=322609,fd=47),("Unity",pid=322457,fd=47))
+     ```
+
+     the debugging IP is 127.0.0.1 and the port is 56365.
+     (ideally the list of endpoints to connect to should be listed automatically - will be implemented in the near future)
 
  In case you are not using the CGNvim Neovim configuration,
  just copy its [DAP configuration for Unity][cgnvim_unity_dap]
@@ -384,3 +385,4 @@ See LICENSE.txt file for more info.
 [cgnvim]: https://github.com/walcht/CGNvim
 [cgnvim_unity_dap]: https://github.com/walcht/CGNvim/blob/master/lua/cgnvim/daps/unity.lua
 [showcase_1]: https://raw.githubusercontent.com/walcht/walcht/refs/heads/master/images/neovim-unity-showcase-1.png
+[mono]: https://www.mono-project.com/download/stable/
