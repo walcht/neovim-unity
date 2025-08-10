@@ -316,23 +316,22 @@ adapter under an MIT license.
 - [ ] Add XML comments highlighting (OPTIONAL)
 - [ ] Add GitHub pages support (OPTIONAL)
 
-## (Known) Limitations
-
-- No Unity debugging support for the moment. This will be added in the near
-future.
-
 ## FAQ
 
-- Q. Why not use csharp-ls?
-- A. Serious problems on Ubuntu 22.04 (failures to detect .NET framework 4.7.X
-  assemblies, metadata warnings, etc...).
+- Q. Why not use omnisharp or csharp-ls?
+- A. Roslyn LS is the *new* officially suporrted LSP for C#. Omnisharp is not
+  well maintained, can be exteremely slow and unresponsive, and has a potential
+  memory leak issue. CSharp-LS on the other hand is a hacky LSP (as per the
+  description in its repository) and is not officially supported.
 
 ---
 
-- Q. Why the headache? Why not just use Visual Studio?
+- Q. Why the headache? Why not just use Visual Studio/VSCode?
 - A. Some people find great joy in using Neovim. Some other people use it for
   all their programming tasks thus it would be inefficient for them to
-  transition to Visual Studio or VSCode just for Unity programming.
+  transition to Visual Studio or VSCode just for Unity programming. Also,
+  Neovim consumes less resources and you get more control into how much
+  you want it to act as an IDE.
 
 ---
 
@@ -347,12 +346,12 @@ future.
 
 ---
 
-- Q. Why does LSP take so long to provide completion at the start of Neovim?
-(this question was only relevant when Omnisharp LSP was used)
-- A. That's Omnisharp reading your whole project for proper LSP setup. A little
-  bit of patience at the start is needed. As instructed in the beginning of this
-  guide, **just avoid using Omnisharp - it has numerous issues including severe
-  memory leakage problems**.
+- Q. Why does LSP take so long (e.g., couple of seconds) to provide completion
+  at the start of Neovim?
+- A. The language server has to read your whole project (or part of it - depending on
+  the LSP settings) for proper LSP setup. A little bit of patience at the start is needed.
+  As instructed in the beginning of this guide, **just avoid using Omnisharp -
+  it has numerous issues including severe memory leakage problems**.
 
 ---
 
