@@ -83,6 +83,15 @@ sudo pacman -S --noconfirm --needed gcc make git ripgrep fd unzip neovim
 
 <details><summary>Windows</summary>
 
+There are a couple of ways you can install NeoVim on Windows 10/11, either:
+
+1. Download the `nvim-win64.msi` executable from the [latest official release
+   page][nvim-release-page] and execute it.
+
+Or, you can use a package manager for Windows and download it from there
+(note however that this was problematic for me due to an obscure issue -
+see [#13]):
+
 1. install [chocolatey](https://chocolatey.org/install)
 either follow the instructions on the page or use winget,
 run in cmd as **admin**:
@@ -428,3 +437,5 @@ MIT License. See LICENSE.txt file for more info.
 [cgnvim]: https://github.com/walcht/CGNvim
 [cgnvim_unity_dap]: https://github.com/walcht/CGNvim/blob/master/lua/cgnvim/daps/unity.lua
 [mono]: https://www.mono-project.com/download/stable/
+[nvim-release-page]: https://github.com/neovim/neovim/blob/master/INSTALL.md
+[#13]: https://github.com/walcht/neovim-unity/issues/13
