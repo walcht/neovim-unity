@@ -9,10 +9,13 @@ Debugging is also supported:
 
 ![Showcase of Unity Neovim IDE-like editor's debugging support][showcase_1]
 
+Showcase video on Windows 10:
+[Showcase of Unity Neovim IDE-like editor on Windows 10](https://github.com/user-attachments/assets/56cf00ac-2fe4-4182-bb8b-4eebb31a53ea)
+
 Ready-to-use Neovim configuration with the Unity engine. This repository is 
 a single README file that provides instructions on how to setup Neovim for
-Unity game engine development tasks. This project aims to provide both, a
-ready-to-use Neovim package and a guide on how to get Neovim
+Unity game engine development tasks on both Windows 10/11 and Linux. This project
+aims to provide both, a ready-to-use Neovim package and a guide on how to get Neovim
 working with Unity all while relying on permissive licenses for thirdy party
 tools/plugins providers (i.e., no Microsoft licenses that forces telemetry)
 
@@ -31,8 +34,8 @@ Neovim configuration.
 
 ## Installation
 
-This Installation guide targets **Linux distributions**. A guide on how to
-properly set this for Windows(and MacOS) is yet to be provided.
+This Installation guide targets both **Linux distributions** and **Windows 10/11**.
+A guide on how to properly set this for MacOS is yet to be provided.
 
 Neovim installation commands on:
 
@@ -151,7 +154,7 @@ official source:
 2. extract it (NugGets are ZIP archives) at some location of your choice
 (that we hereafter refer to as **<roslyn_ls_path>**):
 
-3. open the Roslyn LSP configuration file (or your custom Neovim's Roslyn LS
+3. open the Roslyn LS configuration file (or your custom Neovim's Roslyn LS
 configuration file) using some text editor:
 
     ```bash
@@ -283,6 +286,10 @@ created at [Unity-DAP][unity_dap] to provide an up-to-date debug adapter for Uni
 (without any VSCode dependencies).
 
 
+> [!NOTE]
+> [Unity-DAP][unity_dap] has NOT been yet tested on Windows 10/11 platforms. Testing
+> and, potentially, support will be added shortly.
+
 To add debugging support for Unity, you have to:
 
 1. install [**Mono**][mono]
@@ -363,7 +370,6 @@ adapter under an MIT license.
 
 ## TODO
 
-- [ ] Windows support (CRUCIAL)
 - [ ] Provide a set of default keymaps as a PDF 'cheat sheet' (IMPORTANT)
 - [ ] MacOS support (IMPORTANT)
 - [ ] Add XML comments highlighting (OPTIONAL)
@@ -423,6 +429,7 @@ MIT License. See LICENSE.txt file for more info.
 
 [showcase_0]: https://github.com/user-attachments/assets/daf91384-798c-4515-8b99-09bc49361b8c
 [showcase_1]: https://github.com/user-attachments/assets/b0212c86-516f-45cf-87be-fc6dee90c08f
+[showcase_2]: https://github.com/user-attachments/assets/56cf00ac-2fe4-4182-bb8b-4eebb31a53ea
 [neovim_installation]: https://github.com/neovim/neovim/tags
 [wmctrl_installation]: https://linux.die.net/man/1/wmctrl
 [xclip_repo]: https://github.com/astrand/xclip
