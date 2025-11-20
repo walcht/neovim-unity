@@ -433,7 +433,6 @@ MIT License. See LICENSE.txt file for more info.
 
 [showcase_0]: https://github.com/user-attachments/assets/daf91384-798c-4515-8b99-09bc49361b8c
 [showcase_1]: https://github.com/user-attachments/assets/b0212c86-516f-45cf-87be-fc6dee90c08f
-[showcase_2]: https://github.com/user-attachments/assets/56cf00ac-2fe4-4182-bb8b-4eebb31a53ea
 [neovim_installation]: https://github.com/neovim/neovim/tags
 [wmctrl_installation]: https://linux.die.net/man/1/wmctrl
 [xclip_repo]: https://github.com/astrand/xclip
