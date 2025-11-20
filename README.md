@@ -10,7 +10,11 @@ Debugging is also supported:
 ![Showcase of Unity Neovim IDE-like editor's debugging support][showcase_1]
 
 Showcase video on Windows 10:
-[Showcase of Unity Neovim IDE-like editor on Windows 10](https://github.com/user-attachments/assets/56cf00ac-2fe4-4182-bb8b-4eebb31a53ea)
+
+https://github.com/user-attachments/assets/9990fb30-dcee-45ee-91fe-05a13b36b160
+
+
+
 
 Ready-to-use Neovim configuration with the Unity engine. This repository is 
 a single README file that provides instructions on how to setup Neovim for
