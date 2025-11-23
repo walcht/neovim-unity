@@ -189,20 +189,20 @@ Neovim configuration for computer graphics development.
 
 <details><summary>use proposed CGNvim configuration</summary>
 
-1. If you already have your own Neovim configuration then you can follow
-the guide below on how to set it up for Unity.
+1. If you already have your own Neovim configuration then make sure to do a
+backup before proceeding:
 
-  ```bash
-  mv ~/.config/nvim ~/.config/nvim.bak
-  mv ~/.local/share/nvim ~/.local/share/nvim.bak
-  ```
+    ```bash
+    mv ~/.config/nvim ~/.config/nvim.bak
+    mv ~/.local/share/nvim ~/.local/share/nvim.bak
+    ```
 
 1. Then clone the [**CGNvim**][cgnvim] repository (Neovim configuration
 for general purpose computer graphics development):
 
-  ```bash
-  git clone https://github.com/walcht/CGNvim.git ~/.config/nvim
-  ```
+    ```bash
+    git clone https://github.com/walcht/CGNvim.git ~/.config/nvim
+    ```
 
 1. open the Roslyn LS configuration file (or your custom Neovim's Roslyn LS
 configuration file) using some text editor:
@@ -211,9 +211,9 @@ configuration file) using some text editor:
     nvim ~/.config/nvim/lua/cgnvim/lsps/roslyn_ls.lua
     ```
 
-and change the `cmd` path to where you extracted/installed the Roslyn LSP
-(remember that **<roslyn_ls_path>** is a placeholder to where you have installed
-Roslyn LS):
+   and change the `cmd` path to where you extracted/installed the Roslyn LSP
+   (remember that **<roslyn_ls_path>** is a placeholder to where you have installed
+   Roslyn LS):
 
     ```lua
     cmd = {
@@ -229,21 +229,22 @@ Roslyn LS):
 1. Run `nvim` on anything so that you trigger the installation of dependencies
 then run `:checkhealth` and solve potential issues (some dependencies may
 require, for instance, Python3 and you may not have it on your system, etc).
+
 </details>
 
 <details><summary>adjust your own Neovim configuration</summary>
 
-It is assumed that you know Lua (at least the basics) and know how to configure
+- It is assumed that you know Lua (at least the basics) and know how to configure
 your Neovim setup (also very basic stuff - nothing advanced). The following
 steps will not make any organizational assumptions and it is assumed that you
 are able to take the following snippets and integrate them within your own
-Neovim configuration. That being said, start by setting up the Roslyn LS:
+Neovim configuration.
 
-1. We will make use of Neovim's core LSP functionalities and no external
-dependencies - no plugins, no nvim-config, just plain Neovim. Copy the following
-Lua script somewhere into your configuration (e.g., in your config's `init`)
-and make sure to update **<roslyn_ls_path>** to the path of your installed
-Roslyn LS:
+1. We will make use of Neovim's core LSP functionalities and
+no external dependencies - no plugins, no nvim-config, just plain Neovim. Copy
+the following Lua script somewhere into your configuration (e.g., in your
+config's `init`) and make sure to update **<roslyn_ls_path>** to the path of
+your installed Roslyn LS:
 
     ```lua
     --- This will be called on LS initialization to request Roslyn to open the
@@ -477,34 +478,19 @@ Roslyn LS:
     ```
 
 1. then to setup the DAP configuration for Unity usage (only Mono backend is
-supported), see: [Unity Debugger Support](#Unity-Debugger-Support0
+supported), see: [Unity Debugger Support](#Unity-Debugger-Support0)
 
 </details>
-
-#### Installing Plugin Dependencies
-
-Some plugins require external tools to be installed.
-
-For a start, make sure the latest versions of these are installed:
-
-1. Git
-2. (optional) NPM
-3. (optional) Python >= 3.9
-
-Type `:checkhealth` in a Neovim instance to check for missing dependencies.
-Plugins with missing dependencies should be clearly identified and a simple
-internet search with the dependency's name will yield the official installation
-guide.
 
 #### Important Step for Proper LSP Functionalities
 
 For LSP to work properly *.csproj* files have to be generated from the project
-files. If you enter the command `:LspInfo` after opening a .cs file from a
-Unity project, you might notice that the project's directory root wasn't
-detected (see image below). The project directory has to be detected for
-Omnisharp to work properly (Think of across-files go-to definitions and
-references or classes defined in external modules like UnityEngine, UnityEditor
-etc.).
+files. If you enter the command `:checkhealth vim.lsp` (or `:LspInfo` if you are
+using CGNvim) after opening a .cs file from a Unity project, you might notice
+that the project's directory root wasn't detected (see image below). The project
+directory has to be detected for Omnisharp to work properly (Think of
+across-files go-to definitions and references or classes defined in external
+modules like UnityEngine, UnityEditor etc.).
 
 #### Is Everything Working Fine?
 
@@ -512,9 +498,10 @@ Getting a C# LSP (in this case Roslyn LS) to work properly for a Unity project
 can be frustrating.
 
 To debug LSP issues, make sure that the C# LSP is active by entering the command
-`:LspInfo` and checking the output. Do also check the LSP logs using the command
-`:LspLog` (important to note that a lot of LSP *errors* and *warnings* can be
-safely ignored).
+`:checkhealth vim.lsp` (or `:LspInfo` if you use CGNvim) and checking the
+output. Do also check the LSP logs (using the cmd `:LspLog` if you use CGNvim)
+(important to note that a lot of LSP *errors* and *warnings* can be safely
+ignored).
 
 Make sure to run `:checkhealth` to check if installed plugins are working
 properly. If any issues are encountered then it is, most probably, related to
@@ -530,6 +517,7 @@ some plugin dependencies that are not (or not properly) installed.
 TODO
 
 </details>
+
 
 The Mono debug adapter for Unity [VSCode Unity Debug][depracated_unity_debug]
 is no longer supported and is deprecated, therefore a fork of the project is
@@ -553,84 +541,87 @@ I have tested it and it does NOT work)
      dotnet build unity-debug-adapter/unity-debug-adapter.csproj --configuration=Release
      ```
 
-1. depending on which Neovim configuration you are using, adjust your [nvim-dap][nvim-dap]
-configuration by entering the path to your just-installed Unity debug adapter:
+1. depending on which Neovim configuration you are using, adjust your
+[nvim-dap][nvim-dap] configuration by entering the path to your just-installed
+Unity debug adapter:
 
-  - <details><summary>use proposed CGNvim configuration</summary>
-  Assuming you are using the [CGNvim][cgnvim] Neovim configuration, navigate
-  to `~/.config/nvim/lua/cgnvim/daps/unity.lua` and change the
-  `unity-debug-adapter.exe` path (also optionally change `mono` path in case it is
-  not in PATH):
-  
-       ```lua
-       -- adjust mono path - do not use Unity's integrated MonoBleedingEdge
-       command = "mono",
-       -- adjust unity-debug-adapter.exe path
-       args = {
-         "<path-to-unity-debug-adapter.exe>",
-         "--log-level=none",  -- optional log level argument: tace | debug | info | warn | error | critical | none
-         -- "--log-file=<path-to-log-file>",  -- optional path to log file (logs to stderr in case this is not provided)
-       },
-       ```
-  </details>
+   <details><summary>use proposed CGNvim configuration</summary>
+   Assuming you are using the [CGNvim][cgnvim] Neovim configuration, navigate
+   to `~/.config/nvim/lua/cgnvim/daps/unity.lua` and change the
+   `unity-debug-adapter.exe` path (also optionally change `mono` path in case it is
+   not in PATH):
 
-  - <details><summary>adjust your own Neovim configuration</summary>
-  To setup Unity DA for your own Neovim configuration, make sure that you have
-  [nvim-dap][nvim-dap] Neovim plugin installed and copy the following Lua script
-  somewhere into your configuration (e.g., in your config's `init`) and make
-  sure to update **<unity_debug_adapter_exe>** to the path of your
-  just-installed Unity DA (also optionally change `mono` path in case it is not
-  in PATH):
-
-  ```lua
-  local dap = require("dap")
-  
-  dap.adapters.unity = function(clbk, config)
-    -- options passed to unity-debug-adapter.exe
-  
-    -- when connecting to a running Unity Editor, the TCP address of the listening
-    -- connection is localhost
-    -- on Linux, use: ss -tlp | grep 'Unity' to find the debugger connection
-    vim.ui.input(
-      { prompt = "address [127.0.0.1]: ", default = "127.0.0.1" },
-      function(result)
-        config.address = result
-      end
-    )
-    -- then prompt the user for which port the DA should connect to
-    vim.ui.input({ prompt = "port: " }, function(result)
-      config.port = tonumber(result)
-    end)
-    clbk({
-      type = "executable",
-      -- adjust mono path - do NOT use Unity's integrated MonoBleedingEdge
+      ```lua
+      -- adjust mono path - do not use Unity's integrated MonoBleedingEdge
       command = "mono",
       -- adjust unity-debug-adapter.exe path
       args = {
-        -- get and install Unity debug adapter from:
-        -- https://github.com/walcht/unity-dap
-        -- then adjust the following path to where the installed executable is
-        "<unity_debug_adapter_exe_path>",
-        -- optional log level argument: trace | debug | info | warn | error | critical | none
-        "--log-level=error",
-        -- optional path to log file (logs to stderr in case this is not provided)
-        -- "--log-file=<path_to_log_file_txt>",
+        "<path-to-unity-debug-adapter.exe>",
+        "--log-level=none",  -- optional log level argument: tace | debug | info | warn | error | critical | none
+        -- "--log-file=<path-to-log-file>",  -- optional path to log file (logs to stderr in case this is not provided)
       },
-    })
-  end
-  
-  -- make sure NOT to override other C# DAP configurations
-  if dap.configurations.cs == nil then
-    dap.configurations.cs = {}
-  end
-  
-  table.insert(dap.configurations.cs, {
-    name = "Unity Editor/Player Instance [Mono]",
-    type = "unity",
-    request = "attach",
-  })
-  ```
-  </details>
+      ```
+
+   </details>
+    
+   <details><summary>adjust your own Neovim configuration</summary>
+   To setup Unity DA for your own Neovim configuration, make sure that you have
+   [nvim-dap][nvim-dap] Neovim plugin installed and copy the following Lua script
+   somewhere into your configuration (e.g., in your config's `init`) and make
+   sure to update **<unity_debug_adapter_exe>** to the path of your
+   just-installed Unity DA (also optionally change `mono` path in case it is not
+   in PATH):
+   
+     ```lua
+     local dap = require("dap")
+     
+     dap.adapters.unity = function(clbk, config)
+       -- options passed to unity-debug-adapter.exe
+     
+       -- when connecting to a running Unity Editor, the TCP address of the listening
+       -- connection is localhost
+       -- on Linux, use: ss -tlp | grep 'Unity' to find the debugger connection
+       vim.ui.input(
+         { prompt = "address [127.0.0.1]: ", default = "127.0.0.1" },
+         function(result)
+           config.address = result
+         end
+       )
+       -- then prompt the user for which port the DA should connect to
+       vim.ui.input({ prompt = "port: " }, function(result)
+         config.port = tonumber(result)
+       end)
+       clbk({
+         type = "executable",
+         -- adjust mono path - do NOT use Unity's integrated MonoBleedingEdge
+         command = "mono",
+         -- adjust unity-debug-adapter.exe path
+         args = {
+           -- get and install Unity debug adapter from:
+           -- https://github.com/walcht/unity-dap
+           -- then adjust the following path to where the installed executable is
+           "<unity_debug_adapter_exe_path>",
+           -- optional log level argument: trace | debug | info | warn | error | critical | none
+           "--log-level=error",
+           -- optional path to log file (logs to stderr in case this is not provided)
+           -- "--log-file=<path_to_log_file_txt>",
+         },
+       })
+     end
+     
+     -- make sure NOT to override other C# DAP configurations
+     if dap.configurations.cs == nil then
+       dap.configurations.cs = {}
+     end
+     
+     table.insert(dap.configurations.cs, {
+       name = "Unity Editor/Player Instance [Mono]",
+       type = "unity",
+       request = "attach",
+     })
+     ```
+
+   </details>
 
 1. if you are debugging a Unity editor instance, make sure Unity is set to
 `Mode: Debug` and if you are debugging a Unity player instance, then make sure
@@ -758,3 +749,4 @@ MIT License. See LICENSE.txt file for more info.
 [mono]: https://www.mono-project.com/download/stable/
 [nvim-release-page]: https://github.com/neovim/neovim/blob/master/INSTALL.md
 [#13]: https://github.com/walcht/neovim-unity/issues/13
+[nvim-dap]: https://github.com/mfussenegger/nvim-dap
