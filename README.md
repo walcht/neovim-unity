@@ -176,7 +176,7 @@ Adjust which packages to generate the .csproj files for (you will only get LSP
 functionalities for those selected packages and you might - not verified - get
 worse performance the more the selected):
 
-![Unity's external tools menu][com_walcht_ide_neovim]
+<img width="521" height="258" alt="neovim-unity-ide-external-tools" src="https://github.com/user-attachments/assets/37020f12-b918-409a-88c7-d82a2e97576a" />
 
 Now try to open a C# script from you project and keep an eye on the
 notifications that might pop-up.
