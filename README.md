@@ -478,7 +478,7 @@ your installed Roslyn LS:
     ```
 
 1. then to setup the DAP configuration for Unity usage (only Mono backend is
-supported), see: [Unity Debugger Support](#Unity-Debugger-Support0)
+supported), see: [Unity Debugger Support](#Unity-Debugger-Support)
 
 </details>
 
@@ -671,7 +671,7 @@ Neovim development. To quote the [license terms][stupid_license]:
 > > Microsoft, GitHub, and other Microsoft affiliates’ products and services
 > > (collectively, the “In-Scope Products and Services”).
 
-For this reason, I started the [Unity DA][unity-dap] project to provide an
+For this reason, I started the [Unity DA][unity_dap] project to provide an
 up-to-date debug adapter under a permissive license.
 
 ## TODO
