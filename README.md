@@ -91,6 +91,10 @@ There are a couple of ways you can install NeoVim on Windows 10/11, either:
 1. Download the `nvim-win64.msi` executable from the [latest official release
    page][nvim-release-page] and execute it.
 
+1. Or if you want to use WSL2 (Windows Subsystem for Linux), you can follow
+   the installation guide for your installed Linux distribution and then make
+   sure to read [Setting Neovim in WSL with Unity Projects in Windows](#Setting-Neovim-in-WSL-with-Unity-Projects-in-Windows).
+
 Or, you can use a package manager for Windows and download it from there
 (note however that this was problematic for me due to an obscure issue -
 see [#13]):
@@ -674,9 +678,85 @@ Neovim development. To quote the [license terms][stupid_license]:
 For this reason, I started the [Unity DA][unity_dap] project to provide an
 up-to-date debug adapter under a permissive license.
 
+## Setting Neovim in WSL with Unity Projects in Windows
+
+If you want to use Neovim within WSL2 (Windows Subsystem for Linux) and *connect*
+it with Unity projects under Windows then you have to:
+
+  1. open WSL2 and run (`<windows-host-ip>` now refers to the outputed IP):
+     
+     ```bash
+     ip route show | grep -i default | awk '{ print $3}'
+     ```
+     
+     Why? For a program running on WSL2 (a whole different machine - somewhat) to
+     communicate with a program running on Windows host, you have to get its IP.
+     Read this official guide for details: [Accessing network applications with WSL][windows-wsl].
+     
+  1. adjust the Roslyn LS's config's `cmd` as such:
+     
+     ```lua
+     local roslyn_ls_config = {
+      -- ...
+      cmd = vim.lsp.rpc.connect(<windows-host-ip>, <port>),
+      -- ...
+      }
+     ```
+
+     `<port>` can be any available port: example: `56777`.
+     What this does is to tell the Neovim LSP client to connect to an LS
+     via the IP socket `<windows-host-ip>:<port>` (does not matter where
+     the other LS is running - as long as its socket endpoint is reachable).
+
+  1. install and build the [LSP IP Socket Adapter][lsp-ip-socket-adapter] (or just
+     get the DLL directly from the [release page][lspadapter-releases]) and run as such:
+
+     ```PowerShell
+     LSPTCPSocketAdapter.exe <windows-host-ip> <port> dotnet "<roslyn-ls-path> --logLevel=Error --extensionLogDirectory=log --stdio" --mount=/mnt/c
+     ```
+
+  1. now run Neovim on a valid C# file/project (i.e., a project with generated csproj files)
+     and you should see LSP support.
+
+     Why install an additional program, this is already too complicated? (you may
+     ask) - Well, as the time of writing this, Roslyn LS does NOT provided a sockets
+     IP communication mechanism and one can only communicate with it via its stdin/stdout
+     or pipes (which do not work with WSL2). This is where this adapter comes in handy,
+     what it does is simply this:
+
+     ```
+       Neovim LSP Client ----- LSP IP Socket Adapter ------- Roslyn LS
+                         |            |                  |
+             + - - - - - +            |                  + - - - +
+             |              forward msgs from  both ends           |
+     communication via      and adjust Neovim LSP client    communication via
+     IP socket:             URIs to  valid Windows  URIs      stdin/stdout
+     <windows-host-ip>:<port>
+     ```
+
+You might think of running the Roslyn LS within WSL2 (i.e., install it on WSL2 and
+run it on some Unity project that was generated/configured on Windows under some
+mounted location - usually `/mnt/c`). **There are many issues with such approach,
+including:**
+
+  1. It will simply not work - the UnityEngine DLLs are configured/built for Windows
+     and the `.csproj` files contain Windows paths (i.e., not adjusted to the mount
+     location of Windows under WSL). Even if you adjust the paths, it will still not
+     work - you are simply running a program under an OS (Linux) telling it to
+     understand the structure of another project under a completely different OS
+     (Windows).
+
+  1. Even if this somehow works (which again, it will not) - the performance will be
+     extremely bad because Roslyn LS has to access a lot of files (hundreds to thousands)
+     and Windows file access performance via WSL2 is simply bad.
+
+For more details, see: [this issue][wsl-issue] and [this original issue][nvim-roslyn-wsl-issue].
+
 ## TODO
 
-- [ ] MacOS support (IMPORTANT)
+- [ ] automate WSL setup (automatic windows host IP discovery, automatic random
+      port assignment, automatic LSP adapter startup, etc.) (**IMPORTANT**)
+- [ ] MacOS support (OPTIONAL) (needs a MacOS contributor)
 - [ ] Add GitHub pages support (OPTIONAL)
 
 ## FAQ
@@ -750,3 +830,8 @@ MIT License. See LICENSE.txt file for more info.
 [nvim-release-page]: https://github.com/neovim/neovim/blob/master/INSTALL.md
 [#13]: https://github.com/walcht/neovim-unity/issues/13
 [nvim-dap]: https://github.com/mfussenegger/nvim-dap
+[windows-wsl]: https://learn.microsoft.com/en-us/windows/wsl/networking
+[nvim-roslyn-wsl-issue]: https://github.com/seblyng/roslyn.nvim/issues/266
+[lspadapter-releases]: https://github.com/walcht/LSP-TCP-socket-adapter/releases
+[lsp-ip-socket-adapter]: https://github.com/walcht/LSP-TCP-socket-adapter
+[wsl-issue]: https://github.com/walcht/neovim-unity/issues/21
