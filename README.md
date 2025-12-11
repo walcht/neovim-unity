@@ -709,27 +709,27 @@ it with Unity projects under Windows then you have to:
      the other LS is running - as long as its socket endpoint is reachable).
 
   1. install and build the [LSP IP Socket Adapter][lsp-ip-socket-adapter] (or just
-     get the DLL directly from the release page) and run as such:
+     get the DLL directly from the [release page][lspadapter-releases]) and run as such:
 
      ```PowerShell
-     LSPAdapter.exe "<windows-host-ip>:<port>" <path-to-roslyn-ls.dll> -- --logLevel=Error --extensionLogDirectory="LSPLog" --stdio
+     LSPTCPSocketAdapter.exe <windows-host-ip> <port> dotnet "<roslyn-ls-path> --logLevel=Error --extensionLogDirectory=log --stdio" --mount=/mnt/c
      ```
 
-     Options after the `--` are simply passed as is to the underlying Roslyn LS
-     process startup.
+  1. now run Neovim on a valid C# file/project (i.e., a project with generated csproj files)
+     and you should see LSP support.
 
      Why install an additional program, this is already too complicated? (you may
      ask) - Well, as the time of writing this, Roslyn LS does NOT provided a sockets
-     IP communication mechanism and one can only communication with it via its
-     stdin/stdout or pipes (which do not work with WSL2). This is where this adapter
-     comes in handy, what it does is simply this:
+     IP communication mechanism and one can only communicate with it via its stdin/stdout
+     or pipes (which do not work with WSL2). This is where this adapter comes in handy,
+     what it does is simply this:
 
      ```
        Neovim LSP Client ----- LSP IP Socket Adapter ------- Roslyn LS
                          |            |                  |
              + - - - - - +            |                  + - - - +
              |              forward msgs from  both ends           |
-     communication via      and adjust Neovim LSP client    communicates via
+     communication via      and adjust Neovim LSP client    communication via
      IP socket:             URIs to  valid Windows  URIs      stdin/stdout
      <windows-host-ip>:<port>
      ```
@@ -750,7 +750,7 @@ including:**
      extremely bad because Roslyn LS has to access a lot of files (hundreds to thousands)
      and Windows file access performance via WSL2 is simply bad.
 
-For more details, see: [this issue](#21) and [this original issue][nvim-roslyn-wsl-issue].
+For more details, see: [this issue][wsl-issue] and [this original issue][nvim-roslyn-wsl-issue].
 
 ## TODO
 
@@ -831,4 +831,7 @@ MIT License. See LICENSE.txt file for more info.
 [#13]: https://github.com/walcht/neovim-unity/issues/13
 [nvim-dap]: https://github.com/mfussenegger/nvim-dap
 [windows-wsl]: https://learn.microsoft.com/en-us/windows/wsl/networking
-[nvim-roslyn-wsl-issue]: https://github.com/seblyng/roslyn.nvim/issues/266 
+[nvim-roslyn-wsl-issue]: https://github.com/seblyng/roslyn.nvim/issues/266
+[lspadapter-releases]: https://github.com/walcht/LSP-TCP-socket-adapter/releases
+[lsp-ip-socket-adapter]: https://github.com/walcht/LSP-TCP-socket-adapter
+[wsl-issue]: https://github.com/walcht/neovim-unity/issues/21
