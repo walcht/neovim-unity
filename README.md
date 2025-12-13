@@ -860,6 +860,14 @@ For more details, see: [this issue][wsl-issue] and [this original issue][nvim-ro
   the language server - make sure to test with different versions, or only use supported
   ones.
 
+---
+
+- Q. I do not see Neovim in the External Script Editor dropdown, what should I do?
+- A. Try to re-import the whole Unity project (this happened to me once and re-importing
+  somehow fixed it). Otherwise, are you sure that Neovim is installed and is globally
+  available or at least in a known location (see source code for locations this plugin
+  looks into to find nvim executable)?
+
 ## Feedback
 
 The objective for this guide and its related projects is to provide a rich
