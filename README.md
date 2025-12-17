@@ -870,6 +870,13 @@ For more details, see: [this issue][wsl-issue] and [this original issue][nvim-ro
   available or at least in a known location (see source code for locations this plugin
   looks into to find nvim executable)?
 
+---
+
+- Q. Neovim is not listed in the External Tools menu, what should I do?
+- A. Make sure that Neovim is on PATH under the name `nvim`. On Linux, make sure that
+  `nvim` is appended to PATH for non-interactive shells - E.g., append PATH in `~/.profile`
+  and NOT in `~/.bashrc`.
+
 ## Feedback
 
 The objective for this guide and its related projects is to provide a rich
