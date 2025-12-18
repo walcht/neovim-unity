@@ -809,11 +809,36 @@ including:**
 
 For more details, see: [this issue][wsl-issue] and [this original issue][nvim-roslyn-wsl-issue].
 
+## Known Limitaions
+
+- When you create a new C# from Neovim - you do not get LSP support for it. You have to
+  focus on Unity window (to regenerate the `.csproj` files) and restart the language server.
+  This is currently in the TODO list below.
+
+- Currently when you do any change in Neovim of any relevant Unity project files (e.g.,
+  C# script), Unity does not recompile changes until you focus on its Window. This is in
+  the TODO list below and requires some IPC communication mechanism between the Unity
+  Neovim.IDE pluging and the running Neovim server instance.
+
+- Debugging is only limited to Mono scripting backends (no debugging support for IL2CPP).
+  Currently, I am not planning to adding support for this due to the huge workload this
+  requires (I do not even know if it is possible). Feel free to contribute if you know
+  how to do it.
+
+- You have to figure out (through trial and error) the Unity debugger's port it is
+  listening on for you to be able to attach the DAP to Unity's debugger. Automated
+  script for figuring this out is currently being worked on.
+
 ## TODO
 
-- [ ] automate WSL setup (automatic windows host IP discovery, automatic random
+- [ ] Automate WSL setup (automatic windows host IP discovery, automatic random
       port assignment, automatic LSP adapter startup, etc.) (**IMPORTANT**)
-- [ ] MacOS support (OPTIONAL) (needs a MacOS contributor)
+- [ ] Auto Unity debugger listening port discovery (**CRUCIAL**) (this is being done but is
+      much trickier that initially thought)
+- [ ] MacOS support (**IMPORTANT**) (needs a MacOS tester/contributor)
+- [ ] Add metrics/benchmarking integration tests for LSP on some Unity projects (**CRUCIAL**)
+- [ ] Add GitHub workflow for auto TOC generation for this README (OPTIONAL)
+- [ ] Add GitHub workflow for link checks for this README (OPTIONAL)
 - [ ] Add GitHub pages support (OPTIONAL)
 
 ## FAQ
