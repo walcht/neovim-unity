@@ -809,7 +809,7 @@ including:**
 
 For more details, see: [this issue][wsl-issue] and [this original issue][nvim-roslyn-wsl-issue].
 
-## Known Limitaions
+## Known Limitations
 
 - When you create a new C# from Neovim - you do not get LSP support for it. You have to
   focus on Unity window (to regenerate the `.csproj` files) and restart the language server.
