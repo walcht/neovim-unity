@@ -210,6 +210,11 @@ Neovim configuration for computer graphics development.
 
 <details><summary>use proposed CGNvim configuration</summary>
 
+CGNvim has an auto-generated keymaps [cheatsheet PDF][cgnvim-cheatsheet] that makes it easy
+to rapidly look for keymaps:
+
+![cgnvim-cheatsheet](https://github.com/user-attachments/assets/3f8291ec-b9e1-4ebb-ad72-0766b757af8a)
+
 1. If you already have your own Neovim configuration then make sure to do a
 backup before proceeding:
 
@@ -914,3 +919,4 @@ MIT License. See LICENSE.txt file for more info.
 [wsl-issue]: https://github.com/walcht/neovim-unity/issues/21
 [roslyn]: https://github.com/dotnet/roslyn
 [unity-analyzers]: https://github.com/microsoft/Microsoft.Unity.Analyzers
+[cgnvim-cheatsheet]: https://github.com/walcht/CGNvim/releases
