@@ -684,32 +684,90 @@ Unity debug adapter:
 
    </details>
 
-1. if you are debugging a Unity editor instance, make sure Unity is set to
-`Mode: Debug` and if you are debugging a Unity player instance, then make sure
-that it is debuggable (check the settings on how to do that).
+1. depending on whether you want to debug a Unity Editor or a Unity Player
+   instance:
+   
+   - if you are debugging a Unity Editor instance, make sure Unity is set to
+     `Mode: Debug` and make sure you see this symbol:
+
+     <img width="343" height="136" alt="image" src="https://github.com/user-attachments/assets/a494063a-55b3-45f2-a02d-e370e385ad82" />
+     
+   - if you are debugging a Unity Player instance, then make sure that it is debuggable
+     (check the build settings on how to do that):
+     
+     <img width="444" height="181" alt="image" src="https://github.com/user-attachments/assets/8a361746-08f8-47ac-909a-a21756735550" />
 
 1. open a C# script, set some breakpoints and continue (<F5> key or by
 entering the cmd `:DapContinue`)
 
 1. the Unity DA connects to the Unity Mono debugger via a TCP socket, therefore
-you have to provide an IP address and a port. On Linux, you can figure the
-debugging port of a Unity editor instance by checking the output of:
+you have to provide an IP address and a port. Here you have two options: you can
+figure the Unity's debugger listening IP and PORT manually or you can use my
+[Unity Listening Debugger Port][unity-listening-debugger-port] to automatically list
+the currently attachable Unity debugger instances. In case you chose the former
+manual method:
 
-    ```bash
-    ss -tlp | grep 'Unity'
-    ```
+   - For a local Unity Editor instance:
+   
+     - IP: `127.0.0.1`
+     
+     - PORT: `56000 + <UNITY-EDITOR-PID> % 1000`
 
-    which yields an output like this:
+       On Windows 10/11 you can figure the PID of the running Unity Editor instance using:
+     
+       ```powershell
+       Get-Process -Name Unity | Where-Object {$_.mainWindowTitle} | Format-Table Id, Name, mainWindowtitle
+       ```
 
-    ```
-    LISTEN 0      16         127.0.0.1:56365       0.0.0.0:*    users:(("UnityShaderComp",pid=306581,fd=128),("Unity",pid=306365,fd=128))
-    LISTEN 0      16         127.0.0.1:56451       0.0.0.0:*    users:(("UnityShaderComp",pid=322591,fd=47),("Unity",pid=322451,fd=47))  
-    LISTEN 0      16         127.0.0.1:56457       0.0.0.0:*    users:(("UnityShaderComp",pid=322609,fd=47),("Unity",pid=322457,fd=47))
-    ```
+       which outputs something like this:
 
-    the debugging IP is 127.0.0.1 and the port is 56365.
-    (ideally the list of endpoints to connect to should be listed automatically
-    - will be implemented in the near future)
+       ```powershell
+          Id Name  MainWindowTitle
+          -- ----  ---------------
+       15900 Unity ctvisualizer - desktop - Windows, Mac, Linux - Unity 6.3 LTS (6000.3.1f1) <Vulkan>
+       ```
+
+       which means the debugging port is 56900.
+       Notice that in the above script the processes have to be filtered by those having a main title
+       window because there are multiple Unity-named processes (i.e., background processes).
+     
+       On Linux, you can figure the debugging port of a Unity editor instance by checking the output of:
+
+       ```bash
+       ss -tlp | grep 'Unity'
+       ```
+
+       which yields an output like this:
+
+       ```
+       LISTEN 0      16         127.0.0.1:56365       0.0.0.0:*    users:(("UnityShaderComp",pid=306581,fd=128),("Unity",pid=306365,fd=128))
+       LISTEN 0      16         127.0.0.1:56451       0.0.0.0:*    users:(("UnityShaderComp",pid=322591,fd=47),("Unity",pid=322451,fd=47))  
+       LISTEN 0      16         127.0.0.1:56457       0.0.0.0:*    users:(("UnityShaderComp",pid=322609,fd=47),("Unity",pid=322457,fd=47))
+       ```
+
+       the debugging IP is 127.0.0.1 and the port is 56365 (usually the Unity process consuming the most resources is the Unity Editor instance one).
+
+   - For a local Unity Player instance:
+   
+     - IP: `127.0.0.1`
+     
+     - PORT: there are multiple ways to determine the listening debugger:
+     
+       - The easiest way is to enable the `Wait For Managed Debugger` in your build settings:
+
+         <img width="444" height="181" alt="image" src="https://github.com/user-attachments/assets/8a361746-08f8-47ac-909a-a21756735550" />
+
+         This will cause the showup of the following popup upon the launch of your built Unity application:
+
+         <img width="396" height="150" alt="image" src="https://github.com/user-attachments/assets/e348b4b6-535e-41b0-b1c3-c611da4c0e6a" />
+
+       - The other method is to navigate to `C:\Users\<user-name>\AppData\LocalLow\<company-name>\<product-name>\Player.txt`
+         which should contain the following lines (at the very top):
+
+         ```text
+         Starting managed debugger on port 56846
+         Using monoOptions --debugger-agent=transport=dt_socket,embedding=1,server=y,suspend=n,address=0.0.0.0:56846
+         ```
 
 > [!NOTE]
 > [Unity-DAP][unity_dap] only supports debugging applications built using the
@@ -945,3 +1003,4 @@ MIT License. See LICENSE.txt file for more info.
 [roslyn]: https://github.com/dotnet/roslyn
 [unity-analyzers]: https://github.com/microsoft/Microsoft.Unity.Analyzers
 [cgnvim-cheatsheet]: https://github.com/walcht/CGNvim/releases
+[unity-listening-debugger-port]: https://github.com/walcht/unity-listening-debug-port
