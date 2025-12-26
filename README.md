@@ -711,7 +711,17 @@ manual method:
    
      - IP: `127.0.0.1`
      
-     - PORT: `56000 + <UNITY-EDITOR-PID> % 1000`
+     - PORT: There are multiple methods to determine the port.
+    
+       Assuming you only have one single Unity Editor instance running, you can simply navigate to:
+       
+        - on Linux: `~/.config/unity3d/Editor.log`
+        - on Windows: `%LOCALAPPDATA%\Unity\Editor\Editor.log`
+    
+       and look for the following line:
+       `Using monoOptions --debugger-agent=transport=dt_socket,embedding=1,server=y,suspend=n,address=127.0.0.1:56900`
+     
+       Or you can compute the following formula for the port: `56000 + <UNITY-EDITOR-PID> % 1000`
 
        On Windows 10/11 you can figure the PID of the running Unity Editor instance using:
      
@@ -761,7 +771,11 @@ manual method:
 
          <img width="396" height="150" alt="image" src="https://github.com/user-attachments/assets/e348b4b6-535e-41b0-b1c3-c611da4c0e6a" />
 
-       - The other method is to navigate to `C:\Users\<user-name>\AppData\LocalLow\<company-name>\<product-name>\Player.txt`
+       - The other method is to navigate to:
+
+         - on Linux: `~/.config/unity3d/CompanyName/ProductName/Player.log`
+         - on Windows: `%USERPROFILE%\AppData\LocalLow\CompanyName\ProductName\Player.log`
+         
          which should contain the following lines (at the very top):
 
          ```text
