@@ -789,7 +789,7 @@ manual method:
 > caution below in case debugging IL2CPP-built applications is a necessity for 
 > you.
 
-Alternatively, if you want to bebug IL2CPP-built apps then the new official
+Alternatively, if you want to debug IL2CPP-built apps then the new official
 extension for VSCode, albeit closed-source, provides a `UnityDebugAdapter.dll`
 and a `UnityAttachProbe.dll` which \**can be used* to list multiple instances
 with which the DAP client could be attached.
