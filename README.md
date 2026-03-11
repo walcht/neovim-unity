@@ -269,7 +269,9 @@ Neovim configuration.
 no external dependencies - no plugins, no nvim-config, just plain Neovim. Copy
 the following Lua script somewhere into your configuration (e.g., in your
 config's `init`) and make sure to update **<roslyn_ls_path>** to the path of
-your installed Roslyn LS:
+your installed Roslyn LS (**this version is largely based on
+[lspconfig's nvim roslyn setup][roslyn_lspconfig] - you are advised to refer
+to that version as this one may not be up-to-date**):
 
     ```lua
     --- This will be called on LS initialization to request Roslyn to open the
@@ -985,6 +987,22 @@ The objective for this guide and its related projects is to provide a rich
 Neovim development experience for the Unity game engine. Any feedback is more
 than welcome (especially regarding C# LSP details).
 
+## References
+
+There a lot of other resources/projects that can help you in improving your Unity Neovim
+development experience:
+
+- [roslyn.nvim][roslyn_nvim]: a well-maintained Roslyn LSP plugin for neovim (I advise you
+  to use this rather than setting up your own Roslyn LS Lua config - it will save you a lot
+  of headache).
+- [lspconfig's Roslyn LS setup][roslyn_lspconfig]: a single .lua file for setting up Roslyn
+  LS. I advise you to use the plugin [roslyn.nvim][roslyn_nvim] which provides a lot of
+  additional features.
+- [unity-ping.nvim][unity_ping]: sync active buffer to Unity Editor Project window
+  (ping/select asset).
+- [nvim-unity][nvim_unity]: Use Neovim as the default code editor for Unity — with .csproj
+  generation, OmniSharp support and LSP-ready workflow.
+
 ## License
 
 MIT License. See LICENSE.txt file for more info.
@@ -1018,3 +1036,7 @@ MIT License. See LICENSE.txt file for more info.
 [unity-analyzers]: https://github.com/microsoft/Microsoft.Unity.Analyzers
 [cgnvim-cheatsheet]: https://github.com/walcht/CGNvim/releases
 [unity-listening-debugger-port]: https://github.com/walcht/unity-listening-debug-port
+[roslyn_nvim]: https://github.com/seblyng/roslyn.nvim
+[roslyn_lspconfig]: https://github.com/neovim/nvim-lspconfig/blob/master/lsp/roslyn_ls.lua
+[unity_ping]: https://github.com/Rival/unity-ping.nvim
+[nvim_unity]: https://github.com/apyra/nvim-unity
