@@ -928,17 +928,16 @@ For more details, see: [this issue][wsl-issue] and [this original issue][nvim-ro
 ---
 
 - Q. Why the headache? Why not just use Visual Studio/VSCode?
-- A. Some people find great joy in using Neovim. Some other people use it for
+- A0. The VSCode plugin for C# development is closed source and strictly forbids
+  its usage for non-Microsoft products.
+- A1. This project allows you to use Neovim (an IDE-ish experience) within WSL2
+  with proper LSP support. As far as I know, no other IDE/text editor provides
+  this funtionality.
+- A2. Some people find great joy in using Neovim. Some other people use it for
   all their programming tasks thus it would be inefficient for them to
   transition to Visual Studio or VSCode just for Unity programming. Also,
   Neovim consumes less resources and you get more control into how much
   you want it to act as an IDE.
-
----
-
-- Q. Why when opening a .cs script, nvim opens multiple empty buffers?
-- A. **Make sure that the name of your Unity project does not contain any white
-  spaces**.
 
 ---
 
@@ -949,15 +948,21 @@ For more details, see: [this issue][wsl-issue] and [this original issue][nvim-ro
 
 - Q. Why does LSP take so long (e.g., couple of seconds) to provide completion
   at the start of Neovim?
-- A. The language server has to read your whole project (or part of it - depending on
+- A1. You can instruct Roslyn LS to provide diagnostics for the whole project
+  (deteriorates the performance) or only for opened files. Play with these
+  settings.
+- A1. The language server has to read your whole project (or part of it - depending on
   the LSP settings) for proper LSP setup. A little bit of patience at the start is needed.
-  As instructed in the beginning of this guide, **just avoid using Omnisharp -
+- A2. As instructed in the beginning of this guide, **just avoid using Omnisharp -
   it has numerous issues including severe memory leakage problems**.
 
 ---
 
 - Q. LSP stopped working/does not work, help!
-- A. Check LSP log by entering `:LspInfo` and solve issues accordingly.
+- A0. Check LSP log by entering `:LspInfo` and solve issues accordingly.
+- A1. Is the root directory correctly provided/discovered? (this root dir
+  should be for Unity projects the folder which contains the Asset/ folder).
+- A2. 
 
 ---
 
@@ -971,17 +976,13 @@ For more details, see: [this issue][wsl-issue] and [this original issue][nvim-ro
 ---
 
 - Q. I do not see Neovim in the External Script Editor dropdown, what should I do?
-- A. Try to re-import the whole Unity project (this happened to me once and re-importing
-  somehow fixed it). Otherwise, are you sure that Neovim is installed and is globally
-  available or at least in a known location (see source code for locations this plugin
-  looks into to find nvim executable)?
-
----
-
-- Q. Neovim is not listed in the External Tools menu, what should I do?
-- A. Make sure that Neovim is on PATH under the name `nvim`. On Linux, make sure that
+- A0. Make sure that Neovim is on PATH under the name `nvim`. On Linux, make sure that
   `nvim` is appended to PATH for non-interactive shells - E.g., append PATH in `~/.profile`
   and NOT in `~/.bashrc`.
+- A1. Explicitly provide the path to your nvim executable in `Neovim -> Settings`.
+- A2. Try to re-import the whole Unity project (this happened to me once and re-importing
+  somehow fixed it).
+
 
 ## Feedback
 
