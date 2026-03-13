@@ -20,9 +20,11 @@ This guide includes steps on:
  - how to setup the debug adapter (DA) using [Unity DAP][unity_dap]
  - how to add the official [Microsoft.Unity.Analyzers][unity-analyzers] Roslyn analyzer
 
-![Showcase of Unity Neovim IDE-like editor with LSP support and diagnostics][showcase_0]
+On Windows 10 using Windows Terminal:
 
-Debugging is also supported:
+<img width="2560" height="1440" alt="image" src="https://github.com/user-attachments/assets/7dddd223-99da-44b7-b5da-0845fa9201f6" />
+
+Debugging is also supported (screenshot on Ubuntu):
 
 ![Showcase of Unity Neovim IDE-like editor's debugging support][showcase_1]
 
