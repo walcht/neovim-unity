@@ -22,7 +22,8 @@ This guide includes steps on:
 
 On Windows 10 using Windows Terminal:
 
-<img width="2560" height="1440" alt="image" src="https://github.com/user-attachments/assets/7dddd223-99da-44b7-b5da-0845fa9201f6" />
+<img width="2560" height="1440" alt="image" src="https://github.com/user-attachments/assets/673262d6-8b6a-4622-9427-ddc22ced93a8" />
+
 
 Debugging is also supported (screenshot on Ubuntu):
 
