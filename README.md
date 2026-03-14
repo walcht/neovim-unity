@@ -187,6 +187,10 @@ https://github.com/walcht/com.walcht.ide.neovim.git
 ```
 and click on install.
 
+**After completion, restart Unity** (just to be safe - for some reason, for
+some Unity versions, not doing this may result in `Neovim <version>` not
+showing up in the External Tools menu).
+
 Now when navigating to: `Edit -> Preferences -> External Tools` you should
 see `Neovim` in the drop down options (if you don't then you have to
 explicitly enter your nvim executable path in `Neovim -> Settings`).
