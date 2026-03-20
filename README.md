@@ -1,10 +1,9 @@
 # About
 
-> [!NOTE]
+> [!Note]
 > This project is **not affiliated with Unity Technologies**.
 >
-> This project only supports **Unity >= 2022.3 LTS** on Linux, Windows 10/11,
-and MacOS (limited testing).
+> This project is only supported for **Unity 2019.4 or later**.
 
 This is a guide alongside a set of projects on how to setup **Neovim >= 0.11** for Unity
 development tasks on both Linux and Windows (and, to some degree, WSL2 under Windows).
@@ -46,6 +45,21 @@ tools/plugins providers (i.e., no Microsoft licenses that forces telemetry)
 If you already have your own Neovim configuration and want to know how to get
 it working with Unity, you can easily follow this README as a guide on how to
 do that.
+
+>
+> This project only supports **Unity >= 2019.4 LTS**.
+
+This project is constantly tested against the following Unity versions and
+platforms:
+
+| Unity                     | OS                    | Status (\*Notes)         |
+| ------------------------- | --------------------- |------------------------- |
+| Unity 6000.4 LTS          | Ubuntu 24.04          | OK                       |
+| Unity 6000.3 LTS          | Windows 10            | OK                       |
+| Unity 2022.3 LTS          | Windows 10            | OK                       |
+| Unity 2022.3 LTS          | Ubuntu 20.04          | OK                       |
+| Unity 2020.3 LTS          | Windows 10            | OK (\*might get issues with the settings menu - bug with Unity's UIToolkit)   |
+| Unity 2019.4 LTS          | Windows 10            | OK                       |
 
 ## Target Readers/Users
 
