@@ -50,14 +50,14 @@ do that.
 > This project only supports **Unity >= 2019.4 LTS**.
 
 This project is constantly tested against the following Unity versions and
-platforms:
+platforms (*Ok here means that everything is runnings well, from LSP to the Debugger.*):
 
 | Unity                     | OS                    | Status (\*Notes)         |
 | ------------------------- | --------------------- |------------------------- |
 | Unity 6000.4 LTS          | Ubuntu 24.04          | OK                       |
 | Unity 6000.3 LTS          | Windows 10            | OK                       |
 | Unity 2022.3 LTS          | Windows 10            | OK                       |
-| Unity 2022.3 LTS          | Ubuntu 20.04          | OK                       |
+| Unity 2022.3 LTS          | Ubuntu 24.04          | OK                       |
 | Unity 2020.3 LTS          | Windows 10            | OK (\*might get issues with the settings menu - bug with Unity's UIToolkit)   |
 | Unity 2019.4 LTS          | Windows 10            | OK                       |
 
@@ -912,7 +912,26 @@ diagnostics) then:
 
 ### Debug Adapter Protocols
 
-TODO
+```
+                    Translates `requests` from nvim (which are DAP conformant)
+                    to Mono.Debugger-sepecific requests.
+                    Translates Mono.Debugger-specific
+                    responses to DAP-conformant `responses`.
+                    Writes logs to s_LogFile or stderr              Locally running Unity Editor (which always uses Mono). Or
+                              |                                     a local/remote running Unity Player instance using Mono
+                              |                                                 backend (with debugging enabled)
+                              |                                                             |
+    +------+            +-----------+                  +--------------------+ <  - - - - -  +
+    | Nvim |----------- | UNITY DAP | ---------------- |       UNITY        |
+    +------+     ^      +-----------+        ^         |   (Mono.Debugger)  |
+                 |                           |         +--------------------+
+                 |                           |
+         via stdin and stdout                + via a TCP/IP socket (ip:port)
+         (_outputStream and inputStream)
+```
+
+You can read the excellent overview on DAPs here:
+https://github.com/microsoft/debug-adapter-protocol/blob/main/overview.md
 
 </details>
 
@@ -920,16 +939,9 @@ TODO
 The Mono debug adapter for Unity [VSCode Unity Debug][depracated_unity_debug]
 is no longer supported and is deprecated, therefore a fork of the project is
 created at [Unity-DAP][unity_dap] to provide an up-to-date debug adapter for Unity
-(without any VSCode dependencies).
-
-> [!NOTE]
-> [Unity-DAP][unity_dap] has NOT been yet tested on Windows 10/11 platforms. Testing
-> and, potentially, support will be added shortly.
+(without any VSCode dependencies nor any weird licenses).
 
 To add debugging support for Unity, you have to:
-
-1. install [**Mono**][mono] (do NOT use Unity's integrated Mono to build this -
-I have tested it and it does NOT work)
 
 1. install the [Unity debug adapter][unity_dap] by cloning the repo and building it from source:
 
@@ -950,11 +962,9 @@ Unity debug adapter:
    not in PATH):
 
       ```lua
-      -- adjust mono path - do not use Unity's integrated MonoBleedingEdge
-      command = "mono",
-      -- adjust unity-debug-adapter.exe path
+      -- adjust unity-debug-adapter.exe path (don't forget to `chmod +x` it)
+      command = "<path-to-unity-debug-adapter.exe>",
       args = {
-        "<path-to-unity-debug-adapter.exe>",
         "--log-level=none",  -- optional log level argument: tace | debug | info | warn | error | critical | none
         -- "--log-file=<path-to-log-file>",  -- optional path to log file (logs to stderr in case this is not provided)
       },
@@ -967,8 +977,7 @@ Unity debug adapter:
    [nvim-dap][nvim-dap] Neovim plugin installed and copy the following Lua script
    somewhere into your configuration (e.g., in your config's `init`) and make
    sure to update **<unity_debug_adapter_exe>** to the path of your
-   just-installed Unity DA (also optionally change `mono` path in case it is not
-   in PATH):
+   just-installed Unity DA:
    
      ```lua
      local dap = require("dap")
@@ -977,8 +986,7 @@ Unity debug adapter:
        -- options passed to unity-debug-adapter.exe
      
        -- when connecting to a running Unity Editor, the TCP address of the listening
-       -- connection is localhost
-       -- on Linux, use: ss -tlp | grep 'Unity' to find the debugger connection
+       -- connection is localhost (i.e., 127.0.0.1).
        vim.ui.input(
          { prompt = "address [127.0.0.1]: ", default = "127.0.0.1" },
          function(result)
@@ -986,19 +994,19 @@ Unity debug adapter:
          end
        )
        -- then prompt the user for which port the DA should connect to
+       -- to get the port for a Unity Editor, search for this line
+       -- "" at:
+       --   on Linux: 
        vim.ui.input({ prompt = "port: " }, function(result)
          config.port = tonumber(result)
        end)
        clbk({
          type = "executable",
-         -- adjust mono path - do NOT use Unity's integrated MonoBleedingEdge
-         command = "mono",
-         -- adjust unity-debug-adapter.exe path
+         -- adjust unity-debug-adapter.exe path (don't forget to `chmod +x` it)
+         -- get and install Unity debug adapter from:
+         -- https://github.com/walcht/unity-dap
+         command = "<path-to-unity-debug-adapter.exe>",
          args = {
-           -- get and install Unity debug adapter from:
-           -- https://github.com/walcht/unity-dap
-           -- then adjust the following path to where the installed executable is
-           "<unity_debug_adapter_exe_path>",
            -- optional log level argument: trace | debug | info | warn | error | critical | none
            "--log-level=error",
            -- optional path to log file (logs to stderr in case this is not provided)
@@ -1038,11 +1046,8 @@ Unity debug adapter:
 entering the cmd `:DapContinue`)
 
 1. the Unity DA connects to the Unity Mono debugger via a TCP socket, therefore
-you have to provide an IP address and a port. Here you have two options: you can
-figure the Unity's debugger listening IP and PORT manually or you can use my
-[Unity Listening Debugger Port][unity-listening-debugger-port] to automatically list
-the currently attachable Unity debugger instances. In case you chose the former
-manual method:
+you have to provide an IP address and a port. For the moment, you can
+figure the Unity's debugger listening IP and PORT manually:
 
    - For a local Unity Editor instance:
    
@@ -1050,17 +1055,17 @@ manual method:
      
      - PORT: There are multiple methods to determine the port.
     
-       Assuming you only have one single Unity Editor instance running, you can simply navigate to:
+       Assuming you only have one single Unity Editor instance running, you can simply navigate to
+       (the Neovim DAP configuration above automatically does this):
        
         - on Linux: `~/.config/unity3d/Editor.log`
         - on Windows: `%LOCALAPPDATA%\Unity\Editor\Editor.log`
     
        and look for the following line:
        `Using monoOptions --debugger-agent=transport=dt_socket,embedding=1,server=y,suspend=n,address=127.0.0.1:56900`
-     
-       Or you can compute the following formula for the port: `56000 + <UNITY-EDITOR-PID> % 1000`
-
-       On Windows 10/11 you can figure the PID of the running Unity Editor instance using:
+       
+       <details><summary>More advanced methods to find IP:PORT of Unity Editor instance</summary>
+        On Windows 10/11 you can figure the PID of the running Unity Editor instance using:
      
        ```powershell
        Get-Process -Name Unity | Where-Object {$_.mainWindowTitle} | Format-Table Id, Name, mainWindowtitle
@@ -1093,10 +1098,14 @@ manual method:
        ```
 
        the debugging IP is 127.0.0.1 and the port is 56365 (usually the Unity process consuming the most resources is the Unity Editor instance one).
+       
+       Or you can compute the following formula for the port: `56000 + <UNITY-EDITOR-PID> % 1000`
+       
+       </details>
 
    - For a local Unity Player instance:
    
-     - IP: `127.0.0.1`
+     - IP: `127.0.0.1` (or remote machine IP in case it is not running locally)
      
      - PORT: there are multiple ways to determine the listening debugger:
      
@@ -1107,8 +1116,9 @@ manual method:
          This will cause the showup of the following popup upon the launch of your built Unity application:
 
          <img width="396" height="150" alt="image" src="https://github.com/user-attachments/assets/e348b4b6-535e-41b0-b1c3-c611da4c0e6a" />
-
-       - The other method is to navigate to:
+         
+       <details><summary>Other methods to find IP:PORT of a Unity Player instance</summary>
+        - The other method is to navigate to:
 
          - on Linux: `~/.config/unity3d/CompanyName/ProductName/Player.log`
          - on Windows: `%USERPROFILE%\AppData\LocalLow\CompanyName\ProductName\Player.log`
@@ -1119,7 +1129,8 @@ manual method:
          Starting managed debugger on port 56846
          Using monoOptions --debugger-agent=transport=dt_socket,embedding=1,server=y,suspend=n,address=0.0.0.0:56846
          ```
-
+       </details>
+       
 > [!NOTE]
 > [Unity-DAP][unity_dap] only supports debugging applications built using the
 > scripting backend `Mono` (i.e., IL2CPP debugging is not supported). Read the
