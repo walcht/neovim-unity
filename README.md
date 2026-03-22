@@ -1102,7 +1102,11 @@ you have to provide an IP address and a port. For the moment, you can
 figure the Unity's debugger listening IP and PORT manually:
 
    - For a local Unity Editor instance:
-   
+     - Use the convenient automatic Unity Editor instance discovery (number 1):
+       <img width="722" height="130" alt="image" src="https://github.com/user-attachments/assets/956d9afc-ac2a-4147-9957-f77f57902957" />
+     
+       Or discover the IP:PORT pair manually (number 2):
+     
      - IP: `127.0.0.1`
      
      - PORT: There are multiple methods to determine the port.
