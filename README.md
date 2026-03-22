@@ -1327,6 +1327,21 @@ For more details, see: [this issue][wsl-issue] and [this original issue][nvim-ro
 - A2. Try to re-import the whole Unity project (this happened to me once and re-importing
   somehow fixed it).
 
+---
+
+- Q. LSP diagnostics for the currently open buffer are outdated, what should I do?
+- A0. Enter the edit command `:e`. I still don't know exactly why and how to solve
+  this issue. It happens when, say, file A depends on file B, you have them both
+  open, you modify that dependency in B and then switch to buffer B which still
+  shows outdated diagnostics.
+
+---
+
+- Q. Neovim got really, really slow, what should I do?
+- A0. If the LSP is currently running and the referenced project files (.csporj)
+  are regenerated then for some reason the Roslyn LS completely slows down.
+  Restart the language server using `LspRestart roslyn_ls`.
+
 
 ## Feedback
 
