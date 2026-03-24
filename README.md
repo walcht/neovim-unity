@@ -943,16 +943,11 @@ created at [Unity-DAP][unity_dap] to provide an up-to-date debug adapter for Uni
 
 To add debugging support for Unity, you have to:
 
-1. install the [Unity debug adapter][unity_dap] by cloning the repo and building it from source:
-
-     ```bash
-     git clone --recurse-submodules https://github.com/walcht/unity-dap.git
-     cd unity-dap
-     dotnet build unity-debug-adapter/unity-debug-adapter.csproj --configuration=Release
-     ```
+1. download latest release of [Unity debug adapter][unity_dap] from the
+[unity-dap releases page][unity_dap_releases] and extract it.
 
 1. depending on which Neovim configuration you are using, adjust your
-[nvim-dap][nvim-dap] configuration by entering the path to your just-installed
+[nvim-dap][nvim-dap] configuration by entering the path to your just-extracted
 Unity debug adapter:
 
    <details><summary>use proposed CGNvim configuration</summary>
@@ -1446,6 +1441,7 @@ MIT License. See LICENSE.txt file for more info.
 [depracated_unity_debug]: https://github.com/Unity-Technologies/vscode-unity-debug
 [stupid_license]: https://marketplace.visualstudio.com/items/VisualStudioToolsForUnity.vstuc/license
 [unity_dap]: https://github.com/walcht/unity-dap
+[unity_dap_releases]: https://github.com/walcht/unity-dap/releases
 [cgnvim]: https://github.com/walcht/CGNvim
 [cgnvim_unity_dap]: https://github.com/walcht/CGNvim/blob/master/lua/cgnvim/daps/unity.lua
 [mono]: https://www.mono-project.com/download/stable/
